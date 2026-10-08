@@ -1,0 +1,14 @@
+-- ============================================================================
+-- YouthX Foundation — seed
+--
+-- Intentionally empty. The real starting content (site settings, navigation, pages,
+-- the eight programs) lives in migrations/20261008000014_initial_content.sql so that
+-- production gets it too. We never seed invented people, stories, events, partners,
+-- statistics, or donations.
+--
+-- To create your first super admin after signing up on the site, run in the SQL editor:
+--
+--   insert into public.admin_users (user_id, role)
+--   select id, 'super_admin' from auth.users where email = 'you@example.com';
+-- ============================================================================
+select 1;

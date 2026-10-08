@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+/* Somali YouthUp brand
+   primary   #b3e717  lime  (buttons, highlights — always with dark text)
+   secondary #1c4b40  deep green (headings, header, footer, text on lime) */
+:root {
+  --background: #ffffff;
+  --foreground: #10241f;
+  --muted: #f3f7f5;
+  --muted-foreground: #5b6f69;
+  --border: #dde7e3;
+  --primary: #b3e717;
+  --primary-hover: #a2d312;
+  --primary-soft: #f2fbd6;
+  --primary-foreground: #1c4b40;
+  --secondary: #1c4b40;
+  --secondary-hover: #153a31;
+  --secondary-soft: #e7f0ed;
+  --secondary-foreground: #ffffff;
+  --danger: #c0392b;
+  --danger-soft: #fdecea;
+  --warning: #b7791f;
+  --warning-soft: #fef6e4;
+  --women: #0a7d5e; /* validated chart pair (dataviz CVD + contrast checks) */
+  --men: #7a9e0f;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-soft: var(--secondary-soft);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-women: var(--women);
+  --color-men: var(--men);
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Sanitized rich text (posts, opportunity descriptions) */
+.prose-content { line-height: 1.75; }
+.prose-content h2 { font-size: 1.35rem; font-weight: 700; margin: 1.5rem 0 .5rem; color: var(--secondary); }
+.prose-content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.25rem 0 .5rem; color: var(--secondary); }
+.prose-content p { margin: .75rem 0; }
+.prose-content ul { list-style: disc; padding-left: 1.5rem; margin: .75rem 0; }
+.prose-content ol { list-style: decimal; padding-left: 1.5rem; margin: .75rem 0; }
+.prose-content a { color: var(--secondary); text-decoration: underline; }
+.prose-content blockquote { border-left: 4px solid var(--primary); padding-left: 1rem; color: var(--muted-foreground); }
