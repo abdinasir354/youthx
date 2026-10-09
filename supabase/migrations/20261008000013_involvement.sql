@@ -112,7 +112,7 @@ begin
      where id = a.user_id;
     perform set_config('app.role_change', 'off', true);
     insert into public.notifications (user_id, title, body, link)
-    values (a.user_id, 'Mentor application approved', 'Welcome to the YouthX mentor network.', '/mentor');
+    values (a.user_id, 'Mentor application approved', 'Welcome to the Youthup mentor network.', '/mentor');
   end if;
 end $$;
 revoke execute on function public.approve_mentor_application(uuid) from public, anon;

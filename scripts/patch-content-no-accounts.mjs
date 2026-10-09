@@ -70,7 +70,7 @@ async function merge(row, patch) {
   const ctas = list.filter((s) => s.type === "cta");
   const last = ctas[ctas.length - 1];
   if (last) await merge(last, GET_IN_TOUCH);
-  // Insert the approach panels right after "About YouthX" (once).
+  // Insert the approach panels right after "About Youthup" (once).
   if (about && !list.some((s) => s.anchor === "approach")) {
     for (const s of list.filter((x) => x.position > about.position).reverse()) {
       await db.from("page_sections").update({ position: s.position + 1 }).eq("id", s.id);

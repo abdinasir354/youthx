@@ -1,5 +1,5 @@
 /**
- * CMS security tests (YouthX prompt §41): roles, publishing rights, private applications,
+ * CMS security tests (Youthup prompt §41): roles, publishing rights, private applications,
  * anonymous access, and privilege escalation. Runs against a real Supabase database.
  */
 import { afterAll, beforeAll, describe, expect, it } from "vitest";

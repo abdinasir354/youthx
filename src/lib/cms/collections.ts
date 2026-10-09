@@ -112,7 +112,7 @@ export const COLLECTIONS: Record<CollectionKey, CollectionDef> = {
       { kind: "richtext", name: "description", label: "Description" },
       { kind: "richtext", name: "requirements", label: "Eligibility" },
       { kind: "select", name: "apply_mode", label: "How to apply", required: true, group: "details", options: [
-        { value: "internal", label: "Contact YouthX (opens our contact form)" },
+        { value: "internal", label: "Contact Youthup (opens our contact form)" },
         { value: "external", label: "External link (the organizer's own form)" },
       ] },
       { kind: "url", name: "application_url", label: "Application URL", group: "details", help: "Only for external links." },

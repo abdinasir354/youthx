@@ -67,7 +67,7 @@ export default async function AdminMessagesPage({ searchParams }: PageProps<"/[l
                   </p>
                   <p className="text-sm text-muted-foreground">
                     {m.name}
-                    {m.email && <> · <a href={`mailto:${m.email}?subject=${encodeURIComponent(`Re: ${m.subject ?? "Your message to YouthX"}`)}`} className="underline">{m.email}</a></>}
+                    {m.email && <> · <a href={`mailto:${m.email}?subject=${encodeURIComponent(`Re: ${m.subject ?? "Your message to Youthup"}`)}`} className="underline">{m.email}</a></>}
                     {m.phone && <> · <a href={`tel:${m.phone}`} className="underline">{m.phone}</a></>}
                     {" · "}
                     {new Date(m.created_at).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Africa/Mogadishu" })}

@@ -25,7 +25,7 @@ export default async function NewsletterPage() {
             {count ?? 0} active subscriber(s). Every email you send must include an unsubscribe link; people can also unsubscribe from the website.
           </p>
         </div>
-        <CsvButton action={exportSubscribersCsv} filename="youthx-subscribers.csv">Export CSV</CsvButton>
+        <CsvButton action={exportSubscribersCsv} filename="youthup-subscribers.csv">Export CSV</CsvButton>
       </div>
       {rows.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border bg-white px-6 py-14 text-center text-sm text-muted-foreground">No subscribers yet.</div>

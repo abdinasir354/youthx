@@ -6,7 +6,7 @@ import { AdminShell } from "@/components/admin/shell/admin-shell";
 import { ADMIN_NAV } from "@/components/admin/shell/nav";
 
 export const metadata: Metadata = {
-  title: { default: "Admin", template: "%s · YouthX Admin" },
+  title: { default: "Admin", template: "%s · Youthup Admin" },
   robots: { index: false, follow: false },
 };
 

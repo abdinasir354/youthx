@@ -21,7 +21,7 @@ export function ReviewActions({ kind, id, status, notes: initialNotes, hasCv, ha
     if (next === "approved" && kind === "mentor") {
       const ok = await confirm({
         title: "Approve this mentor?",
-        body: hasAccount ? "Their YouthX account becomes an approved mentor and youth can send them mentorship requests." : "They don't have a YouthX account yet. Ask them to sign up with the same email; you can then approve them under Users.",
+        body: hasAccount ? "Their Youthup account becomes an approved mentor and youth can send them mentorship requests." : "They don't have a Youthup account yet. Ask them to sign up with the same email; you can then approve them under Users.",
         confirmLabel: "Approve",
       });
       if (!ok) return;

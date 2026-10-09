@@ -159,7 +159,7 @@ export async function ReviewDetail({ kind, id }: { kind: ReviewKind; id: string 
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <a href={`mailto:${email}?subject=${encodeURIComponent(`Your YouthX ${kind} application`)}&body=${encodeURIComponent(`Dear ${firstName},\n\n`)}`} className={buttonVariants({ variant: "outline" })}>
+          <a href={`mailto:${email}?subject=${encodeURIComponent(`Your Youthup ${kind} application`)}&body=${encodeURIComponent(`Dear ${firstName},\n\n`)}`} className={buttonVariants({ variant: "outline" })}>
             <Mail /> Email applicant
           </a>
           {typeof r.phone === "string" && r.phone && (

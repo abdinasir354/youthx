@@ -25,7 +25,7 @@ export default async function HomePage() {
             heading: s.tagline ?? s.site_name,
             subheading: s.description,
             primary_cta: { label: "Explore Our Programs", href: "/programs" },
-            secondary_cta: { label: "Join YouthX", href: "/get-involved" },
+            secondary_cta: { label: "Join Youthup", href: "/get-involved" },
           },
         },
       ]}

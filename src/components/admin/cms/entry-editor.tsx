@@ -298,7 +298,7 @@ function SearchPreview({ title, description, path }: { title: string; descriptio
   const desc = description.replace(/[#*_>\[\]()`-]/g, "").replace(/\s+/g, " ").trim();
   return (
     <div className="mb-5 rounded-md border border-border bg-muted/40 p-4" aria-label="Search result preview">
-      <p className="text-xs text-muted-foreground">youthx.org{path ?? ""}</p>
+      <p className="text-xs text-muted-foreground">youthup.org{path ?? ""}</p>
       <p className="truncate text-lg text-[#1a0dab]">{title || "Title"}</p>
       <p className="line-clamp-2 text-sm text-[#4d5156]">{desc || "Add a description so search engines show a helpful summary."}</p>
     </div>
