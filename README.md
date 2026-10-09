@@ -165,5 +165,3 @@ Every account has one platform role. Back-office access is separate (see *Admin 
 2. Add the environment variables, including `CRON_SECRET`. `vercel.json` schedules the daily job that closes expired opportunities. Set `NEXT_PUBLIC_SITE_URL` to the production domain.
 3. Add the production `/auth/callback` URL to Supabase Auth redirect URLs.
 4. Deploy.
-#   y o u t h x  
- 

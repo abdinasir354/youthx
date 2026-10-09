@@ -1,109 +1,184 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { useTranslations } from "next-intl";
+import { connection } from "next/server";
 import { getTranslations } from "next-intl/server";
-import { Search } from "lucide-react";
-import { getPublishedOpportunities, getSeats } from "@/lib/data/public";
-import { OpportunityCard } from "@/components/opportunities/opportunity-card";
-import { Button } from "@/components/ui/button";
-import { Checkbox, Input, Select } from "@/components/ui/input";
-import { EmptyState, PageSkeleton } from "@/components/ui/misc";
-import { isPastDeadline } from "@/lib/utils";
-import { OPPORTUNITY_TYPES, REGIONS } from "@/types/database.types";
+import { Search, SearchX } from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import { getPublishedOpportunities } from "@/lib/data/public";
+import { getPage } from "@/lib/data/cms";
+import { cn, isPastDeadline } from "@/lib/utils";
+import { REGIONS } from "@/types/database.types";
+import { Sections } from "@/components/cms/sections";
+import { Container, Eyebrow } from "@/components/site/basics";
+import { cmsPageMetadata } from "@/components/site/cms-page";
+import { FloatingShapes } from "@/components/site/shapes";
+import { OpportunityRow } from "@/components/opportunities/opportunity-row";
+import { Skeleton } from "@/components/ui/misc";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("opportunities");
-  return { title: t("metaTitle"), description: t("subtitle") };
+  return cmsPageMetadata("opportunities", "Opportunities");
 }
 
-type Filters = { q?: string; type?: string; region?: string; remote?: string; open?: string };
+type Filters = { q?: string; type?: string; region?: string; remote?: string; closed?: string };
 
-export default function OpportunitiesPage({ searchParams }: PageProps<"/[locale]/opportunities">) {
-  const t = useTranslations("opportunities");
+export default async function OpportunitiesPage({ searchParams }: PageProps<"/[locale]/opportunities">) {
+  const [page, t, ts] = await Promise.all([getPage("opportunities"), getTranslations("opportunities"), getTranslations("site")]);
   return (
     <>
-      <section className="bg-secondary py-12 text-white">
-        <div className="mx-auto max-w-7xl px-4">
-          <h1 className="text-4xl font-extrabold">{t("title")}</h1>
-          <p className="mt-2 text-white/80">{t("subtitle")}</p>
-        </div>
+      <section className="relative overflow-hidden bg-surface">
+        <FloatingShapes variant="c" />
+        <Container className="relative pb-10 pt-16 sm:pb-14 sm:pt-20">
+          <Eyebrow>{ts("opportunitiesEyebrow")}</Eyebrow>
+          <h1 className="display mt-4 max-w-3xl text-balance text-5xl text-ink sm:text-6xl">{ts("findNext")}</h1>
+          <p className="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground sm:text-xl">{page?.page.description ?? t("subtitle")}</p>
+          {/* Search + filters read the URL (request data) → stream in behind Suspense */}
+          <Suspense fallback={<Skeleton className="mt-10 h-16 max-w-3xl rounded-full" />}>
+            <SearchBox searchParams={searchParams as Promise<Filters>} />
+          </Suspense>
+        </Container>
       </section>
-      <div className="mx-auto max-w-7xl px-4 py-8">
-        {/* searchParams are request data → filters + results stream in behind Suspense */}
-        <Suspense fallback={<PageSkeleton />}>
-          <FilteredResults searchParams={searchParams as Promise<Filters>} />
-        </Suspense>
-      </div>
+      <section className="bg-white">
+        <Container className="py-10 sm:py-14">
+          <Suspense fallback={<ResultsSkeleton />}>
+            <Results searchParams={searchParams as Promise<Filters>} />
+          </Suspense>
+        </Container>
+      </section>
+      {page && <Sections sections={page.sections} />}
     </>
   );
 }
 
-async function FilteredResults({ searchParams }: { searchParams: Promise<Filters> }) {
+function qs(current: Filters, change: Partial<Filters>) {
+  const u = new URLSearchParams();
+  for (const [k, v] of Object.entries({ ...current, ...change })) if (v) u.set(k, v);
+  const s = u.toString();
+  return `/opportunities${s ? `?${s}` : ""}`;
+}
+
+/** Big search box + quick type chips (plain links / GET form: works without JavaScript). */
+async function SearchBox({ searchParams }: { searchParams: Promise<Filters> }) {
   const params = await searchParams;
-  const t = await getTranslations("opportunities");
-  const tt = await getTranslations("types");
-  const common = await getTranslations("common");
+  const [t, tt, ts] = await Promise.all([getTranslations("opportunities"), getTranslations("types"), getTranslations("site")]);
+  const quick = ["scholarship", "internship", "fellowship", "training", "job", "competition", "volunteering", "conference"] as const;
+  return (
+    <div className="mt-10">
+      <form role="search" className="flex max-w-3xl items-center gap-2 rounded-full border border-border bg-white p-2 shadow-[0_20px_40px_-24px_rgba(18,53,46,0.35)] focus-within:ring-2 focus-within:ring-primary">
+        {params.type && <input type="hidden" name="type" value={params.type} />}
+        {params.region && <input type="hidden" name="region" value={params.region} />}
+        {params.remote && <input type="hidden" name="remote" value={params.remote} />}
+        {params.closed && <input type="hidden" name="closed" value={params.closed} />}
+        <Search className="ml-4 size-5 shrink-0 text-muted-foreground" aria-hidden />
+        <label htmlFor="opp-q" className="sr-only">{t("searchPlaceholder")}</label>
+        <input
+          id="opp-q"
+          name="q"
+          defaultValue={params.q}
+          placeholder={ts("searchOpportunities")}
+          className="h-12 min-w-0 flex-1 bg-transparent text-base text-ink placeholder:text-muted-foreground focus:outline-none sm:text-lg"
+        />
+        <button type="submit" className="h-12 shrink-0 rounded-full bg-ink px-6 text-base font-bold text-white transition hover:bg-secondary-hover">
+          {ts("search")}
+        </button>
+      </form>
+      <nav aria-label={t("filterType")} className="mt-5 flex flex-wrap gap-2">
+        <Link href={qs(params, { type: undefined })} aria-current={!params.type ? "page" : undefined} className={chip(!params.type)}>
+          {t("allTypes")}
+        </Link>
+        {quick.map((type) => (
+          <Link key={type} href={qs(params, { type })} aria-current={params.type === type ? "page" : undefined} className={chip(params.type === type)}>
+            {tt(type)}
+          </Link>
+        ))}
+      </nav>
+    </div>
+  );
+}
+
+const chip = (active: boolean) =>
+  cn(
+    "rounded-full border px-4 py-2 text-sm font-semibold transition",
+    active ? "border-ink bg-ink text-white" : "border-border bg-white text-ink hover:border-secondary/40",
+  );
+
+async function Results({ searchParams }: { searchParams: Promise<Filters> }) {
+  await connection(); // filters depend on the current time (deadlines / expiry) → request time
+  const params = await searchParams;
+  const [t, ts, common] = await Promise.all([getTranslations("opportunities"), getTranslations("site"), getTranslations("common")]);
 
   const q = (params.q ?? "").toLowerCase().trim().slice(0, 100);
-  const all = await getPublishedOpportunities();
+  // Listings past their expiry date are hidden automatically (and closed by the daily job).
+  const all = (await getPublishedOpportunities()).filter((o) => !o.expires_at || !isPastDeadline(o.expires_at));
   const opps = all.filter((o) => {
     if (params.type && o.type !== params.type) return false;
     if (params.region && o.region !== params.region) return false;
     if (params.remote === "1" && !o.is_remote) return false;
-    if (params.open === "1" && isPastDeadline(o.apply_deadline)) return false;
-    if (q && !`${o.title} ${o.summary ?? ""} ${o.organization?.name ?? ""}`.toLowerCase().includes(q)) return false;
+    if (params.closed !== "1" && (o.status === "closed" || isPastDeadline(o.apply_deadline))) return false;
+    if (q && !`${o.title} ${o.summary ?? ""} ${o.organization?.name ?? ""} ${o.organization_name ?? ""} ${o.location ?? ""}`.toLowerCase().includes(q)) return false;
     return true;
   });
-  const seats = await getSeats(opps.map((o) => o.id));
+  // Featured first, then soonest deadline.
+  opps.sort((a, b) => Number(b.is_featured) - Number(a.is_featured) || (a.apply_deadline ?? "9999").localeCompare(b.apply_deadline ?? "9999"));
+  const filtered = Boolean(q || params.type || params.region || params.remote || params.closed);
 
   return (
     <>
-      {/* Plain GET form: works without JavaScript on slow phones */}
-      <form className="mb-8 grid gap-3 rounded-2xl border border-border bg-white p-4 shadow-sm md:grid-cols-[2fr_1fr_1fr_auto]" role="search">
-        <div className="relative">
-          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input name="q" defaultValue={params.q} placeholder={t("searchPlaceholder")} aria-label={common("search")} className="pl-9" />
-        </div>
-        <Select name="type" defaultValue={params.type ?? ""} aria-label={t("filterType")}>
-          <option value="">{t("allTypes")}</option>
-          {OPPORTUNITY_TYPES.map((type) => (
-            <option key={type} value={type}>
-              {tt(type)}
-            </option>
-          ))}
-        </Select>
-        <Select name="region" defaultValue={params.region ?? ""} aria-label={t("filterRegion")}>
-          <option value="">{t("allRegions")}</option>
-          {REGIONS.map((r) => (
-            <option key={r} value={r}>
-              {r}
-            </option>
-          ))}
-        </Select>
-        <Button type="submit" variant="secondary">
-          {common("filter")}
-        </Button>
-        <div className="flex flex-wrap gap-5 md:col-span-4">
-          <label className="flex items-center gap-2 text-sm text-secondary">
-            <Checkbox name="remote" value="1" defaultChecked={params.remote === "1"} />
-            {t("filterRemote")}
+      {/* Toolbar: count + secondary filters (GET form) */}
+      <form className="mb-8 flex flex-col gap-4 border-b border-border pb-6 lg:flex-row lg:items-center lg:justify-between">
+        {params.q && <input type="hidden" name="q" value={params.q} />}
+        {params.type && <input type="hidden" name="type" value={params.type} />}
+        <p className="text-lg text-ink" aria-live="polite">
+          <span className="font-extrabold">{opps.length}</span> {ts("opportunitiesFound", { count: opps.length })}
+        </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <label className="sr-only" htmlFor="opp-region">{t("filterRegion")}</label>
+          <select id="opp-region" name="region" defaultValue={params.region ?? ""} className="h-11 rounded-full border border-border bg-white px-4 text-sm font-medium text-ink">
+            <option value="">{t("allRegions")}</option>
+            {REGIONS.map((r) => (
+              <option key={r} value={r}>{r}</option>
+            ))}
+          </select>
+          <label className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full border border-border bg-white px-4 text-sm font-medium text-ink">
+            <input type="checkbox" name="remote" value="1" defaultChecked={params.remote === "1"} className="size-4 accent-secondary" /> {t("filterRemote")}
           </label>
-          <label className="flex items-center gap-2 text-sm text-secondary">
-            <Checkbox name="open" value="1" defaultChecked={params.open === "1"} />
-            {t("filterOpen")}
+          <label className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full border border-border bg-white px-4 text-sm font-medium text-ink">
+            <input type="checkbox" name="closed" value="1" defaultChecked={params.closed === "1"} className="size-4 accent-secondary" /> {ts("includeClosed")}
           </label>
+          <button type="submit" className="h-11 rounded-full bg-primary px-5 text-sm font-bold text-ink transition hover:bg-primary-hover">
+            {common("filter")}
+          </button>
+          {filtered && (
+            <Link href="/opportunities" className="text-sm font-semibold text-muted-foreground underline-offset-4 hover:text-ink hover:underline">
+              {ts("clearFilters")}
+            </Link>
+          )}
         </div>
       </form>
 
       {opps.length === 0 ? (
-        <EmptyState title={all.length === 0 ? t("noneTitle") : common("noResults")} description={all.length === 0 ? t("noneText") : common("noResultsHint")} />
+        <div className="rounded-3xl border border-dashed border-border bg-surface px-6 py-16 text-center">
+          <SearchX className="mx-auto size-10 text-secondary/40" aria-hidden />
+          <p className="heading mt-4 text-2xl text-ink">{all.length === 0 ? t("noneTitle") : ts("noMatches")}</p>
+          <p className="mx-auto mt-2 max-w-md text-muted-foreground">{all.length === 0 ? t("noneText") : ts("noMatchesHint")}</p>
+        </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-4">
           {opps.map((o) => (
-            <OpportunityCard key={o.id} opp={o} seats={seats[o.id]} />
+            <OpportunityRow key={o.id} opp={o} />
           ))}
         </div>
       )}
     </>
+  );
+}
+
+function ResultsSkeleton() {
+  return (
+    <div className="space-y-4" aria-busy="true">
+      <Skeleton className="h-10 w-64" />
+      {Array.from({ length: 3 }).map((_, i) => (
+        <Skeleton key={i} className="h-36 rounded-3xl" />
+      ))}
+    </div>
   );
 }

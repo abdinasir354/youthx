@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { CheckCircle2 } from "lucide-react";
-import { recordDonation, sendContactMessage, sendPartnerRequest } from "@/app/actions/public-forms";
-import { contactSchema, donationSchema, partnerRequestSchema } from "@/lib/validations";
+import { recordDonation, sendPartnerRequest } from "@/app/actions/public-forms";
+import { donationSchema, partnerRequestSchema } from "@/lib/validations";
 import { Alert } from "@/components/ui/misc";
 import { CheckboxField, Honeypot, SelectField, SubmitButton, TextAreaField, TextField } from "./fields";
 import { useActionForm } from "./use-action-form";
@@ -20,39 +20,14 @@ function Success({ text }: { text: string }) {
   );
 }
 
-export function ContactForm() {
-  const t = useTranslations("contact");
-  const common = useTranslations("common");
-  const [sent, setSent] = useState(false);
-  const { form, onSubmit, pending } = useActionForm<{ name: string; email: string; phone: string; subject: string; message: string; website: string }>({
-    schema: contactSchema,
-    defaultValues: { name: "", email: "", phone: "", subject: "", message: "", website: "" },
-    action: sendContactMessage,
-    onSuccess: () => setSent(true),
-  });
-  if (sent) return <Success text={t("sent")} />;
-  return (
-    <form onSubmit={onSubmit} className="relative grid gap-4 sm:grid-cols-2" noValidate>
-      <Honeypot form={form} />
-      <TextField form={form} name="name" label={common("name")} autoComplete="name" className="sm:col-span-2" />
-      <TextField form={form} name="email" label={common("email")} type="email" autoComplete="email" optional />
-      <TextField form={form} name="phone" label={common("phone")} type="tel" autoComplete="tel" optional />
-      <TextField form={form} name="subject" label={t("subject")} optional className="sm:col-span-2" />
-      <TextAreaField form={form} name="message" label={common("message")} rows={5} className="sm:col-span-2" />
-      <SubmitButton pending={pending} className="sm:col-span-2 sm:justify-self-start">
-        {t("send")}
-      </SubmitButton>
-    </form>
-  );
-}
-
-export function PartnerRequestForm() {
+export function PartnerRequestForm({ kind = "partner" }: { kind?: "partner" | "sponsor" }) {
   const t = useTranslations("partners");
+  const ti = useTranslations("involve");
   const common = useTranslations("common");
   const [sent, setSent] = useState(false);
-  const { form, onSubmit, pending } = useActionForm<{ org_name: string; contact_name: string; email: string; phone: string; message: string; website: string }>({
+  const { form, onSubmit, pending } = useActionForm<{ kind: "partner" | "sponsor"; org_name: string; contact_name: string; email: string; phone: string; message: string; website: string }>({
     schema: partnerRequestSchema,
-    defaultValues: { org_name: "", contact_name: "", email: "", phone: "", message: "", website: "" },
+    defaultValues: { kind, org_name: "", contact_name: "", email: "", phone: "", message: "", website: "" },
     action: sendPartnerRequest,
     onSuccess: () => setSent(true),
   });
@@ -64,9 +39,16 @@ export function PartnerRequestForm() {
       <TextField form={form} name="contact_name" label={t("contactName")} autoComplete="name" />
       <TextField form={form} name="email" label={common("email")} type="email" autoComplete="email" />
       <TextField form={form} name="phone" label={common("phone")} type="tel" optional />
-      <TextAreaField form={form} name="message" label={common("message")} optional rows={4} className="sm:col-span-2" />
-      <SubmitButton pending={pending} className="sm:col-span-2 sm:justify-self-start">
-        {common("submit")}
+      <TextAreaField
+        form={form}
+        name="message"
+        label={kind === "sponsor" ? ti("sponsorMessage") : ti("partnerMessage")}
+        optional
+        rows={5}
+        className="sm:col-span-2"
+      />
+      <SubmitButton pending={pending} size="lg" className="sm:col-span-2 sm:justify-self-start">
+        {kind === "sponsor" ? ti("submitSponsor") : ti("submitPartner")}
       </SubmitButton>
     </form>
   );

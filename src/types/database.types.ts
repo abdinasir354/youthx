@@ -68,6 +68,16 @@ export interface OpportunityQuestion {
 export interface Opportunity {
   id: string;
   organization_id: string | null;
+  organization_name: string | null;
+  location: string | null;
+  apply_mode: "internal" | "external";
+  application_url: string | null;
+  attachment_url: string | null;
+  expires_at: string | null;
+  is_featured: boolean;
+  published_at: string | null;
+  seo_title: string | null;
+  seo_description: string | null;
   type: OpportunityType;
   title: string;
   slug: string;

@@ -36,3 +36,10 @@ export const ADMIN_ROLE_LABELS: Record<AdminRole, string> = {
 
 /** Hidden admin sign-in page. Not linked anywhere and excluded from search engines. */
 export const ADMIN_LOGIN_PATH = "/xbh-ctrl-cakel/auth";
+
+/**
+ * Set (httpOnly) only by a successful sign-in on the hidden admin page. The admin area needs
+ * both this marker and an active admin role, so admin access only ever starts from that link.
+ * It isn't a security boundary on its own — RLS and the role checks are.
+ */
+export const ADMIN_SESSION_COOKIE = "yx_admin";

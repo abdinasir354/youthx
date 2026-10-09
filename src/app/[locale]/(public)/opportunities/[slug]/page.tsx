@@ -2,33 +2,23 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
-import { getLocale, getTranslations } from "next-intl/server";
-import { Building2, CalendarDays, Globe2, MapPin, Users } from "lucide-react";
+import { getTranslations } from "next-intl/server";
+import { ArrowLeft, CalendarDays, CalendarRange, ExternalLink, FileDown, Globe2, MapPin, Tag, Users, type LucideIcon } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { getCurrentUser } from "@/lib/auth";
-import { getOpportunityBySlug, getSeats } from "@/lib/data/public";
-import { createClient } from "@/lib/supabase/server";
-import { sanitize } from "@/lib/sanitize";
-import { formatDate, isPastDeadline } from "@/lib/utils";
-import { ApplyForm } from "@/components/opportunities/apply-form";
-import { SaveButton } from "@/components/opportunities/save-button";
-import { Deadline } from "@/components/opportunities/deadline";
-import { SeatDetail } from "@/components/opportunities/seat-bar";
-import { AppStatusBadge } from "@/components/dashboard/status-badge";
-import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
-import { Alert, PageSkeleton, Skeleton } from "@/components/ui/misc";
-import type { ApplicationStatus, Opportunity } from "@/types/database.types";
+import { getOpportunityBySlug } from "@/lib/data/public";
+import { pageMetadata } from "@/lib/seo";
+import { isPastDeadline } from "@/lib/utils";
+import type { Opportunity } from "@/types/database.types";
+import { Container, RichText, formatEventDate, pill } from "@/components/site/basics";
+import { FloatingShapes } from "@/components/site/shapes";
+import { Countdown } from "@/components/opportunities/countdown";
+import { PageSkeleton, Skeleton } from "@/components/ui/misc";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/opportunities/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const opp = await getOpportunityBySlug(slug);
   if (!opp) return {};
-  return {
-    title: opp.title,
-    description: opp.summary ?? undefined,
-    openGraph: { title: opp.title, description: opp.summary ?? undefined, images: opp.cover_url ? [opp.cover_url] : undefined },
-  };
+  return pageMetadata({ title: opp.seo_title || opp.title, description: opp.seo_description || opp.summary, image: opp.cover_url, path: `/opportunities/${opp.slug}` });
 }
 
 export default function OpportunityPage({ params }: PageProps<"/[locale]/opportunities/[slug]">) {
@@ -39,145 +29,176 @@ export default function OpportunityPage({ params }: PageProps<"/[locale]/opportu
   );
 }
 
+const day = (iso: string | null) => (iso ? formatEventDate(iso, { day: "numeric", month: "long", year: "numeric" }) : null);
+
 async function OpportunityDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const opp = await getOpportunityBySlug(slug);
   if (!opp) notFound();
-  const t = await getTranslations("opportunities");
-  const tt = await getTranslations("types");
-  const common = await getTranslations("common");
-  const locale = await getLocale();
-  const seats = (await getSeats([opp.id]))[opp.id];
+  const [t, tt, ts] = await Promise.all([getTranslations("opportunities"), getTranslations("types"), getTranslations("site")]);
+  const org = opp.organization?.name ?? opp.organization_name ?? "YouthX Foundation";
+  const where = [opp.location, opp.region].filter(Boolean).join(", ");
+
+  const chips = [
+    where && { icon: MapPin, text: where },
+    opp.is_remote && { icon: Globe2, text: ts("remote") },
+    opp.starts_at && { icon: CalendarDays, text: `${t("starts")} ${day(opp.starts_at)}` },
+  ].filter(Boolean) as { icon: LucideIcon; text: string }[];
+
+  const glance = [
+    { icon: Tag, label: ts("type"), value: tt(opp.type) },
+    { icon: MapPin, label: t("location"), value: opp.is_remote ? (where ? `${where} · ${ts("remote")}` : ts("remote")) : where || null },
+    { icon: Users, label: t("ageRange"), value: t("ageRangeValue", { min: opp.min_age ?? 15, max: opp.max_age ?? 35 }) },
+    { icon: CalendarRange, label: ts("dates"), value: [day(opp.starts_at), day(opp.ends_at)].filter(Boolean).join(" – ") || null },
+    { icon: Users, label: ts("places"), value: opp.capacity ? String(opp.capacity) : null },
+  ].filter((g) => g.value) as { icon: LucideIcon; label: string; value: string }[];
 
   return (
     <>
-      <section className="bg-secondary py-12 text-white">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="flex flex-wrap gap-2">
-            <Badge>{tt(opp.type)}</Badge>
-            {opp.is_remote && (
-              <Badge variant="outline" className="border-white/30 text-white">
-                <Globe2 className="size-3" /> {common("remote")}
-              </Badge>
-            )}
-            {opp.status === "closed" && <Badge variant="danger">{t("closed")}</Badge>}
-          </div>
-          <h1 className="mt-4 max-w-3xl text-3xl font-extrabold sm:text-4xl">{opp.title}</h1>
-          {opp.summary && <p className="mt-3 max-w-3xl text-white/80">{opp.summary}</p>}
-          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/80">
-            {opp.organization && (
-              <span className="flex items-center gap-1.5"><Building2 className="size-4 text-primary" />{opp.organization.name}</span>
-            )}
-            {opp.region && <span className="flex items-center gap-1.5"><MapPin className="size-4 text-primary" />{opp.region}</span>}
-            <Deadline value={opp.apply_deadline} className="text-white/80" />
-          </div>
-        </div>
+      {/* The pass */}
+      <section className="relative overflow-hidden bg-surface">
+        <FloatingShapes variant="a" />
+        <Container className="relative py-10 sm:py-14">
+          <Link href="/opportunities" className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-ink">
+            <ArrowLeft className="size-4" aria-hidden /> {ts("allOpportunities")}
+          </Link>
+
+          <article className="mt-8 flex flex-col overflow-hidden rounded-[2rem] shadow-[0_40px_80px_-40px_rgba(18,53,46,0.45)] lg:flex-row">
+            {/* Main part */}
+            <div className="relative flex-1 bg-white p-8 sm:p-12">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-primary-soft px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#4d6b00]">{tt(opp.type)}</span>
+                {opp.is_featured && <span className="rounded-full bg-[#fdebc8] px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#8a5a00]">{ts("featured")}</span>}
+              </div>
+              <h1 className="display mt-6 max-w-3xl text-balance text-4xl text-ink sm:text-5xl lg:text-[3.4rem]">{opp.title}</h1>
+              <div className="mt-6 flex items-center gap-3">
+                <span aria-hidden className="flex size-11 items-center justify-center rounded-xl bg-ink text-lg font-extrabold text-primary">{org.trim()[0]?.toUpperCase()}</span>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">{ts("offeredBy")}</p>
+                  <p className="font-bold text-ink">{org}</p>
+                </div>
+              </div>
+              {opp.summary && <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">{opp.summary}</p>}
+              {chips.length > 0 && (
+                <ul className="mt-7 flex flex-wrap gap-2">
+                  {chips.map((c) => (
+                    <li key={c.text} className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium text-ink">
+                      <c.icon className="size-4 text-secondary" aria-hidden /> {c.text}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            {/* Perforation */}
+            <div aria-hidden className="relative flex h-0 items-center bg-white lg:h-auto lg:w-0 lg:flex-col">
+              <span className="absolute -left-4 top-1/2 size-8 -translate-y-1/2 rounded-full bg-surface lg:left-1/2 lg:top-0 lg:-translate-x-1/2" />
+              <span className="absolute -right-4 top-1/2 size-8 -translate-y-1/2 rounded-full bg-surface lg:left-1/2 lg:right-auto lg:top-auto lg:bottom-0 lg:-translate-x-1/2 lg:translate-y-1/2" />
+              <span className="absolute inset-x-6 top-0 border-t-2 border-dashed border-border lg:inset-y-6 lg:left-0 lg:right-auto lg:border-l-2 lg:border-t-0" />
+            </div>
+
+            {/* Stub */}
+            <aside id="apply" className="relative flex flex-col justify-between gap-8 overflow-hidden bg-ink p-8 text-white sm:p-10 lg:w-[22rem]">
+              <FloatingShapes variant="c" />
+              <div className="relative">
+                <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">{ts("applyBy")}</p>
+                <div className="mt-4">
+                  <Countdown deadline={opp.apply_deadline} />
+                </div>
+                {opp.apply_deadline && <p className="mt-2 text-sm text-white/60">{formatEventDate(opp.apply_deadline, { weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" })} EAT</p>}
+              </div>
+              <div className="relative">
+                <Suspense fallback={<Skeleton className="h-14 rounded-full bg-white/10" />}>
+                  <ApplyButton opp={opp} />
+                </Suspense>
+              </div>
+            </aside>
+          </article>
+        </Container>
       </section>
 
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 lg:grid-cols-[1fr_380px]">
-        <div className="min-w-0 space-y-8">
-          {opp.description && (
-            <section>
-              <h2 className="text-xl font-bold text-secondary">{t("about")}</h2>
-              <div className="prose-content mt-2" dangerouslySetInnerHTML={{ __html: sanitize(opp.description) }} />
-            </section>
-          )}
-          {opp.requirements && (
-            <section>
-              <h2 className="text-xl font-bold text-secondary">{t("requirements")}</h2>
-              <div className="prose-content mt-2" dangerouslySetInnerHTML={{ __html: sanitize(opp.requirements) }} />
-            </section>
-          )}
-          <section className="rounded-2xl border border-border bg-white p-5">
-            <h2 className="mb-3 font-bold text-secondary">{t("details")}</h2>
-            <dl className="grid gap-3 text-sm sm:grid-cols-2">
-              <Detail icon={<Users className="size-4" />} label={t("ageRange")} value={t("ageRangeValue", { min: opp.min_age ?? 15, max: opp.max_age ?? 35 })} />
-              <Detail icon={<MapPin className="size-4" />} label={t("location")} value={opp.is_remote ? common("remote") : opp.region ?? "—"} />
-              {opp.starts_at && <Detail icon={<CalendarDays className="size-4" />} label={t("starts")} value={formatDate(opp.starts_at, locale)} />}
-              {opp.ends_at && <Detail icon={<CalendarDays className="size-4" />} label={t("ends")} value={formatDate(opp.ends_at, locale)} />}
-            </dl>
-          </section>
-        </div>
+      {/* Details */}
+      <section className="bg-white">
+        <Container className="grid gap-10 py-10 sm:py-12 lg:grid-cols-[minmax(0,1fr)_22rem]">
+          <div className="space-y-6">
+            {opp.description && (
+              <section aria-labelledby="opp-about" className="rounded-[2rem] border border-border p-8 sm:p-10">
+                <h2 id="opp-about" className="heading text-3xl text-ink">{t("about")}</h2>
+                <RichText markdown={opp.description} className="mt-5 break-words" />
+              </section>
+            )}
+            {opp.requirements && (
+              <section aria-labelledby="opp-who" className="rounded-[2rem] bg-surface p-8 sm:p-10">
+                <h2 id="opp-who" className="heading text-3xl text-ink">{ts("whoCanApply")}</h2>
+                <RichText markdown={opp.requirements} className="mt-5 break-words" />
+              </section>
+            )}
+          </div>
 
-        <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-2xl border border-border bg-white p-5 shadow-sm">
-            <h2 className="mb-3 font-bold text-secondary">{t("seatsTitle")}</h2>
-            <SeatDetail seats={seats} />
-          </div>
-          <div id="apply" className="rounded-2xl border border-border bg-white p-5 shadow-sm">
-            <Suspense fallback={<Skeleton className="h-40" />}>
-              <ApplyPanel opp={opp} />
-            </Suspense>
-          </div>
-        </aside>
-      </div>
+          <aside className="h-fit space-y-4 lg:sticky lg:top-24">
+            <div className="rounded-[2rem] border border-border p-7">
+              <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">{ts("atAGlance")}</h2>
+              <dl className="mt-5 space-y-4">
+                {glance.map((g) => (
+                  <div key={g.label} className="flex gap-3">
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-[#4d6b00]">
+                      <g.icon className="size-4" aria-hidden />
+                    </span>
+                    <div className="min-w-0">
+                      <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{g.label}</dt>
+                      <dd className="mt-0.5 font-semibold text-ink">{g.value}</dd>
+                    </div>
+                  </div>
+                ))}
+              </dl>
+            </div>
+            {opp.attachment_url && (
+              <a href={opp.attachment_url} target="_blank" rel="noopener" className={`${pill.outline} w-full`}>
+                <FileDown className="size-5" aria-hidden /> {ts("downloadAttachment")}
+              </a>
+            )}
+          </aside>
+        </Container>
+      </section>
     </>
   );
 }
 
-function Detail({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
-  return (
-    <div className="flex items-start gap-2">
-      <span className="mt-0.5 text-secondary">{icon}</span>
+/**
+ * How to apply. External listings link to the organizer's own form; our own opportunities
+ * open the contact form with the opportunity already filled in (no accounts needed).
+ */
+async function ApplyButton({ opp }: { opp: Opportunity }) {
+  await connection(); // depends on the current time
+  const ts = await getTranslations("site");
+  const closed = opp.status !== "published" || isPastDeadline(opp.expires_at ?? opp.apply_deadline);
+  if (closed) {
+    return (
       <div>
-        <dt className="text-muted-foreground">{label}</dt>
-        <dd className="font-semibold text-secondary">{value}</dd>
+        <p className="rounded-2xl bg-white/[0.08] px-5 py-4 text-sm leading-relaxed text-white/80">{ts("closedNote")}</p>
+        <Link href="/opportunities" className={`${pill.ghostLight} mt-4 w-full`}>
+          {ts("seeOpen")}
+        </Link>
       </div>
-    </div>
-  );
-}
-
-/** Per-user part of the page: login prompt, existing application, or the apply form. */
-async function ApplyPanel({ opp }: { opp: Opportunity }) {
-  await connection(); // per-request: depends on the user and the current time
-  const t = await getTranslations("opportunities");
-  const locale = await getLocale();
-  const ta = await getTranslations("apply");
-  const user = await getCurrentUser();
-  const closed = opp.status !== "published" || isPastDeadline(opp.apply_deadline);
-
-  if (!user) {
-    return closed ? (
-      <Alert variant="warning">{t("deadlinePassed")}</Alert>
-    ) : (
-      <Link href={`/login?next=${locale === "en" ? "" : `/${locale}`}/opportunities/${opp.slug}`} className={buttonVariants({ className: "w-full", size: "lg" })}>
-        {t("loginToApply")}
-      </Link>
     );
   }
-
-  const supabase = await createClient();
-  const [{ data: existing }, { data: saved }] = await Promise.all([
-    supabase.from("applications").select("id, status").eq("opportunity_id", opp.id).eq("applicant_id", user.id).maybeSingle(),
-    supabase.from("saved_opportunities").select("opportunity_id").eq("opportunity_id", opp.id).eq("user_id", user.id).maybeSingle(),
-  ]);
-
-  return (
-    <div className="space-y-4">
-      <div className="flex justify-end">
-        <SaveButton opportunityId={opp.id} initialSaved={!!saved} />
+  if (opp.apply_mode === "external" && opp.application_url) {
+    return (
+      <div>
+        <a href={opp.application_url} target="_blank" rel="noopener noreferrer" className={`${pill.primary} w-full`}>
+          {ts("applyExternal")} <ExternalLink className="size-4" aria-hidden />
+        </a>
+        <p className="mt-3 text-sm text-white/60">{ts("externalNote", { org: opp.organization?.name ?? opp.organization_name ?? ts("theOrganizer") })}</p>
       </div>
-      {existing ? (
-        <div className="space-y-3">
-          <p className="flex items-center justify-between font-semibold text-secondary">
-            {t("alreadyApplied")} <AppStatusBadge status={existing.status as ApplicationStatus} />
-          </p>
-          <Link href="/dashboard/applications" className={buttonVariants({ variant: "outline", className: "w-full" })}>
-            {t("viewApplication")}
-          </Link>
-        </div>
-      ) : closed ? (
-        <Alert variant="warning">{t("deadlinePassed")}</Alert>
-      ) : !user.profile.gender ? (
-        <div className="space-y-3">
-          <Alert variant="warning">{ta("genderRequired")}</Alert>
-          <Link href="/dashboard/profile" className={buttonVariants({ className: "w-full" })}>
-            {ta("completeProfile")}
-          </Link>
-        </div>
-      ) : (
-        <ApplyForm opportunityId={opp.id} questions={opp.questions ?? []} userId={user.id} profileCvPath={user.profile.cv_path} />
-      )}
+    );
+  }
+  const href = `/contact?type=programs&subject=${encodeURIComponent(`${ts("applicationFor")}: ${opp.title}`)}`;
+  return (
+    <div>
+      <Link href={href} className={`${pill.primary} w-full`}>
+        {ts("contactToApply")} <span aria-hidden>→</span>
+      </Link>
+      <p className="mt-3 text-sm text-white/60">{ts("contactToApplyText")}</p>
     </div>
   );
 }

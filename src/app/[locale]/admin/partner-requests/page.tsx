@@ -9,6 +9,8 @@ import { ActionButton } from "@/components/admin/controls";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState, PageHeader } from "@/components/ui/misc";
 import type { PartnerRequest } from "@/types/database.types";
+import { SectionTabs } from "@/components/admin/shell/section-tabs";
+import { MESSAGE_TABS } from "@/components/admin/shell/nav";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("admin");
@@ -27,6 +29,7 @@ export default async function AdminPartnerRequestsPage() {
 
   return (
     <div className="max-w-4xl">
+      <SectionTabs tabs={MESSAGE_TABS} />
       <PageHeader title={t("partnerRequests")} />
       {requests.length === 0 ? (
         <EmptyState icon={Handshake} title={common("noResults")} />

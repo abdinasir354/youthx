@@ -2,15 +2,14 @@ import { useTranslations } from "next-intl";
 import { Building2, Globe2, MapPin } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
-import type { Opportunity, SeatInfo } from "@/types/database.types";
+import type { Opportunity } from "@/types/database.types";
 import { Deadline } from "./deadline";
-import { SeatBar } from "./seat-bar";
 
-export function OpportunityCard({ opp, seats }: { opp: Opportunity; seats?: SeatInfo | null }) {
+export function OpportunityCard({ opp }: { opp: Opportunity }) {
   const t = useTranslations("types");
   const common = useTranslations("common");
   return (
-    <article className="group relative flex h-full flex-col rounded-2xl border border-border bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
+    <article className="group relative flex h-full flex-col rounded-lg border border-border bg-white p-5 transition-shadow hover:shadow-lg focus-within:ring-2 focus-within:ring-primary">
       <div className="flex items-start justify-between gap-2">
         <Badge>{t(opp.type)}</Badge>
         {opp.is_remote && (
@@ -26,22 +25,21 @@ export function OpportunityCard({ opp, seats }: { opp: Opportunity; seats?: Seat
         </Link>
       </h3>
       <div className="mt-2 space-y-1 text-sm text-muted-foreground">
-        {opp.organization && (
+        {(opp.organization?.name || opp.organization_name) && (
           <p className="flex items-center gap-1.5">
-            <Building2 className="size-4 shrink-0" />
-            {opp.organization.name}
+            <Building2 className="size-4 shrink-0" aria-hidden />
+            {opp.organization?.name ?? opp.organization_name}
           </p>
         )}
-        {opp.region && (
+        {(opp.location || opp.region) && (
           <p className="flex items-center gap-1.5">
-            <MapPin className="size-4 shrink-0" />
-            {opp.region}
+            <MapPin className="size-4 shrink-0" aria-hidden />
+            {[opp.location, opp.region].filter(Boolean).join(", ")}
           </p>
         )}
       </div>
       {opp.summary && <p className="mt-3 line-clamp-2 text-sm text-foreground/80">{opp.summary}</p>}
       <div className="mt-auto space-y-3 pt-4">
-        <SeatBar seats={seats} compact />
         <Deadline value={opp.apply_deadline} />
       </div>
     </article>

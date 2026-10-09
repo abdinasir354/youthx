@@ -1,14 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { getSettings } from "@/lib/data/cms";
+import { jsonLd } from "@/lib/seo";
 import { Toaster } from "sonner";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+// Inter: very legible at small sizes, and bold/tight enough for big headlines.
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
@@ -21,18 +23,39 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "common" });
+  const s = await getSettings();
   return {
     metadataBase: new URL(siteUrl),
-    title: { default: t("siteName"), template: `%s · ${t("shortName")}` },
-    description: t("tagline"),
+    title: { default: s.seo_title || s.site_name, template: `%s · ${s.site_name}` },
+    description: s.seo_description || s.description || undefined,
+    applicationName: s.site_name,
     openGraph: {
       type: "website",
-      siteName: t("siteName"),
+      siteName: s.site_name,
       locale: locale === "so" ? "so_SO" : "en_US",
-      description: t("tagline"),
+      description: s.seo_description || s.description || undefined,
+      images: s.og_image_url ? [{ url: s.og_image_url }] : undefined,
     },
   };
+}
+
+/** schema.org Organization — only real details from Site settings. */
+async function OrganizationJsonLd() {
+  const s = await getSettings();
+  const sameAs = Object.values(s.social ?? {}).filter(Boolean);
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "NGO",
+    name: s.site_name,
+    url: siteUrl,
+    logo: `${siteUrl}/icon.png`,
+    description: s.description ?? undefined,
+    slogan: s.tagline ?? undefined,
+    email: s.contact_email ?? undefined,
+    telephone: s.contact_phone ?? undefined,
+    sameAs: sameAs.length ? sameAs : undefined,
+  };
+  return <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(data)} />;
 }
 
 export const viewport: Viewport = {
@@ -46,8 +69,9 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   if (!hasLocale(routing.locales, locale)) notFound();
 
   return (
-    <html lang={locale} className={`${jakarta.variable} h-full antialiased`}>
+    <html lang={locale} className={`${inter.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
+        <OrganizationJsonLd />
         <NextIntlClientProvider>
           {children}
           <Toaster position="top-center" richColors closeButton />

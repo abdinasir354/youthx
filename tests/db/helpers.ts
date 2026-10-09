@@ -27,7 +27,12 @@ export type TestUser = { id: string; email: string; client: SupabaseClient };
 /** Creates a confirmed user with the given role/gender and returns a client signed in as them. */
 export async function createUser(
   label: string,
-  opts: { role?: "youth" | "mentor" | "partner" | "staff" | "admin"; gender?: "female" | "male" | null; signIn?: boolean } = {},
+  opts: {
+    role?: "youth" | "mentor" | "partner";
+    adminRole?: "super_admin" | "content_admin" | "program_manager" | "editor";
+    gender?: "female" | "male" | null;
+    signIn?: boolean;
+  } = {},
 ): Promise<TestUser> {
   const admin = service();
   const email = `rls-${tag}-${label}@example.com`;
@@ -45,6 +50,10 @@ export async function createUser(
     .update({ role: opts.role ?? "youth", gender: opts.gender === undefined ? "female" : opts.gender, onboarded: true })
     .eq("id", id);
   if (pErr) throw new Error(`profile ${label}: ${pErr.message}`);
+  if (opts.adminRole) {
+    const { error: aErr } = await admin.from("admin_users").insert({ user_id: id, role: opts.adminRole });
+    if (aErr) throw new Error(`admin role ${label}: ${aErr.message}`);
+  }
 
   const client = anon();
   if (opts.signIn !== false) {

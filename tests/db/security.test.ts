@@ -56,8 +56,8 @@ describe.skipIf(!dbConfigured)("database security & quota", () => {
       track(createUser("youth-b", { gender: "female" })),
       track(createUser("partner-1", { role: "partner", gender: "male" })),
       track(createUser("partner-2", { role: "partner", gender: "female" })),
-      track(createUser("admin-1", { role: "admin", gender: "female" })),
-      track(createUser("admin-2", { role: "admin", gender: "male" })),
+      track(createUser("admin-1", { adminRole: "program_manager", gender: "female" })),
+      track(createUser("admin-2", { adminRole: "program_manager", gender: "male" })),
     ]);
 
     // Organizations: the org_owner trigger makes created_by the owner.
@@ -237,7 +237,7 @@ describe.skipIf(!dbConfigured)("database security & quota", () => {
       expect(seats).toEqual([{ capacity: 20, female_seats: 15, male_seats: 5, female_left: 0, male_left: 0 }]);
     });
 
-    it("two admins accepting at the same moment cannot exceed capacity", async () => {
+    it("two staff accepting at the same moment cannot exceed capacity", async () => {
       const opp = await createOpp({ organization_id: org1, capacity: 4 }); // 3 women / 1 man
       const people = await Promise.all(
         Array.from({ length: 8 }, (_, i) => track(createUser(`race${i}`, { gender: i % 2 ? "male" : "female", signIn: false }))),

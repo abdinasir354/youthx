@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useTransition, type ReactNode } from "react";
+import { useTransition, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { Download, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "@/i18n/navigation";
-import { setAdminRole, setUserRole, updateQuota } from "@/app/actions/admin";
+import { setAdminRole, setUserRole } from "@/app/actions/admin";
 import { Button, type ButtonProps } from "@/components/ui/button";
-import { Checkbox, Input, Select } from "@/components/ui/input";
+import { Select } from "@/components/ui/input";
 import { useErrorText } from "@/components/forms/use-action-form";
 import { ADMIN_ROLE_LABELS } from "@/lib/permissions";
 import { ADMIN_ROLES, USER_ROLES, type AdminRole, type UserRole } from "@/types/database.types";
@@ -119,44 +119,6 @@ export function AdminRoleSelect({ userId, role }: { userId: string; role: AdminR
         </option>
       ))}
     </Select>
-  );
-}
-
-export function QuotaEditor({ id, ratio, allowRollover }: { id: string; ratio: number; allowRollover: boolean }) {
-  const t = useTranslations("admin");
-  const tf = useTranslations("partner.fields");
-  const errorText = useErrorText();
-  const router = useRouter();
-  const [value, setValue] = useState(String(Math.round(ratio * 100)));
-  const [rollover, setRollover] = useState(allowRollover);
-  const [pending, start] = useTransition();
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      <label className="flex items-center gap-1 text-xs text-muted-foreground">
-        {t("quotaRatio")}
-        <Input type="number" min={0} max={100} value={value} onChange={(e) => setValue(e.target.value)} className="h-8 w-16 px-2" />%
-      </label>
-      <label className="flex items-center gap-1 text-xs text-muted-foreground">
-        <Checkbox checked={rollover} onChange={(e) => setRollover(e.target.checked)} />
-        {tf("allowRollover")}
-      </label>
-      <Button
-        size="sm"
-        variant="ghost"
-        disabled={pending}
-        onClick={() =>
-          start(async () => {
-            const res = await updateQuota({ id, female_ratio: Number(value) / 100, allow_rollover: rollover });
-            if (res.ok) {
-              toast.success(t("updateRatio"));
-              router.refresh();
-            } else toast.error(errorText(res.error));
-          })
-        }
-      >
-        {t("updateRatio")}
-      </Button>
-    </div>
   );
 }
 

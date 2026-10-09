@@ -1,37 +1,27 @@
-import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { Quote } from "lucide-react";
-import { getPosts } from "@/lib/data/public";
-import { StoryCard } from "@/components/layout/post-card";
-import { EmptyState } from "@/components/ui/misc";
+import { getStories } from "@/lib/data/cms";
+import { pageMetadata } from "@/lib/seo";
+import { Container, PageIntro } from "@/components/site/basics";
+import { StoryCard } from "@/components/site/cards";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("stories");
-  return { title: t("metaTitle"), description: t("subtitle") };
+export async function generateMetadata() {
+  const t = await getTranslations("site");
+  return pageMetadata({ title: t("storiesTitle"), description: t("storiesIntro"), path: "/stories" });
 }
 
+/** Real youth stories, published only with the person's consent. */
 export default async function StoriesPage() {
-  const t = await getTranslations("stories");
-  const stories = await getPosts("story");
+  const [stories, t] = await Promise.all([getStories(), getTranslations("site")]);
   return (
     <>
-      <section className="bg-secondary py-12 text-white">
-        <div className="mx-auto max-w-7xl px-4">
-          <h1 className="text-4xl font-extrabold">{t("title")}</h1>
-          <p className="mt-2 text-white/80">{t("subtitle")}</p>
-        </div>
-      </section>
-      <div className="mx-auto max-w-7xl px-4 py-10">
-        {stories.length === 0 ? (
-          <EmptyState icon={Quote} title={t("noneTitle")} />
+      <PageIntro eyebrow={t("storiesEyebrow")} title={t("storiesTitle")} description={t("storiesIntro")} />
+      <Container className="py-10 sm:py-12">
+        {stories.length ? (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{stories.map((s) => <StoryCard key={s.id} story={s} />)}</div>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {stories.map((s) => (
-              <StoryCard key={s.id} post={s} />
-            ))}
-          </div>
+          <p className="rounded-lg border border-dashed border-border px-6 py-14 text-center text-muted-foreground">{t("noStories")}</p>
         )}
-      </div>
+      </Container>
     </>
   );
 }

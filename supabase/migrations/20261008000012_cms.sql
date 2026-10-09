@@ -66,8 +66,8 @@ create table public.site_settings (
   contact_phone text,
   address text,
   social jsonb not null default '{}',     -- {"facebook": "...", "x": "...", "instagram": "...", "linkedin": "...", "youtube": "...", "tiktok": "..."}
-  header_cta_label text not null default 'Join YouthX',
-  header_cta_href text not null default '/get-involved',
+  header_cta_label text not null default 'Contact us',
+  header_cta_href text not null default '/contact',
   footer_text text,
   seo_title text,
   seo_description text,

@@ -12,7 +12,7 @@ import type { Course, ImpactStats, Lesson, Opportunity, Organization, Post, Publ
  */
 
 const OPP_COLUMNS =
-  "id, organization_id, type, title, slug, summary, description, requirements, region, is_remote, capacity, female_ratio, min_age, max_age, apply_deadline, starts_at, ends_at, cover_url, questions, status, created_at, organization:organizations(id, name, slug, logo_url)";
+  "id, organization_id, organization_name, type, title, slug, summary, description, requirements, region, location, is_remote, apply_mode, application_url, attachment_url, capacity, female_ratio, min_age, max_age, apply_deadline, expires_at, starts_at, ends_at, cover_url, questions, status, is_featured, published_at, seo_title, seo_description, created_at, updated_at, organization:organizations(id, name, slug, logo_url)";
 
 export async function getImpactStats(): Promise<ImpactStats | null> {
   "use cache";
@@ -45,6 +45,18 @@ export async function getOpportunityBySlug(slug: string): Promise<Opportunity | 
   if (!isSupabaseConfigured) return null;
   const { data } = await createPublicClient().from("opportunities").select(OPP_COLUMNS).eq("slug", slug).maybeSingle();
   return (data as unknown as Opportunity) ?? null;
+}
+
+/** Published listings whose deadline / expiry hasn't passed (computed inside the cache, refreshed every few minutes). */
+export async function getOpenOpportunities(): Promise<Opportunity[]> {
+  "use cache";
+  cacheLife("minutes");
+  cacheTag("opportunities");
+  const now = Date.now();
+  return (await getPublishedOpportunities()).filter((o) => {
+    const end = o.expires_at ?? o.apply_deadline;
+    return !end || new Date(end).getTime() >= now;
+  });
 }
 
 /** Seat counts: invalidated with updateTag("seats") on every apply / accept / withdraw. */

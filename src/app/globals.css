@@ -1,10 +1,12 @@
 @import "tailwindcss";
 
-/* Somali YouthUp brand
+/* YouthX Foundation brand (from the logo)
    primary   #b3e717  lime  (buttons, highlights — always with dark text)
    secondary #1c4b40  deep green (headings, header, footer, text on lime) */
 :root {
   --background: #ffffff;
+  --surface: #f7f7f3; /* warm off-white page background (public site) */
+  --ink: #12352e;     /* headline green, a touch deeper than secondary */
   --foreground: #10241f;
   --muted: #f3f7f5;
   --muted-foreground: #5b6f69;
@@ -45,25 +47,73 @@
   --color-warning-soft: var(--warning-soft);
   --color-women: var(--women);
   --color-men: var(--men);
-  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  font-size: 1.0625rem; /* 17px: easier reading on phones */
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
 }
+
+/* Big, tight display headlines (public site). */
+.display {
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+.heading {
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+/* Gentle floating shapes (decorative). Disabled by prefers-reduced-motion below. */
+@keyframes float-a { 0%,100% { transform: translate(0,0) rotate(0deg); } 50% { transform: translate(10px,-14px) rotate(6deg); } }
+@keyframes float-b { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-12px,10px) scale(1.06); } }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.float-a { animation: float-a 9s ease-in-out infinite; }
+.float-b { animation: float-b 11s ease-in-out infinite; }
+.spin-slow { animation: spin-slow 40s linear infinite; }
 
 :focus-visible {
   outline: 3px solid var(--primary);
   outline-offset: 2px;
 }
 
-/* Sanitized rich text (posts, opportunity descriptions) */
-.prose-content { line-height: 1.75; }
-.prose-content h2 { font-size: 1.35rem; font-weight: 700; margin: 1.5rem 0 .5rem; color: var(--secondary); }
-.prose-content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.25rem 0 .5rem; color: var(--secondary); }
-.prose-content p { margin: .75rem 0; }
-.prose-content ul { list-style: disc; padding-left: 1.5rem; margin: .75rem 0; }
-.prose-content ol { list-style: decimal; padding-left: 1.5rem; margin: .75rem 0; }
-.prose-content a { color: var(--secondary); text-decoration: underline; }
-.prose-content blockquote { border-left: 4px solid var(--primary); padding-left: 1rem; color: var(--muted-foreground); }
+/* Sanitized rich text (CMS Markdown, posts, opportunity descriptions) */
+.prose-content, .prose-cms { line-height: 1.75; }
+.prose-content h2, .prose-cms h2 { font-size: 1.35rem; font-weight: 700; margin: 1.5rem 0 .5rem; color: var(--secondary); }
+.prose-content h3, .prose-cms h3 { font-size: 1.15rem; font-weight: 700; margin: 1.25rem 0 .5rem; color: var(--secondary); }
+.prose-content p, .prose-cms p { margin: .75rem 0; }
+.prose-content ul, .prose-cms ul { list-style: disc; padding-left: 1.5rem; margin: .75rem 0; }
+.prose-content ol, .prose-cms ol { list-style: decimal; padding-left: 1.5rem; margin: .75rem 0; }
+.prose-content a, .prose-cms a { color: var(--secondary); text-decoration: underline; }
+.prose-content blockquote, .prose-cms blockquote { border-left: 4px solid var(--primary); padding-left: 1rem; color: var(--muted-foreground); }
+.prose-cms > :first-child { margin-top: 0; }
+.prose-cms h4 { font-weight: 700; margin: 1rem 0 .25rem; color: var(--secondary); }
+.prose-cms strong { color: var(--secondary); }
+.prose-cms hr { border-color: var(--border); margin: 1.5rem 0; }
+.prose-cms table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .9em; }
+.prose-cms th, .prose-cms td { border: 1px solid var(--border); padding: .5rem .75rem; text-align: left; }
+.prose-cms blockquote { border-left: 4px solid var(--primary); padding-left: 1rem; color: var(--muted-foreground); }
+
+/* Subtle geometric lattice used behind hero sections — a quiet nod to traditional
+   Somali woven and carved patterns. Decorative only. */
+.bg-lattice {
+  background-image:
+    linear-gradient(135deg, rgb(255 255 255 / .045) 25%, transparent 25%),
+    linear-gradient(225deg, rgb(255 255 255 / .045) 25%, transparent 25%),
+    linear-gradient(315deg, rgb(255 255 255 / .045) 25%, transparent 25%),
+    linear-gradient(45deg, rgb(255 255 255 / .045) 25%, transparent 25%);
+  background-size: 36px 36px;
+  background-position: 18px 0, 18px 0, 0 0, 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

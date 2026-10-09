@@ -1,29 +1,55 @@
-import { useTranslations } from "next-intl";
-import { BarChart3, BookOpen, Briefcase, Building2, FileText, Handshake, HeartHandshake, LayoutDashboard, Mail, Newspaper, ScrollText, Users } from "lucide-react";
-import { DashboardShell } from "@/components/dashboard/shell";
-import { AdminGate } from "@/components/dashboard/role-gate";
+import { Suspense } from "react";
+import type { Metadata } from "next";
+import { requireAdmin } from "@/lib/auth";
+import { ADMIN_ROLE_LABELS, can } from "@/lib/permissions";
+import { AdminShell } from "@/components/admin/shell/admin-shell";
+import { ADMIN_NAV } from "@/components/admin/shell/nav";
 
-/** /admin is for staff and admins. Admin-only pages (roles, audit) re-check inside. */
+export const metadata: Metadata = {
+  title: { default: "Admin", template: "%s · YouthX Admin" },
+  robots: { index: false, follow: false },
+};
+
+/**
+ * Back office. The proxy already 404s anyone without an admin role; requireAdmin() checks again
+ * on the server, every page checks its own permission, and RLS checks every query.
+ */
 export default function AdminLayout({ children }: LayoutProps<"/[locale]/admin">) {
-  const t = useTranslations("admin");
   return (
-    <DashboardShell
-      title={t("title")}
-      nav={[
-        { href: "/admin", label: t("overview"), icon: <LayoutDashboard />, exact: true },
-        { href: "/admin/users", label: t("users"), icon: <Users /> },
-        { href: "/admin/organizations", label: t("organizations"), icon: <Building2 /> },
-        { href: "/admin/opportunities", label: t("opportunities"), icon: <Briefcase /> },
-        { href: "/admin/applications", label: t("applications"), icon: <FileText /> },
-        { href: "/admin/courses", label: t("courses"), icon: <BookOpen /> },
-        { href: "/admin/posts", label: t("posts"), icon: <Newspaper /> },
-        { href: "/admin/donations", label: t("donations"), icon: <HeartHandshake /> },
-        { href: "/admin/messages", label: t("messages"), icon: <Mail /> },
-        { href: "/admin/partner-requests", label: t("partnerRequests"), icon: <Handshake /> },
-        { href: "/admin/reports", label: t("reports.title"), icon: <BarChart3 /> },
-        { href: "/admin/audit", label: t("audit"), icon: <ScrollText /> },
-      ]}
-      gate={<AdminGate>{children}</AdminGate>}
-    />
+    <Suspense fallback={<ShellSkeleton />}>
+      <AdminFrame>{children}</AdminFrame>
+    </Suspense>
+  );
+}
+
+async function AdminFrame({ children }: { children: React.ReactNode }) {
+  const me = await requireAdmin();
+  const nav = ADMIN_NAV.map((g) => ({
+    ...g,
+    items: g.items
+      .filter((i) => !i.perm || can(me.adminRole, i.perm))
+      // Content admins manage navigation + SEO but not site settings.
+      .map((i) => (i.href === "/admin/settings" && !can(me.adminRole, "settings") ? { ...i, href: "/admin/navigation" } : i)),
+  })).filter((g) => g.items.length);
+  return (
+    <AdminShell
+      nav={nav}
+      user={{ name: me.profile.full_name || me.email || "Admin", email: me.email, roleLabel: ADMIN_ROLE_LABELS[me.adminRole] }}
+    >
+      {children}
+    </AdminShell>
+  );
+}
+
+function ShellSkeleton() {
+  return (
+    <div className="min-h-screen bg-[#f6f7f6] lg:pl-64" aria-busy="true">
+      <div className="fixed inset-y-0 left-0 hidden w-64 bg-secondary lg:block" />
+      <div className="h-16 border-b border-border bg-white" />
+      <div className="mx-auto max-w-7xl space-y-4 px-6 py-8">
+        <div className="h-8 w-56 animate-pulse rounded bg-muted" />
+        <div className="h-64 animate-pulse rounded-lg bg-white" />
+      </div>
+    </div>
   );
 }

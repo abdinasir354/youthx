@@ -134,7 +134,10 @@ export const opportunitySchema = z
 export type OpportunityInput = z.input<typeof opportunitySchema>;
 
 // ---------- public forms ----------
+export const INQUIRY_TYPES = ["general", "partnership", "programs", "media", "other"] as const;
+
 export const contactSchema = z.object({
+  inquiry_type: z.enum(INQUIRY_TYPES).default("general"),
   name: req(120),
   email: z.union([z.literal(""), email]).optional().transform((v) => (v ? v : null)),
   phone: optPhone,
@@ -144,6 +147,7 @@ export const contactSchema = z.object({
 });
 
 export const partnerRequestSchema = z.object({
+  kind: z.enum(["partner", "sponsor"]).default("partner"),
   org_name: req(150),
   contact_name: req(120),
   email,
@@ -164,6 +168,46 @@ export const donationSchema = z.object({
   is_anonymous: z.boolean().default(false),
   website: honeypot,
 });
+
+const optUrl = z
+  .union([z.literal(""), z.string().trim().url("url").max(300).refine((v) => /^https?:\/\//i.test(v), "url")])
+  .optional()
+  .transform((v) => (v ? v : null));
+
+export const volunteerSchema = z.object({
+  full_name: req(120),
+  email,
+  phone: optPhone,
+  location: opt(120),
+  skills: csv,
+  interests: csv,
+  experience: opt(3000),
+  availability: opt(300),
+  motivation: z.string().trim().min(30, "minChars:30").max(3000, "maxChars:3000"),
+  portfolio_url: optUrl,
+  website: honeypot,
+});
+
+export const mentorApplicationSchema = z.object({
+  full_name: req(120),
+  email,
+  phone: optPhone,
+  professional_field: req(120),
+  organization: opt(160),
+  years_experience: z
+    .union([z.literal(""), z.coerce.number().int("invalid").min(0, "invalid").max(70, "invalid")])
+    .optional()
+    .transform((v) => (v === "" || v == null ? null : v)),
+  skills: csv,
+  website_url: optUrl,
+  mentor_areas: csv,
+  availability: opt(300),
+  bio: opt(2000),
+  motivation: z.string().trim().min(30, "minChars:30").max(3000, "maxChars:3000"),
+  website: honeypot,
+});
+
+export const newsletterSchema = z.object({ email, website: honeypot });
 
 // ---------- mentorship ----------
 export const mentorshipRequestSchema = z.object({

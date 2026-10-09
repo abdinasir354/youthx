@@ -1,60 +1,62 @@
-import type { Metadata } from "next";
-import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
-import { ArrowRight, BookOpen, Briefcase, Check, GraduationCap, Lightbulb, Users, Wrench } from "lucide-react";
-import { Link } from "@/i18n/navigation";
-import { buttonVariants } from "@/components/ui/button";
+import { getPage, getProgramCategories, getPrograms } from "@/lib/data/cms";
+import { Sections } from "@/components/cms/sections";
+import { Container, PageIntro, SectionHeading } from "@/components/site/basics";
+import { ProgramCard } from "@/components/site/cards";
+import { cmsPageMetadata } from "@/components/site/cms-page";
+import { FloatingShapes } from "@/components/site/shapes";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("programs");
-  return { title: t("metaTitle"), description: t("subtitle") };
+export async function generateMetadata() {
+  return cmsPageMetadata("programs", "Programs");
 }
 
-export default function ProgramsPage() {
-  const t = useTranslations("programs");
-  const programs = [
-    { key: "education", icon: BookOpen, href: "/courses" },
-    { key: "skills", icon: Wrench, href: "/opportunities?type=training", bullets: ["skillsDigital", "skillsBusiness", "skillsVocational"] },
-    { key: "scholarships", icon: GraduationCap, href: "/opportunities?type=scholarship" },
-    { key: "mentorship", icon: Users, href: "/dashboard/mentorship" },
-    { key: "jobs", icon: Briefcase, href: "/opportunities?type=job" },
-    { key: "entrepreneurship", icon: Lightbulb, href: "/opportunities?type=grant" },
-  ] as const;
+/**
+ * Programs: an optional CMS hero (Admin → Pages → Programs), then every published program,
+ * then the page's other CMS sections (stories, call to action…).
+ */
+export default async function ProgramsPage() {
+  const [page, programs, categories, t] = await Promise.all([getPage("programs"), getPrograms(), getProgramCategories(), getTranslations("site")]);
+  const sections = page?.sections ?? [];
+  const hero = sections[0]?.type === "hero" ? sections[0] : null;
+  const rest = hero ? sections.slice(1) : sections;
+  const used = categories.filter((c) => programs.some((p) => p.category_id === c.id));
 
   return (
     <>
-      <section className="bg-secondary py-14 text-white">
-        <div className="mx-auto max-w-5xl px-4">
-          <h1 className="text-4xl font-extrabold sm:text-5xl">{t("title")}</h1>
-          <p className="mt-3 text-lg text-white/80">{t("subtitle")}</p>
-        </div>
-      </section>
-      <section className="mx-auto max-w-5xl space-y-5 px-4 py-14">
-        {programs.map(({ key, icon: Icon, href, ...rest }) => (
-          <article key={key} id={key} className="flex flex-col gap-5 rounded-2xl border border-border bg-white p-6 sm:flex-row">
-            <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
-              <Icon className="size-6" />
-            </span>
-            <div className="flex-1">
-              <h2 className="text-xl font-bold text-secondary">{t(key)}</h2>
-              <p className="mt-1 text-muted-foreground">{t(`${key}Text`)}</p>
-              {"bullets" in rest && (
-                <ul className="mt-3 space-y-1.5">
-                  {rest.bullets.map((b) => (
-                    <li key={b} className="flex gap-2 text-sm text-secondary">
-                      <Check className="mt-0.5 size-4 shrink-0" />
-                      {t(b)}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <Link href={href} className={buttonVariants({ variant: "link" }) + " mt-2 h-auto px-0"}>
-                {t("explore")} <ArrowRight />
-              </Link>
+      {hero ? <Sections sections={[hero]} /> : <PageIntro eyebrow={t("programsEyebrow")} title={page?.page.title ?? t("programsTitle")} description={page?.page.description} />}
+
+      <section id="programs" aria-labelledby="programs-heading" className="relative scroll-mt-24 overflow-hidden bg-white py-12 sm:py-16">
+        <FloatingShapes variant="c" />
+        <Container className="relative">
+          <SectionHeading eyebrow={t("ourPillars")} heading={hero ? page?.page.title ?? t("programsTitle") : t("allPrograms")} intro={hero ? page?.page.description : null} id="programs-heading" />
+          {used.length > 1 && (
+            <nav aria-label={t("categories")} className="-mt-3 mb-7 flex flex-wrap gap-2">
+              {used.map((c) => (
+                <a key={c.id} href={`#cat-${c.slug}`} className="rounded-full border border-border bg-surface px-4 py-2 text-sm font-semibold text-ink transition hover:border-secondary/40 hover:bg-white">
+                  {c.name}
+                </a>
+              ))}
+            </nav>
+          )}
+          {programs.length === 0 ? (
+            <p className="rounded-3xl border border-dashed border-border px-6 py-14 text-center text-lg text-muted-foreground">{t("noPrograms")}</p>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {programs.map((p, i) => {
+                const firstOfCategory = programs.findIndex((x) => x.category_id === p.category_id) === i;
+                const cat = categories.find((c) => c.id === p.category_id);
+                return (
+                  <div key={p.id} id={firstOfCategory && cat ? `cat-${cat.slug}` : undefined} className="scroll-mt-28">
+                    <ProgramCard program={p} index={i} />
+                  </div>
+                );
+              })}
             </div>
-          </article>
-        ))}
+          )}
+        </Container>
       </section>
+
+      <Sections sections={rest} />
     </>
   );
 }

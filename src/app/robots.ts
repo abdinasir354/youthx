@@ -1,14 +1,11 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/seo";
 
-const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-
+// The hidden admin sign-in page is deliberately NOT listed here (that would reveal it);
+// it carries its own noindex tag instead.
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: ["/dashboard", "/partner", "/mentor", "/admin", "/en/dashboard", "/en/partner", "/en/mentor", "/en/admin", "/auth/"],
-    },
-    sitemap: `${base}/sitemap.xml`,
+    rules: { userAgent: "*", allow: "/", disallow: ["/admin", "/preview", "/auth/", "/newsletter/"] },
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

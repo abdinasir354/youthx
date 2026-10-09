@@ -49,6 +49,11 @@ export function formatDate(value: string | null | undefined, locale = "en") {
   }).format(new Date(value));
 }
 
+/** Current time as an ISO string. Only call from request-time (dynamic) code. */
+export function nowIso() {
+  return new Date().toISOString();
+}
+
 /** True when the deadline has passed. Only call from request-time (dynamic) code. */
 export function isPastDeadline(deadline: string | null | undefined) {
   return deadline != null && new Date(deadline).getTime() < Date.now();

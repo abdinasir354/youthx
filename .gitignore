@@ -43,3 +43,6 @@ next-env.d.ts
 
 # generated SQL bundle (rebuild from supabase/migrations)
 supabase/setup-all.sql
+
+# content backups made by scripts/apply-page-content.mjs
+supabase/content/backup-*.json

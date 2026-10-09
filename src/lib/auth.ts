@@ -1,12 +1,13 @@
 import "server-only";
 import { cache } from "react";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { getLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
-import { can, type Perm } from "@/lib/permissions";
-import type { AdminRole, Profile, UserRole } from "@/types/database.types";
+import { ADMIN_SESSION_COOKIE, can, type Perm } from "@/lib/permissions";
+import type { AdminRole, Profile } from "@/types/database.types";
 
 export type CurrentUser = { id: string; email: string | null; profile: Profile; adminRole: AdminRole | null };
 
@@ -33,20 +34,6 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
   };
 });
 
-export async function requireUser(): Promise<CurrentUser> {
-  const user = await getCurrentUser();
-  if (!user) redirect({ href: "/login", locale: await getLocale() });
-  return user!;
-}
-
-/** Platform areas (partner, mentor). Back-office users with `adminPerm` may enter too. */
-export async function requireRole(roles: UserRole[], adminPerm?: Perm): Promise<CurrentUser> {
-  const user = await requireUser();
-  const allowed = roles.includes(user.profile.role) || (adminPerm != null && can(user.adminRole, adminPerm));
-  if (!allowed) redirect({ href: "/dashboard", locale: await getLocale() });
-  return user;
-}
-
 /**
  * Back-office pages. Anyone without an admin role gets a plain 404, so the admin area
  * (and its hidden sign-in URL) isn't revealed. Admins lacking `perm` go back to the dashboard.
@@ -54,6 +41,8 @@ export async function requireRole(roles: UserRole[], adminPerm?: Perm): Promise<
 export async function requireAdmin(perm?: Perm): Promise<CurrentUser & { adminRole: AdminRole }> {
   const user = await getCurrentUser();
   if (!user?.adminRole) notFound();
+  // Admin access must start from the private sign-in link (see ADMIN_SESSION_COOKIE).
+  if ((await cookies()).get(ADMIN_SESSION_COOKIE)?.value !== user.id) notFound();
   if (perm && !can(user.adminRole, perm)) redirect({ href: "/admin", locale: await getLocale() });
   return user as CurrentUser & { adminRole: AdminRole };
 }

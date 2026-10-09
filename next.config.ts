@@ -41,6 +41,8 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     agentFeedback: true,
+    // Media library uploads (documents up to 20 MB) go through Server Actions.
+    serverActions: { bodySizeLimit: "21mb" },
   },
   cacheComponents: true,
   partialPrefetching: true,
@@ -56,6 +58,13 @@ const nextConfig: NextConfig = {
     remotePatterns: supabaseHost
       ? [{ protocol: "https", hostname: supabaseHost, pathname: "/storage/v1/object/public/**" }]
       : [],
+  },
+  // The news section became the blog.
+  async redirects() {
+    return [
+      { source: "/news", destination: "/blog", permanent: true },
+      { source: "/news/:slug", destination: "/blog/:slug", permanent: true },
+    ];
   },
   async headers() {
     return [

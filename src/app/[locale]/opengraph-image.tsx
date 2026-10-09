@@ -1,24 +1,28 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { ImageResponse } from "next/og";
-import { getTranslations } from "next-intl/server";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Somali YouthUp Foundation";
+export const alt = "YouthX Foundation — Empowering Somali Youth. Building a Better Future.";
 
-/** Default social-share image in brand colors (pages without their own cover use this). */
+/** Default social-share image in brand colors (pages and settings can override it with their own image). */
 export default async function OpengraphImage() {
-  const t = await getTranslations("home");
+  const icon = await readFile(path.join(process.cwd(), "public", "logo-icon-light.png"));
+  const src = `data:image/png;base64,${icon.toString("base64")}`;
   return new ImageResponse(
     (
       <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", background: "#1c4b40", padding: 72, color: "white" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <div style={{ width: 72, height: 72, borderRadius: 18, background: "#b3e717", display: "flex", alignItems: "center", justifyContent: "center", color: "#1c4b40", fontSize: 44, fontWeight: 800 }}>↑</div>
-          <div style={{ fontSize: 36, fontWeight: 700 }}>Somali YouthUp Foundation</div>
+          {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse renders plain <img> */}
+          <img src={src} width={118} height={72} alt="" />
+          <div style={{ display: "flex", fontSize: 40, fontWeight: 800 }}>
+            <span style={{ color: "#b3e717" }}>YouthX</span>
+            <span style={{ marginLeft: 12 }}>Foundation</span>
+          </div>
         </div>
-        <div style={{ fontSize: 76, fontWeight: 800, lineHeight: 1.05, maxWidth: 1000 }}>{t("heroTitle")}</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div style={{ background: "#b3e717", color: "#1c4b40", borderRadius: 999, padding: "10px 24px", fontSize: 28, fontWeight: 700 }}>{t("heroBadge")}</div>
-        </div>
+        <div style={{ fontSize: 72, fontWeight: 800, lineHeight: 1.08, maxWidth: 1000 }}>Empowering Somali Youth. Building a Better Future.</div>
+        <div style={{ display: "flex", fontSize: 28, color: "rgba(255,255,255,0.75)" }}>Education · Skills · Mentorship · Careers · Entrepreneurship · Community</div>
       </div>
     ),
     size,
