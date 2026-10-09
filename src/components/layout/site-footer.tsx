@@ -16,8 +16,8 @@ export async function SiteFooter() {
 
   return (
     <footer className="mt-auto bg-secondary text-white">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.3fr]">
-        <div className="space-y-4">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 lg:gap-8">
+        <div className="space-y-4 sm:col-span-2 lg:col-span-1">
           <Logo inverted />
           {settings.footer_text && <p className="max-w-xs text-sm leading-relaxed text-white/75">{settings.footer_text}</p>}
           {socials.length > 0 && (
@@ -48,54 +48,52 @@ export async function SiteFooter() {
           </nav>
         )}
 
-        <div className="space-y-8">
-          <h2 className="text-xs font-bold uppercase tracking-[0.16em] text-primary">{t("connect")}</h2>
-          {hasContact && (
-            <div>
-              <h3 className="mb-3 text-sm font-semibold text-white">{t("contactUs")}</h3>
-              <ul className="space-y-3 text-sm text-white/80">
-                {settings.contact_email && (
-                  <li className="flex gap-2">
-                    <Mail className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
-                    <a href={`mailto:${settings.contact_email}`} className="break-all hover:text-primary">{settings.contact_email}</a>
-                  </li>
-                )}
-                {settings.contact_phone && (
-                  <li className="flex gap-2">
-                    <Phone className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
-                    <a href={`tel:${settings.contact_phone.replace(/\s/g, "")}`} className="hover:text-primary">{settings.contact_phone}</a>
-                  </li>
-                )}
-                {settings.address && (
-                  <li className="flex gap-2">
-                    <MapPin className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
-                    <span className="whitespace-pre-line">{settings.address}</span>
-                  </li>
-                )}
-              </ul>
-            </div>
-          )}
-          {legal.length > 0 && (
-            <nav aria-labelledby="footer-legal">
-              <h3 id="footer-legal" className="mb-3 text-sm font-semibold text-white">{t("legal")}</h3>
-              <ul className="space-y-2.5 text-sm text-white/80">
-                {legal.map((l) => (
-                  <li key={l.id}>
-                    <SmartLink href={l.href} className="hover:text-primary">{l.label}</SmartLink>
-                  </li>
-                ))}
-                <li>
-                  <CookieSettingsButton className="text-left hover:text-primary">{t("cookieSettings")}</CookieSettingsButton>
+        {hasContact && (
+          <div>
+            <h2 className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-primary">{t("connect")}</h2>
+            <ul className="space-y-3 text-sm text-white/80">
+              {settings.contact_email && (
+                <li className="flex gap-2">
+                  <Mail className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
+                  <a href={`mailto:${settings.contact_email}`} className="break-all hover:text-primary">{settings.contact_email}</a>
                 </li>
-              </ul>
-            </nav>
-          )}
-        </div>
+              )}
+              {settings.contact_phone && (
+                <li className="flex gap-2">
+                  <Phone className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
+                  <a href={`tel:${settings.contact_phone.replace(/\s/g, "")}`} className="hover:text-primary">{settings.contact_phone}</a>
+                </li>
+              )}
+              {settings.address && (
+                <li className="flex gap-2">
+                  <MapPin className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
+                  <span className="whitespace-pre-line">{settings.address}</span>
+                </li>
+              )}
+            </ul>
+          </div>
+        )}
+
+        {legal.length > 0 && (
+          <nav aria-labelledby="footer-legal">
+            <h2 id="footer-legal" className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-primary">{t("legal")}</h2>
+            <ul className="space-y-2.5 text-sm text-white/80">
+              {legal.map((l) => (
+                <li key={l.id}>
+                  <SmartLink href={l.href} className="hover:text-primary">{l.label}</SmartLink>
+                </li>
+              ))}
+              <li>
+                <CookieSettingsButton className="text-left hover:text-primary">{t("cookieSettings")}</CookieSettingsButton>
+              </li>
+            </ul>
+          </nav>
+        )}
 
         {settings.newsletter_enabled && (
           <div>
-            <h2 className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">{t("newsletterTitle")}</h2>
-            <p className="mb-4 text-sm text-white/75">{t("newsletterText")}</p>
+            <h2 className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-primary">{t("newsletterTitle")}</h2>
+            <p className="mb-4 text-sm leading-relaxed text-white/75">{t("newsletterText")}</p>
             <NewsletterForm />
           </div>
         )}
