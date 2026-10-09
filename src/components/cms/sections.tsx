@@ -469,30 +469,55 @@ function Cards({ data: d, wrap, headingId }: { data: Data; wrap: (c: React.React
   const heading = <SectionHeading eyebrow={str(d.eyebrow)} heading={str(d.heading)} intro={str(d.intro)} id={headingId} center={style === "timeline"} />;
 
   if (style === "timeline") {
+    // "Chapters": numbered markers on a centre spine; date badge pinned to each photo; text in a soft card.
     return wrap(
       <>
         {heading}
         <ol className="relative">
-          <span aria-hidden className="absolute bottom-0 left-4 top-0 w-0.5 bg-gradient-to-b from-primary via-secondary/40 to-primary lg:left-1/2 lg:-translate-x-1/2" />
+          <span aria-hidden className="absolute bottom-6 left-5 top-6 w-px bg-gradient-to-b from-primary via-secondary/30 to-primary lg:left-1/2" />
           {items.map((it, i) => {
             const right = i % 2 === 1;
             const img = str(it.image_url);
+            const date = str(it.date_label);
+            const n = String(i + 1).padStart(2, "0");
             return (
-              <li key={i} className="relative grid gap-6 pb-10 pl-12 last:pb-0 lg:grid-cols-2 lg:gap-20 lg:pl-0">
-                <span aria-hidden className="absolute left-4 top-8 size-4 -translate-x-1/2 rounded-full bg-primary ring-4 ring-surface lg:left-1/2" />
-                <div className={cn("lg:text-right", right && "lg:order-2 lg:text-left")}>
-                  {str(it.date_label) && <p className="display text-5xl text-ink/10 sm:text-7xl">{str(it.date_label)}</p>}
-                  {str(it.subtitle) && (
-                    <p className="mt-3 inline-flex rounded-full border border-secondary/30 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-secondary">{str(it.subtitle)}</p>
-                  )}
-                  <h3 className="heading mt-4 text-2xl text-ink sm:text-3xl">{str(it.title)}</h3>
-                  {str(it.body) && <p className="mt-3 text-lg leading-relaxed text-muted-foreground">{str(it.body)}</p>}
+              <li key={i} className="relative grid items-center gap-5 pb-12 pl-14 last:pb-0 lg:grid-cols-2 lg:gap-24 lg:pl-0">
+                <span
+                  aria-hidden
+                  className="absolute left-5 top-0 flex size-10 -translate-x-1/2 items-center justify-center rounded-full bg-ink text-sm font-extrabold text-primary ring-8 ring-surface lg:left-1/2 lg:top-1/2 lg:size-12 lg:-translate-y-1/2"
+                >
+                  {n}
+                </span>
+
+                <div className={cn("relative", right ? "lg:order-2" : "lg:order-1")}>
+                  <div className="relative overflow-hidden rounded-[1.75rem] border border-border bg-white p-6 shadow-[0_24px_50px_-30px_rgba(18,53,46,0.35)] sm:p-8">
+                    <span aria-hidden className={cn("absolute inset-y-0 w-1.5 bg-primary", right ? "left-0" : "left-0 lg:left-auto lg:right-0")} />
+                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">
+                      Chapter {n}
+                      {!img && date && <span className="text-secondary"> · {date}</span>}
+                    </p>
+                    {str(it.subtitle) && (
+                      <p className="mt-3 inline-flex rounded-full bg-primary-soft px-3.5 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#4d6b00]">{str(it.subtitle)}</p>
+                    )}
+                    <h3 className="heading mt-3 text-balance text-2xl text-ink sm:text-[1.75rem]">{str(it.title)}</h3>
+                    {str(it.body) && <p className="mt-3 text-pretty leading-relaxed text-muted-foreground">{str(it.body)}</p>}
+                  </div>
                 </div>
-                <div className={cn(right && "lg:order-1")}>
-                  {img && (
-                    <div className="relative aspect-[16/10] overflow-hidden rounded-3xl shadow-xl">
-                      <Image src={img} alt="" fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" loading="lazy" />
-                    </div>
+
+                <div className={cn(right ? "lg:order-1" : "lg:order-2")}>
+                  {img ? (
+                    <figure className="relative">
+                      <div className="relative aspect-[16/10] overflow-hidden rounded-[1.75rem] shadow-[0_30px_60px_-30px_rgba(18,53,46,0.5)]">
+                        <Image src={img} alt={str(it.image_alt) ?? ""} fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover transition duration-700 hover:scale-[1.03]" loading="lazy" />
+                      </div>
+                      {date && (
+                        <figcaption className={cn("absolute -bottom-4 rounded-2xl bg-primary px-5 py-2.5 text-lg font-extrabold text-ink shadow-lg", right ? "right-6" : "left-6")}>
+                          {date}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ) : (
+                    date && <p className={cn("display hidden text-6xl text-ink/10 lg:block xl:text-7xl", right ? "lg:text-right" : "")}>{date}</p>
                   )}
                 </div>
               </li>

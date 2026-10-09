@@ -143,6 +143,7 @@ export const SECTIONS: Record<SectionType, SectionDef> = {
         { kind: "textarea", name: "body", label: "Text", max: 800, rows: 3 },
         { kind: "textarea", name: "quote", label: "Quote (team style)", max: 300, rows: 2 },
         { kind: "image", name: "image_url", label: "Photo", folder: "images" },
+        { kind: "text", name: "image_alt", label: "Photo description (alt text)", max: 200 },
         link("link", "Link"),
       ] },
     ],
