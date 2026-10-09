@@ -181,7 +181,8 @@ const bareQuote = (q: string) => q.trim().replace(/^[“"'‘]+|[”"'’]+$/g, 
 const initials = (name: string) => name.split(" ").map((p) => p[0]).slice(0, 2).join("");
 
 /** Story page: centred header, then the story told as numbered chapters along a centre line. */
-export async function StoryDetail({ story }: { story: Story }) {
+export async function StoryDetail({ story, embedded = false }: { story: Story; embedded?: boolean }) {
+  const Title = embedded ? "h2" : "h1";
   const t = await getTranslations("site");
   const chapters = storyChapters(story.body);
   const opening = Boolean(story.quote || story.profile_image_url);
@@ -207,7 +208,7 @@ export async function StoryDetail({ story }: { story: Story }) {
             {t("storiesEyebrow")}
             <span aria-hidden className="h-px w-12 bg-[#4d6b00]/40" />
           </p>
-          <h1 className="display mt-4 text-balance text-4xl text-ink sm:text-5xl lg:text-6xl">{story.title}</h1>
+          <Title className="display mt-4 text-balance text-4xl text-ink sm:text-5xl lg:text-6xl">{story.title}</Title>
           <span aria-hidden className="mx-auto mt-6 block h-1.5 w-24 rounded-full bg-primary" />
           {story.introduction && <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">{story.introduction}</p>}
           <p className="mt-7 inline-flex items-center gap-3 rounded-full border border-border bg-white py-1.5 pl-1.5 pr-5 text-sm font-semibold text-ink shadow-sm">
@@ -242,7 +243,7 @@ export async function StoryDetail({ story }: { story: Story }) {
                 {story.profile_image_url && (
                   <figure className="relative">
                     <div className="relative aspect-[16/11] overflow-hidden rounded-[1.75rem] bg-muted shadow-[0_30px_60px_-30px_rgba(18,53,46,0.5)]">
-                      <Image src={story.profile_image_url} alt={story.person_name} fill preload sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
+                      <Image src={story.profile_image_url} alt={story.person_name} fill preload={!embedded} sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
                     </div>
                     <figcaption className="absolute -bottom-4 left-6 rounded-2xl bg-primary px-5 py-2.5 text-sm font-extrabold text-ink shadow-lg">{story.person_name}</figcaption>
                   </figure>

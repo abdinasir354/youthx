@@ -466,7 +466,8 @@
           "mode": "latest",
           "limit": 3,
           "hide_when_empty": true,
-          "intro": "We are a new foundation with a bold vision. Here is how far we have come in our first months of operation."
+          "intro": "We are a new foundation with a bold vision. Here is how far we have come in our first months of operation.",
+          "display": "full"
         }
       },
       {

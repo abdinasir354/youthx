@@ -55,6 +55,12 @@ function grid(type: SectionType, label: string, source: "programs" | "opportunit
       ] },
       { kind: "relation_multi", name: "ids", label: "Hand-picked items (in order)", source, max: 12, help: "Used when “Which items” is Hand-picked." },
       { kind: "number", name: "limit", label: "How many", integer: true, min: 1, max: 12, half: true },
+      ...(source === "stories"
+        ? [{ kind: "select", name: "display", label: "Display", options: [
+            { value: "spotlight", label: "Spotlight card (quote + link to the story)" },
+            { value: "full", label: "Full story (first story, told as chapters)" },
+          ] } satisfies FieldDef]
+        : []),
       { kind: "boolean", name: "hide_when_empty", label: "Hide the whole section when there's nothing to show" },
       { kind: "text", name: "empty_text", label: "Message when empty", max: 200 },
       link("cta", "Button below the grid"),

@@ -10,6 +10,7 @@ import { OpportunityCard } from "@/components/opportunities/opportunity-card";
 import { ArrowLink, Container, Eyebrow, RichText, SectionHeading, SmartLink, pill } from "@/components/site/basics";
 import { Link } from "@/i18n/navigation";
 import { EventCard, ProgramCard, ProjectCard, ResourceCard, StoryCard } from "@/components/site/cards";
+import { StoryDetail } from "@/components/site/detail-pages";
 import { FloatingShapes, PhotoPlaceholder } from "@/components/site/shapes";
 import { CmsIcon } from "./icon";
 
@@ -813,6 +814,7 @@ async function StorySpotlight({ data: d, wrap, headingId }: { data: CmsSection["
   if (!items.length && d.hide_when_empty) return null;
   const cta = link(d.cta);
   const [lead, ...more] = items;
+  if (lead && d.display === "full") return <StoryDetail story={lead} embedded />;
 
   return wrap(
     <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
