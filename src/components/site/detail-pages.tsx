@@ -178,7 +178,6 @@ function storyChapters(body: string | null): { title: string | null; markdown: s
 /** Quote text without any quote marks the editor already typed (we add our own). */
 const bareQuote = (q: string) => q.trim().replace(/^[“"'‘]+|[”"'’]+$/g, "").trim();
 
-const initials = (name: string) => name.split(" ").map((p) => p[0]).slice(0, 2).join("");
 
 /** Story page: centred header, then the story told as numbered chapters along a centre line. */
 export async function StoryDetail({ story, embedded = false }: { story: Story; embedded?: boolean }) {
@@ -210,13 +209,6 @@ export async function StoryDetail({ story, embedded = false }: { story: Story; e
           </p>
           <Title className="display mt-4 text-balance text-4xl text-ink sm:text-5xl lg:text-6xl">{story.title}</Title>
           <span aria-hidden className="mx-auto mt-6 block h-1.5 w-24 rounded-full bg-primary" />
-          {story.introduction && <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">{story.introduction}</p>}
-          <p className="mt-7 inline-flex items-center gap-3 rounded-full border border-border bg-white py-1.5 pl-1.5 pr-5 text-sm font-semibold text-ink shadow-sm">
-            <span className="relative flex size-9 items-center justify-center overflow-hidden rounded-full bg-secondary text-xs font-bold text-primary">
-              {story.profile_image_url ? <Image src={story.profile_image_url} alt="" fill sizes="36px" className="object-cover" /> : <span aria-hidden>{initials(story.person_name)}</span>}
-            </span>
-            {story.person_name}
-          </p>
         </Container>
       </section>
 
