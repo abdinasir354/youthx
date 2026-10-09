@@ -181,7 +181,7 @@ const bareQuote = (q: string) => q.trim().replace(/^[“"'‘]+|[”"'’]+$/g, 
 const initials = (name: string) => name.split(" ").map((p) => p[0]).slice(0, 2).join("");
 
 /** Story page: centred header, then the story told as numbered chapters along a centre line. */
-export async function StoryDetail({ story, program }: { story: Story; program?: Program }) {
+export async function StoryDetail({ story }: { story: Story }) {
   const t = await getTranslations("site");
   const chapters = storyChapters(story.body);
   const opening = Boolean(story.quote || story.profile_image_url);
@@ -273,20 +273,6 @@ export async function StoryDetail({ story, program }: { story: Story; program?: 
               );
             })}
           </ol>
-
-          <div className="mx-auto mt-14 flex max-w-3xl flex-wrap items-center justify-center gap-3 border-t border-border pt-8 text-center">
-            {program && (
-              <p className="w-full text-sm text-muted-foreground">
-                {t("partOf")} <Link href={`/programs/${program.slug}`} className="font-semibold text-secondary underline">{program.title}</Link>
-              </p>
-            )}
-            <Link href="/stories" className={buttonVariants({ variant: "outline", className: "rounded-full" })}>
-              {t("allStories")}
-            </Link>
-            <Link href="/contact" className={buttonVariants({ className: "rounded-full" })}>
-              {t("shareYourStory")}
-            </Link>
-          </div>
         </Container>
       </section>
     </>

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { getPrograms, getStory } from "@/lib/data/cms";
+import { getStory } from "@/lib/data/cms";
 import { pageMetadata } from "@/lib/seo";
 import { PageSkeleton } from "@/components/ui/misc";
 import { StoryDetail } from "@/components/site/detail-pages";
@@ -24,6 +24,5 @@ async function StoryLoader({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const story = await getStory(slug);
   if (!story) notFound();
-  const program = (await getPrograms()).find((p) => p.id === story.program_id);
-  return <StoryDetail story={story} program={program} />;
+  return <StoryDetail story={story} />;
 }
