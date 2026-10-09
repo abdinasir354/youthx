@@ -41,8 +41,8 @@ export function HeaderNav({ links, className }: { links: NavLink[]; className?: 
           link={l}
           active={isActive(l.href)}
           className={cn(
-            "relative rounded-md px-3 py-2 text-[15px] font-medium transition-colors",
-            isActive(l.href) ? "text-secondary after:absolute after:inset-x-3 after:-bottom-[13px] after:h-0.5 after:bg-primary lg:after:-bottom-[17px]" : "text-secondary/75 hover:text-secondary",
+            "relative rounded-md px-4 py-2 text-[17px] font-semibold tracking-[-0.01em] antialiased transition-colors",
+            isActive(l.href) ? "text-secondary after:absolute after:inset-x-4 after:-bottom-[13px] after:h-[3px] after:rounded-full after:bg-primary lg:after:-bottom-[14px]" : "text-ink/85 hover:text-secondary",
           )}
         />
       ))}
