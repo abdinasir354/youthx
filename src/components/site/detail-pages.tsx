@@ -158,21 +158,29 @@ export async function ResourceDetail({ resource }: { resource: Resource }) {
   );
 }
 
+type Chapter = { title: string | null; markdown: string; image: { src: string; alt: string } | null };
+
 /**
  * Splits a story body into chapters. A chapter starts at a Markdown heading ("## …") or at a short
  * stand-alone line without a full stop (how editors usually type headings in plain text).
+ * The first photo in a chapter (![alt](https://…)) becomes that chapter's photo.
  */
-function storyChapters(body: string | null): { title: string | null; markdown: string }[] {
+function storyChapters(body: string | null): Chapter[] {
   if (!body?.trim()) return [];
   const blocks = body.replace(/\r\n/g, "\n").split(/\n{2,}/).map((b) => b.trim()).filter(Boolean);
-  const isHeading = (b: string) => /^#{1,4}\s/.test(b) || (!b.includes("\n") && b.length <= 80 && !/[.!?:;,]$/.test(b));
-  const chapters: { title: string | null; parts: string[] }[] = [];
+  const imageRe = /^!\[([^\]]*)]\((https:\/\/[^)\s]+)\)$/;
+  const isHeading = (b: string) => /^#{1,4}\s/.test(b) || (!b.includes("\n") && b.length <= 80 && !/[.!?:;,)]$/.test(b) && !imageRe.test(b));
+  const chapters: { title: string | null; parts: string[]; image: Chapter["image"] }[] = [];
+  const current = () => chapters[chapters.length - 1] ?? (chapters.push({ title: null, parts: [], image: null }), chapters[0]);
   for (const b of blocks) {
-    if (isHeading(b)) chapters.push({ title: b.replace(/^#{1,4}\s+/, ""), parts: [] });
-    else if (chapters.length) chapters[chapters.length - 1].parts.push(b);
-    else chapters.push({ title: null, parts: [b] });
+    const img = b.match(imageRe);
+    if (img) {
+      const c = current();
+      if (!c.image) c.image = { alt: img[1], src: img[2] };
+    } else if (isHeading(b)) chapters.push({ title: b.replace(/^#{1,4}\s+/, ""), parts: [], image: null });
+    else current().parts.push(b);
   }
-  return chapters.map((c) => ({ title: c.title, markdown: c.parts.join("\n\n") }));
+  return chapters.map((c) => ({ title: c.title, markdown: c.parts.join("\n\n"), image: c.image }));
 }
 
 /** Quote text without any quote marks the editor already typed (we add our own). */
@@ -245,20 +253,26 @@ export async function StoryDetail({ story, embedded = false }: { story: Story; e
 
             {chapters.map((c, i) => {
               const n = i + 1 + (opening ? 1 : 0);
-              // Chapters face each other across the line: one on the left, the next on the right, staggered.
+              // Text and photo face each other across the line; sides swap every chapter.
               const right = n % 2 === 0;
+              const prev = chapters[i - 1];
+              // Chapters without a photo are staggered so the two sides interlock.
+              const stagger = !c.image && i > 0 && prev && !prev.image;
               return (
-                <li key={i} className={cn("relative grid pb-10 pl-14 last:pb-0 lg:grid-cols-2 lg:gap-x-24 lg:pl-0", right && i > 0 && "lg:-mt-28")}>
+                <li key={i} className={cn("relative grid items-center gap-6 pb-12 pl-14 last:pb-0 lg:grid-cols-2 lg:gap-x-24 lg:pl-0", stagger && "lg:-mt-28")}>
                   <span
                     aria-hidden
-                    className="absolute left-5 top-6 z-10 flex size-10 -translate-x-1/2 items-center justify-center rounded-full bg-ink text-sm font-extrabold text-primary ring-8 ring-white lg:left-1/2 lg:size-12"
+                    className={cn(
+                      "absolute left-5 top-6 z-10 flex size-10 -translate-x-1/2 items-center justify-center rounded-full bg-ink text-sm font-extrabold text-primary ring-8 ring-white lg:left-1/2 lg:size-12",
+                      c.image && "lg:top-1/2 lg:-translate-y-1/2",
+                    )}
                   >
                     {pad(n)}
                   </span>
                   <article
                     className={cn(
                       "relative overflow-hidden rounded-[1.75rem] border border-border bg-surface/60 p-6 shadow-[0_24px_50px_-34px_rgba(18,53,46,0.35)] sm:p-8",
-                      right ? "lg:col-start-2" : "lg:col-start-1 lg:text-right",
+                      right ? "lg:col-start-2 lg:row-start-1" : "lg:col-start-1 lg:row-start-1 lg:text-right",
                     )}
                   >
                     <span aria-hidden className={cn("absolute inset-y-0 w-1.5 bg-primary", right ? "left-0" : "left-0 lg:left-auto lg:right-0")} />
@@ -268,6 +282,13 @@ export async function StoryDetail({ story, embedded = false }: { story: Story; e
                     {c.title && <h2 className="heading mt-2 text-balance text-2xl text-ink sm:text-[1.75rem]">{c.title}</h2>}
                     {c.markdown && <RichText markdown={c.markdown} className="mt-3 break-words" />}
                   </article>
+                  {c.image && (
+                    <figure className={cn("relative", right ? "lg:col-start-1 lg:row-start-1" : "lg:col-start-2 lg:row-start-1")}>
+                      <div className="relative aspect-[16/11] overflow-hidden rounded-[1.75rem] bg-muted shadow-[0_30px_60px_-30px_rgba(18,53,46,0.5)]">
+                        <Image src={c.image.src} alt={c.image.alt} fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" loading="lazy" />
+                      </div>
+                    </figure>
+                  )}
                 </li>
               );
             })}

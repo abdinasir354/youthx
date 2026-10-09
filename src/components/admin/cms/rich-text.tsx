@@ -1,9 +1,10 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Bold, Heading2, Heading3, Italic, Link2, List, ListOrdered, Loader2, Quote } from "lucide-react";
+import { Bold, Heading2, Heading3, ImagePlus, Italic, Link2, List, ListOrdered, Loader2, Quote } from "lucide-react";
 import { previewMarkdown } from "@/app/actions/cms";
 import { cn } from "@/lib/utils";
+import { MediaPicker } from "./media-fields";
 
 type Wrap = { before: string; after?: string; line?: boolean; placeholder: string };
 
@@ -27,6 +28,17 @@ export function RichTextEditor({ id, value, onChange, invalid, maxLength }: { id
   const [tab, setTab] = useState<"write" | "preview">("write");
   const [html, setHtml] = useState("");
   const [loading, setLoading] = useState(false);
+  const [picker, setPicker] = useState(false);
+
+  /** Puts a photo on its own line at the cursor (in stories, it becomes the chapter's photo). */
+  function insertImage(url: string, alt: string) {
+    const el = ref.current;
+    const at = el ? el.selectionEnd : value.length;
+    const before = value.slice(0, at).replace(/\s*$/, "");
+    const after = value.slice(at).replace(/^\s*/, "");
+    const md = `![${alt.replace(/[[\]]/g, "")}](${url})`;
+    onChange([before, md, after].filter(Boolean).join("\n\n"));
+  }
 
   function apply({ before, after = "", line, placeholder }: Wrap) {
     const el = ref.current;
@@ -74,7 +86,13 @@ export function RichTextEditor({ id, value, onChange, invalid, maxLength }: { id
               <Icon className="size-4" />
             </button>
           ))}
+        {tab === "write" && (
+          <button type="button" onClick={() => setPicker(true)} title="Photo" aria-label="Insert photo" className="ml-1 inline-flex items-center gap-1.5 rounded px-2 py-1.5 text-xs font-semibold text-secondary/80 hover:bg-white hover:text-secondary">
+            <ImagePlus className="size-4" /> Photo
+          </button>
+        )}
       </div>
+      <MediaPicker open={picker} onClose={() => setPicker(false)} kind="image" folder="images" onPick={(items) => items[0] && insertImage(items[0].url, items[0].alt_text ?? "")} />
       {tab === "write" ? (
         <textarea
           ref={ref}

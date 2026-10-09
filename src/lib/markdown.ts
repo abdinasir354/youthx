@@ -10,12 +10,14 @@ export function markdownToSafeHtml(md: string | null | undefined): string {
   if (!md) return "";
   const html = marked.parse(md, { async: false, gfm: true, breaks: false }) as string;
   return sanitizeHtml(html, {
-    allowedTags: ["p", "br", "h2", "h3", "h4", "ul", "ol", "li", "a", "strong", "b", "em", "i", "blockquote", "code", "pre", "hr", "table", "thead", "tbody", "tr", "th", "td"],
-    allowedAttributes: { a: ["href", "title", "target", "rel"] },
+    allowedTags: ["p", "br", "h2", "h3", "h4", "ul", "ol", "li", "a", "strong", "b", "em", "i", "blockquote", "code", "pre", "hr", "table", "thead", "tbody", "tr", "th", "td", "img"],
+    allowedAttributes: { a: ["href", "title", "target", "rel"], img: ["src", "alt", "loading"] },
+    allowedSchemesByTag: { img: ["https"] },
     allowedSchemes: ["http", "https", "mailto", "tel"],
     transformTags: {
       // Headings in content never compete with the page's own <h1>.
       h1: "h2",
+      img: (tagName, attribs) => ({ tagName, attribs: { src: attribs.src ?? "", alt: attribs.alt ?? "", loading: "lazy" } }),
       a: (tagName, attribs) => {
         const href = attribs.href ?? "";
         const external = /^https?:\/\//i.test(href);

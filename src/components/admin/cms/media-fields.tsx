@@ -21,7 +21,7 @@ function fileNameFromUrl(url: string) {
   }
 }
 
-function MediaPicker({ open, onClose, kind, folder, multiple, onPick }: { open: boolean; onClose: () => void; kind: "image" | "document"; folder: MediaFolder; multiple?: boolean; onPick: (items: MediaItem[]) => void }) {
+export function MediaPicker({ open, onClose, kind, folder, multiple, onPick }: { open: boolean; onClose: () => void; kind: "image" | "document"; folder: MediaFolder; multiple?: boolean; onPick: (items: MediaItem[]) => void }) {
   return (
     <Modal open={open} onClose={onClose} title={kind === "image" ? "Choose an image" : "Choose a file"} wide>
       <MediaLibrary
