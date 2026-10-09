@@ -21,10 +21,6 @@ select * from (values
   ('footer', 'Programs', '/programs', 1),
   ('footer', 'Blog', '/blog', 2),
   ('footer', 'Gallery', '/gallery', 3),
-  ('footer', 'Opportunities', '/opportunities', 4),
-  ('footer', 'Events', '/events', 5),
-  ('footer', 'Get Involved', '/get-involved', 6),
-  ('footer', 'Contact', '/contact', 7),
   ('legal', 'Privacy Policy', '/privacy', 0),
   ('legal', 'Terms of Service', '/terms', 1),
   ('legal', 'Cookie Policy', '/cookies', 2)

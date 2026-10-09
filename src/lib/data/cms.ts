@@ -24,7 +24,7 @@ export async function getSettings(): Promise<SiteSettings> {
 /** Built-in fallback so the site is navigable before the database is set up. */
 const FALLBACK_NAV: Record<string, [string, string][]> = {
   header: [["Home", "/"], ["About", "/about"], ["Programs", "/programs"], ["Blog", "/blog"], ["Gallery", "/gallery"]],
-  footer: [["About", "/about"], ["Programs", "/programs"], ["Blog", "/blog"], ["Gallery", "/gallery"], ["Opportunities", "/opportunities"], ["Events", "/events"], ["Get Involved", "/get-involved"], ["Contact", "/contact"]],
+  footer: [["About", "/about"], ["Programs", "/programs"], ["Blog", "/blog"], ["Gallery", "/gallery"]],
   legal: [["Privacy Policy", "/privacy"], ["Terms of Service", "/terms"], ["Cookie Policy", "/cookies"]],
 };
 
