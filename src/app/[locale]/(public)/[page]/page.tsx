@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/[page]">
 /** Custom pages created in Admin → Pages (e.g. /annual-report). */
 export default function CustomCmsPage({ params }: PageProps<"/[locale]/[page]">) {
   return (
-    <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-16"><PageSkeleton /></div>}>
+    <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-12"><PageSkeleton /></div>}>
       <CustomPage params={params} />
     </Suspense>
   );

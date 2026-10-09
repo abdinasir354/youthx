@@ -118,7 +118,7 @@ export function AdminShell({
           </div>
         )}
 
-        <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b border-border bg-white/95 px-4 backdrop-blur sm:px-6">
+        <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b border-border bg-white px-4 sm:px-6">
           <button
             type="button"
             onClick={() => setOpen(true)}

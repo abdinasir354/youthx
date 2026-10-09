@@ -173,7 +173,7 @@ export function PageBuilder({ page: initialPage, sections: initialSections, rela
           </div>
 
           {sections.length === 0 ? (
-            <div className="rounded-lg border border-dashed border-border bg-white px-6 py-12 text-center">
+            <div className="rounded-lg border border-dashed border-border bg-white px-6 py-10 text-center">
               <FileText className="mx-auto size-8 text-secondary/40" aria-hidden />
               <p className="mt-2 font-semibold text-secondary">This page has no sections yet</p>
               <p className="text-sm text-muted-foreground">Add a hero, text, cards, a grid of programs, and more.</p>

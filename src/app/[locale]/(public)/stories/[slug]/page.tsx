@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/stories/
 
 export default function StoryPage({ params }: PageProps<"/[locale]/stories/[slug]">) {
   return (
-    <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-16"><PageSkeleton /></div>}>
+    <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-12"><PageSkeleton /></div>}>
       <StoryLoader params={params} />
     </Suspense>
   );

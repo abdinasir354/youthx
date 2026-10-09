@@ -10,7 +10,6 @@ import { pageMetadata } from "@/lib/seo";
 import { isPastDeadline } from "@/lib/utils";
 import type { Opportunity } from "@/types/database.types";
 import { Container, RichText, formatEventDate, pill } from "@/components/site/basics";
-import { FloatingShapes } from "@/components/site/shapes";
 import { Countdown } from "@/components/opportunities/countdown";
 import { PageSkeleton, Skeleton } from "@/components/ui/misc";
 
@@ -23,7 +22,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/opportun
 
 export default function OpportunityPage({ params }: PageProps<"/[locale]/opportunities/[slug]">) {
   return (
-    <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-10"><PageSkeleton /></div>}>
+    <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-8"><PageSkeleton /></div>}>
       <OpportunityDetail params={params} />
     </Suspense>
   );
@@ -57,25 +56,24 @@ async function OpportunityDetail({ params }: { params: Promise<{ slug: string }>
     <>
       {/* The pass */}
       <section className="relative overflow-hidden bg-surface">
-        <FloatingShapes variant="a" />
-        <Container className="relative py-10 sm:py-14">
+        <Container className="relative py-8 sm:py-10">
           <Link href="/opportunities" className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-ink">
             <ArrowLeft className="size-4" aria-hidden /> {ts("allOpportunities")}
           </Link>
 
-          <article className="mt-8 flex flex-col overflow-hidden rounded-[2rem] shadow-[0_40px_80px_-40px_rgba(18,53,46,0.45)] lg:flex-row">
+          <article className="mt-8 flex flex-col overflow-hidden rounded-xl lg:flex-row">
             {/* Main part */}
-            <div className="relative flex-1 bg-white p-8 sm:p-12">
+            <div className="relative flex-1 bg-white p-6 sm:p-8">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-primary-soft px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#4d6b00]">{tt(opp.type)}</span>
-                {opp.is_featured && <span className="rounded-full bg-[#fdebc8] px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#8a5a00]">{ts("featured")}</span>}
+                <span className="rounded-full bg-primary-soft px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#4d6b00]">{tt(opp.type)}</span>
+                {opp.is_featured && <span className="rounded-full bg-[#fdebc8] px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#8a5a00]">{ts("featured")}</span>}
               </div>
-              <h1 className="display mt-6 max-w-3xl text-balance text-4xl text-ink sm:text-5xl lg:text-[3.4rem]">{opp.title}</h1>
+              <h1 className="display mt-4 max-w-3xl text-balance text-3xl text-ink sm:text-4xl lg:text-[2.75rem]">{opp.title}</h1>
               <div className="mt-6 flex items-center gap-3">
-                <span aria-hidden className="flex size-11 items-center justify-center rounded-xl bg-ink text-lg font-extrabold text-primary">{org.trim()[0]?.toUpperCase()}</span>
+                <span aria-hidden className="flex size-11 items-center justify-center rounded-xl bg-ink text-lg font-semibold text-primary">{org.trim()[0]?.toUpperCase()}</span>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">{ts("offeredBy")}</p>
-                  <p className="font-bold text-ink">{org}</p>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{ts("offeredBy")}</p>
+                  <p className="font-semibold text-ink">{org}</p>
                 </div>
               </div>
               {opp.summary && <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">{opp.summary}</p>}
@@ -98,10 +96,9 @@ async function OpportunityDetail({ params }: { params: Promise<{ slug: string }>
             </div>
 
             {/* Stub */}
-            <aside id="apply" className="relative flex flex-col justify-between gap-8 overflow-hidden bg-ink p-8 text-white sm:p-10 lg:w-[22rem]">
-              <FloatingShapes variant="c" />
+            <aside id="apply" className="relative flex flex-col justify-between gap-6 overflow-hidden bg-ink p-6 text-white sm:p-8 lg:w-[22rem]">
               <div className="relative">
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">{ts("applyBy")}</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-primary">{ts("applyBy")}</p>
                 <div className="mt-4">
                   <Countdown deadline={opp.apply_deadline} />
                 </div>
@@ -119,16 +116,16 @@ async function OpportunityDetail({ params }: { params: Promise<{ slug: string }>
 
       {/* Details */}
       <section className="bg-white">
-        <Container className="grid gap-10 py-10 sm:py-12 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        <Container className="grid gap-8 py-8 sm:py-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
           <div className="space-y-6">
             {opp.description && (
-              <section aria-labelledby="opp-about" className="rounded-[2rem] border border-border p-8 sm:p-10">
+              <section aria-labelledby="opp-about" className="rounded-xl border border-border p-6 sm:p-8">
                 <h2 id="opp-about" className="heading text-3xl text-ink">{t("about")}</h2>
                 <RichText markdown={opp.description} className="mt-5 break-words" />
               </section>
             )}
             {opp.requirements && (
-              <section aria-labelledby="opp-who" className="rounded-[2rem] bg-surface p-8 sm:p-10">
+              <section aria-labelledby="opp-who" className="rounded-xl bg-surface p-6 sm:p-8">
                 <h2 id="opp-who" className="heading text-3xl text-ink">{ts("whoCanApply")}</h2>
                 <RichText markdown={opp.requirements} className="mt-5 break-words" />
               </section>
@@ -136,8 +133,8 @@ async function OpportunityDetail({ params }: { params: Promise<{ slug: string }>
           </div>
 
           <aside className="h-fit space-y-4 lg:sticky lg:top-24">
-            <div className="rounded-[2rem] border border-border p-7">
-              <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">{ts("atAGlance")}</h2>
+            <div className="rounded-xl border border-border p-7">
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{ts("atAGlance")}</h2>
               <dl className="mt-5 space-y-4">
                 {glance.map((g) => (
                   <div key={g.label} className="flex gap-3">
@@ -145,7 +142,7 @@ async function OpportunityDetail({ params }: { params: Promise<{ slug: string }>
                       <g.icon className="size-4" aria-hidden />
                     </span>
                     <div className="min-w-0">
-                      <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{g.label}</dt>
+                      <dt className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{g.label}</dt>
                       <dd className="mt-0.5 font-semibold text-ink">{g.value}</dd>
                     </div>
                   </div>

@@ -13,16 +13,16 @@ export default function DonatePage() {
   const t = useTranslations("donate");
   return (
     <>
-      <section className="bg-secondary py-14 text-white">
+      <section className="bg-secondary py-10 text-white">
         <div className="mx-auto max-w-5xl px-4">
           <HeartHandshake className="size-10 text-primary" />
-          <h1 className="mt-3 text-4xl font-extrabold sm:text-5xl">{t("title")}</h1>
+          <h1 className="mt-3 text-3xl font-semibold sm:text-4xl">{t("title")}</h1>
           <p className="mt-3 max-w-2xl text-lg text-white/80">{t("subtitle")}</p>
         </div>
       </section>
-      <div className="mx-auto grid max-w-5xl gap-8 px-4 py-12 lg:grid-cols-[1fr_320px]">
-        <div className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-          <h2 className="text-xl font-bold text-secondary">{t("howTitle")}</h2>
+      <div className="mx-auto grid max-w-5xl gap-6 px-4 py-10 lg:grid-cols-[1fr_320px]">
+        <div className="rounded-2xl border border-border bg-white p-6">
+          <h2 className="text-xl font-semibold text-secondary">{t("howTitle")}</h2>
           <p className="mb-6 mt-1 text-sm text-muted-foreground">{t("howText")}</p>
           <DonationForm />
         </div>

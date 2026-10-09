@@ -16,7 +16,7 @@ function Success({ title, text }: { title: string; text: string }) {
       <span className="flex items-start gap-3">
         <CheckCircle2 className="mt-0.5 size-5 shrink-0" aria-hidden />
         <span>
-          <span className="block font-bold">{title}</span>
+          <span className="block font-semibold">{title}</span>
           <span className="mt-1 block">{text}</span>
         </span>
       </span>

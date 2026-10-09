@@ -98,7 +98,7 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
           </div>
         </section>
       ))}
-      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-white/95 backdrop-blur lg:left-64">
+      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-white lg:left-64">
         <div className="mx-auto flex max-w-7xl justify-end px-4 py-3 sm:px-6">
           <Button variant="secondary" onClick={submit} disabled={pending}>
             {pending ? <Loader2 className="animate-spin" /> : <Save />} Save settings

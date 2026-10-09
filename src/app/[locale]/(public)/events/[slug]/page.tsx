@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/events/[
 
 export default function EventPage({ params }: PageProps<"/[locale]/events/[slug]">) {
   return (
-    <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-16"><PageSkeleton /></div>}>
+    <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-12"><PageSkeleton /></div>}>
       <EventDetail params={params} />
     </Suspense>
   );

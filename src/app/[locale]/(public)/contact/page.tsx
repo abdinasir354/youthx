@@ -8,7 +8,7 @@ import { Sections } from "@/components/cms/sections";
 import { ContactForm } from "@/components/forms/contact-form";
 import { Container } from "@/components/site/basics";
 import { cmsPageMetadata } from "@/components/site/cms-page";
-import { FloatingShapes, PhotoPlaceholder } from "@/components/site/shapes";
+import { PhotoPlaceholder } from "@/components/site/shapes";
 import { Skeleton } from "@/components/ui/misc";
 
 export async function generateMetadata() {
@@ -16,7 +16,7 @@ export async function generateMetadata() {
 }
 
 const str = (v: unknown) => (typeof v === "string" && v.trim() ? v : null);
-const glass = "rounded-2xl bg-white/15 ring-1 ring-white/30 backdrop-blur-md";
+const chip = "rounded-lg bg-ink/75 ring-1 ring-white/15";
 
 /**
  * Contact: one large split card — a photo panel (headline, location, email, phone) beside a
@@ -37,57 +37,54 @@ export default async function ContactPage() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-surface">
-        <FloatingShapes variant="c" />
-        <Container className="relative py-8 sm:py-10">
-          <div className="grid overflow-hidden rounded-[2.75rem] bg-white shadow-[0_40px_90px_-50px_rgba(18,53,46,0.55)] lg:grid-cols-[1fr_1.1fr]">
+      <section className="bg-surface">
+        <Container className="py-8 sm:py-10">
+          <div className="grid overflow-hidden rounded-2xl border border-border bg-white lg:grid-cols-[1fr_1.1fr]">
             {/* Photo panel */}
             <div className="relative p-3">
-              <div className="relative flex min-h-[18rem] flex-col justify-end overflow-hidden rounded-[2.25rem] p-6 text-white sm:p-7 lg:h-full">
+              <div className="relative flex min-h-[18rem] flex-col justify-end overflow-hidden rounded-xl p-6 text-white sm:p-7 lg:h-full">
                 {photo ? (
                   <Image src={photo} alt={str(hero?.image_alt) ?? ""} fill preload sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
                 ) : (
                   <PhotoPlaceholder className="absolute inset-0" />
                 )}
-                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-transparent" />
-                {/* Notched corner */}
-                <span aria-hidden className="absolute left-0 top-0 size-16 rounded-br-[1.75rem] bg-white" />
+                <div aria-hidden className="absolute inset-0 bg-ink/45" />
 
                 {city && (
                   <a
                     href={mapsUrl ?? undefined}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`${glass} absolute right-5 top-5 flex max-w-[16rem] items-start gap-2.5 px-4 py-2.5 text-left transition hover:bg-white/25`}
+                    className={`${chip} absolute right-5 top-5 flex max-w-[16rem] items-start gap-2.5 px-4 py-2.5 text-left transition-colors hover:bg-ink`}
                   >
                     <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden />
                     <span>
-                      <span className="block text-sm font-bold">{s.site_name}</span>
+                      <span className="block text-sm font-semibold">{s.site_name}</span>
                       <span className="block text-xs text-white/80">{s.address?.replace(/\s*\n\s*/g, " ")}</span>
                     </span>
                   </a>
                 )}
 
                 <div className="relative">
-                  <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-primary">{t("contactEyebrow")}</p>
-                  <h1 className="display mt-2 text-balance text-3xl sm:text-4xl">
-                    {heading} {accent && <em className="font-extrabold not-italic text-primary">{accent}</em>}
+                  <p className="text-xs font-semibold uppercase tracking-wider text-primary">{t("contactEyebrow")}</p>
+                  <h1 className="display mt-2 text-balance text-2xl sm:text-3xl">
+                    {heading} {accent && <em className="font-semibold not-italic text-primary">{accent}</em>}
                   </h1>
                   <div className="mt-5 grid gap-2.5 sm:grid-cols-2">
                     {s.contact_email && (
-                      <a href={`mailto:${s.contact_email}`} className={`${glass} flex items-center gap-3 px-4 py-3 transition hover:bg-white/25`}>
+                      <a href={`mailto:${s.contact_email}`} className={`${chip} flex items-center gap-3 px-4 py-3 transition-colors hover:bg-ink`}>
                         <Mail className="size-5 shrink-0" aria-hidden />
                         <span className="min-w-0">
-                          <span className="block text-[11px] font-bold uppercase tracking-[0.18em] text-white/75">{t("emailUs")}</span>
+                          <span className="block text-xs text-white/75">{t("emailUs")}</span>
                           <span className="block truncate text-sm font-semibold">{s.contact_email}</span>
                         </span>
                       </a>
                     )}
                     {s.contact_phone && (
-                      <a href={`tel:${s.contact_phone.replace(/\s/g, "")}`} className={`${glass} flex items-center gap-3 px-4 py-3 transition hover:bg-white/25`}>
+                      <a href={`tel:${s.contact_phone.replace(/\s/g, "")}`} className={`${chip} flex items-center gap-3 px-4 py-3 transition-colors hover:bg-ink`}>
                         <Phone className="size-5 shrink-0" aria-hidden />
                         <span className="min-w-0">
-                          <span className="block text-[11px] font-bold uppercase tracking-[0.18em] text-white/75">{t("callUs")}</span>
+                          <span className="block text-xs text-white/75">{t("callUs")}</span>
                           <span className="block truncate text-sm font-semibold">{s.contact_phone}</span>
                         </span>
                       </a>
@@ -108,12 +105,12 @@ export default async function ContactPage() {
               {(socials.length > 0 || mapsUrl) && (
                 <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-border pt-4">
                   {socials.map((n) => (
-                    <a key={n} href={s.social[n]} target="_blank" rel="noopener noreferrer me" className="rounded-full border border-border px-4 py-2 text-sm font-semibold text-ink hover:border-secondary/40">
+                    <a key={n} href={s.social[n]} target="_blank" rel="noopener noreferrer me" className="rounded-lg border border-border px-3.5 py-2 text-sm font-medium text-ink hover:border-secondary/40">
                       {SOCIAL_LABELS[n]}
                     </a>
                   ))}
                   {mapsUrl && (
-                    <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-sm font-semibold text-ink hover:border-secondary/40">
+                    <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 text-sm font-medium text-ink hover:border-secondary/40">
                       {t("openMaps")} <ArrowUpRight className="size-4" aria-hidden />
                     </a>
                   )}

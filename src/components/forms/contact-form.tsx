@@ -30,7 +30,7 @@ function Line<V extends FieldValues>({ form, name, label, optional, className, c
   const err = errorText((form.formState.errors[name] as { message?: string } | undefined)?.message);
   return (
     <div className={className}>
-      <label htmlFor={id} className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.2em] text-[#5f8500]">
+      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-ink">
         {label}
         {optional && <span className="ml-1.5 font-semibold normal-case tracking-normal text-muted-foreground">({optional})</span>}
       </label>
@@ -70,7 +70,7 @@ export function ContactForm() {
 
   if (sent) {
     return (
-      <div role="status" className="flex flex-col items-start gap-4 py-10">
+      <div role="status" className="flex flex-col items-start gap-4 py-8">
         <span className="flex size-14 items-center justify-center rounded-full bg-primary text-ink">
           <CheckCircle2 className="size-7" aria-hidden />
         </span>
@@ -82,7 +82,7 @@ export function ContactForm() {
 
   const opt = common("optional");
   return (
-    <form onSubmit={onSubmit} className="relative grid gap-x-8 gap-y-5 sm:grid-cols-2" noValidate>
+    <form onSubmit={onSubmit} className="relative grid gap-x-6 gap-y-5 sm:grid-cols-2" noValidate>
       <Honeypot form={form} />
       <Line form={form} name="name" label={ts("fullName")}>
         {(p) => <input id={p.id} aria-invalid={p.invalid} aria-describedby={p.describedBy} autoComplete="name" placeholder={ts("namePlaceholder")} className={line} {...form.register("name")} />}
@@ -116,7 +116,7 @@ export function ContactForm() {
           type="submit"
           disabled={pending}
           aria-busy={pending}
-          className="inline-flex h-12 items-center gap-3 rounded-full bg-ink px-8 text-sm font-extrabold uppercase tracking-[0.2em] text-white shadow-[0_20px_40px_-15px_rgba(18,53,46,0.6)] transition hover:bg-secondary-hover disabled:opacity-60"
+          className="inline-flex h-12 items-center gap-3 rounded-lg bg-ink px-6 text-[15px] font-semibold text-white transition hover:bg-secondary-hover disabled:opacity-60"
         >
           {pending && <Loader2 className="size-4 animate-spin" aria-hidden />}
           {t("send")} <ArrowRight className="size-4" aria-hidden />

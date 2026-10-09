@@ -12,8 +12,8 @@ export async function generateMetadata() {
 export default async function UnsubscribePage({ searchParams }: PageProps<"/[locale]/newsletter/unsubscribe">) {
   const t = await getTranslations("footer");
   return (
-    <Container narrow className="py-20 text-center">
-      <h1 className="text-3xl font-bold text-secondary">{t("unsubscribeTitle")}</h1>
+    <Container narrow className="py-14 text-center">
+      <h1 className="text-3xl font-semibold text-secondary">{t("unsubscribeTitle")}</h1>
       <p className="mt-3 text-muted-foreground">{t("unsubscribeText")}</p>
       <Suspense fallback={null}>
         <TokenButton searchParams={searchParams} />

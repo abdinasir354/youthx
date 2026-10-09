@@ -23,7 +23,7 @@ export default function PreviewPage({ params }: PageProps<"/[locale]/preview/[ki
     <>
       <SiteHeader />
       <main id="main" className="flex-1">
-        <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-16"><PageSkeleton /></div>}>
+        <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-12"><PageSkeleton /></div>}>
           <Preview params={params} />
         </Suspense>
       </main>

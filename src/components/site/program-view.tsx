@@ -7,7 +7,6 @@ import type { Program } from "@/types/cms";
 import { Sections } from "@/components/cms/sections";
 import { Container, RichText, SectionHeading, SmartLink, pill } from "./basics";
 import { EventCard, ProjectCard, ResourceCard, StoryCard } from "./cards";
-import { FloatingShapes } from "./shapes";
 
 /**
  * Program page (used by /programs/[slug] and the admin preview). Kept deliberately simple:
@@ -52,28 +51,27 @@ export async function ProgramView({ program }: { program: Program }) {
     <>
       {/* 1. Header */}
       <section className="relative overflow-hidden bg-surface">
-        <FloatingShapes variant="c" />
         <Container narrow className="relative pb-8 pt-8 sm:pb-10 sm:pt-10">
           <Link href="/programs" className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-ink">
             <ArrowLeft className="size-4" aria-hidden /> {t("allPrograms")}
           </Link>
           {program.category && (
-            <p className="mt-8 inline-flex rounded-full bg-primary-soft px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#4d6b00]">{program.category.name}</p>
+            <p className="mt-8 inline-flex rounded-full bg-primary-soft px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#4d6b00]">{program.category.name}</p>
           )}
-          <h1 className="display mt-5 text-balance text-5xl text-ink sm:text-6xl">{program.title}</h1>
+          <h1 className="display mt-3 text-balance text-3xl text-ink sm:text-4xl lg:text-[2.75rem]">{program.title}</h1>
           {program.short_description && <p className="mt-6 text-pretty text-xl leading-relaxed text-muted-foreground">{program.short_description}</p>}
           {actions && <div className="mt-9">{actions}</div>}
         </Container>
       </section>
 
       <div className="bg-white">
-        <Container narrow className="py-10 sm:py-12">
+        <Container narrow className="py-8 sm:py-10">
           {/* 2. Key facts */}
           {facts.length > 0 && (
             <dl className="grid gap-3 sm:grid-cols-3">
               {facts.map((f) => (
-                <div key={f.label} className="rounded-2xl bg-surface p-5">
-                  <dt className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                <div key={f.label} className="rounded-xl bg-surface p-4">
+                  <dt className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     <f.icon className="size-4 text-secondary" aria-hidden /> {f.label}
                   </dt>
                   <dd className="mt-2 text-lg font-semibold leading-snug text-ink">{f.value}</dd>
@@ -83,14 +81,14 @@ export async function ProgramView({ program }: { program: Program }) {
           )}
 
           {program.featured_image_url && (
-            <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-[2rem]">
+            <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-xl">
               <Image src={program.featured_image_url} alt="" fill preload sizes="(min-width: 768px) 768px, 100vw" className="object-cover" />
             </div>
           )}
 
           {/* 3. About */}
           {program.description && (
-            <section aria-labelledby="about-program" className="mt-14">
+            <section aria-labelledby="about-program" className="mt-10">
               <h2 id="about-program" className="heading text-3xl text-ink">{t("aboutProgram")}</h2>
               <RichText markdown={program.description} className="mt-5 break-words" />
             </section>
@@ -98,11 +96,11 @@ export async function ProgramView({ program }: { program: Program }) {
 
           {/* 4. Objectives */}
           {program.objectives.length > 0 && (
-            <section aria-labelledby="objectives" className="mt-14">
+            <section aria-labelledby="objectives" className="mt-10">
               <h2 id="objectives" className="heading text-3xl text-ink">{t("whatYouGain")}</h2>
               <ul className="mt-6 space-y-3">
                 {program.objectives.map((o) => (
-                  <li key={o} className="flex gap-4 rounded-2xl border border-border p-4 text-lg">
+                  <li key={o} className="flex gap-3 rounded-xl border border-border p-4 text-base">
                     <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary text-ink" aria-hidden>
                       <Check className="size-4" />
                     </span>
@@ -114,9 +112,9 @@ export async function ProgramView({ program }: { program: Program }) {
           )}
 
           {program.gallery.length > 0 && (
-            <ul className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3" aria-label={t("gallery")}>
+            <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3" aria-label={t("gallery")}>
               {program.gallery.map((src, i) => (
-                <li key={src} className="relative aspect-square overflow-hidden rounded-2xl bg-muted">
+                <li key={src} className="relative aspect-square overflow-hidden rounded-xl bg-muted">
                   <Image src={src} alt={`${program.title} — ${i + 1}`} fill sizes="(min-width: 768px) 250px, 50vw" className="object-cover" loading="lazy" />
                 </li>
               ))}
@@ -134,10 +132,10 @@ export async function ProgramView({ program }: { program: Program }) {
       {related.stories.length > 0 && <RelatedBlock heading={t("relatedStories")}>{related.stories.map((s) => <StoryCard key={s.id} story={s} />)}</RelatedBlock>}
 
       {/* 6. One clear call to action */}
-      <section className="bg-surface py-8 sm:py-10">
+      <section className="bg-surface py-8 sm:py-8">
         <Container>
-          <div className="rounded-[2.5rem] bg-ink px-8 py-12 text-center text-white sm:px-14 sm:py-16">
-            <h2 className="heading text-balance text-3xl sm:text-4xl">{t("interested")}</h2>
+          <div className="rounded-2xl bg-ink px-6 py-8 text-center text-white sm:px-10 sm:py-10">
+            <h2 className="heading text-balance text-2xl sm:text-3xl">{t("interested")}</h2>
             <p className="mx-auto mt-3 max-w-xl text-lg text-white/75">{t("interestedText")}</p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               {program.application_url ? (
@@ -162,7 +160,7 @@ export async function ProgramView({ program }: { program: Program }) {
 
 function RelatedBlock({ heading, children }: { heading: string; children: React.ReactNode }) {
   return (
-    <section className="bg-surface py-10 sm:py-12">
+    <section className="bg-surface py-8 sm:py-10">
       <Container>
         <SectionHeading heading={heading} />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{children}</div>

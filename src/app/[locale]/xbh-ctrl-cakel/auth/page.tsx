@@ -13,12 +13,12 @@ export const metadata: Metadata = {
 
 export default function AdminLoginPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-muted px-4 py-12">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-muted px-4 py-10">
       <main id="main" className="w-full max-w-sm">
         <div className="mb-6 flex justify-center">
           <Logo />
         </div>
-        <div className="rounded-lg border border-border bg-white p-6 shadow-sm sm:p-8">
+        <div className="rounded-lg border border-border bg-white p-6 shadow-sm sm:p-6">
           <div className="mb-6 flex items-center gap-2">
             <ShieldCheck className="size-5 text-secondary" aria-hidden />
             <h1 className="text-lg font-bold text-secondary">Admin sign in</h1>

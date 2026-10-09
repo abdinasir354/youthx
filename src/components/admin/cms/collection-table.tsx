@@ -70,7 +70,7 @@ export function CollectionTable({ collection, rows: initial, sortable, canPublis
 
   if (rows.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-border bg-white px-6 py-14 text-center">
+      <div className="rounded-lg border border-dashed border-border bg-white px-6 py-10 text-center">
         <p className="font-semibold text-secondary">{emptyText}</p>
         <Link href={`/admin/${collection}/new`} className="mt-3 inline-block text-sm font-medium text-secondary underline underline-offset-2">
           Create the first one

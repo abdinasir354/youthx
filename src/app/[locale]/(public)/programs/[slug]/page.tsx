@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/programs
 
 export default function ProgramPage({ params }: PageProps<"/[locale]/programs/[slug]">) {
   return (
-    <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-16"><PageSkeleton /></div>}>
+    <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-12"><PageSkeleton /></div>}>
       <ProgramDetail params={params} />
     </Suspense>
   );

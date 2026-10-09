@@ -52,7 +52,7 @@ export function CookieConsent() {
       aria-describedby="cookie-text"
       className="fixed inset-x-3 bottom-3 z-50 sm:inset-x-auto sm:bottom-5 sm:left-5 sm:max-w-md"
     >
-      <div className="relative rounded-[1.75rem] border border-border bg-white p-6 shadow-[0_30px_60px_-20px_rgba(18,53,46,0.45)]">
+      <div className="relative rounded-xl border border-border bg-white p-6">
         <button
           type="button"
           onClick={() => choose("essential")}
@@ -62,10 +62,10 @@ export function CookieConsent() {
           <X className="size-4" />
         </button>
         <div className="flex items-center gap-3">
-          <span className="flex size-10 items-center justify-center rounded-2xl bg-primary-soft text-[#4d6b00]">
+          <span className="flex size-10 items-center justify-center rounded-lg bg-primary-soft text-[#4d6b00]">
             <Cookie className="size-5" aria-hidden />
           </span>
-          <h2 id="cookie-title" className="text-lg font-bold text-ink">{t("title")}</h2>
+          <h2 id="cookie-title" className="text-lg font-semibold text-ink">{t("title")}</h2>
         </div>
         <p id="cookie-text" className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
           {t("text")}{" "}
@@ -74,13 +74,13 @@ export function CookieConsent() {
           </Link>
         </p>
         <div className="mt-5 grid gap-2 sm:grid-cols-3">
-          <button type="button" onClick={() => choose("all")} className="h-11 rounded-full bg-ink px-4 text-sm font-bold text-white transition hover:bg-secondary-hover sm:order-3">
+          <button type="button" onClick={() => choose("all")} className="h-10 rounded-lg bg-ink px-4 text-sm font-semibold text-white transition hover:bg-secondary-hover sm:order-3">
             {t("acceptAll")}
           </button>
-          <button type="button" onClick={() => choose("essential")} className="h-11 rounded-full border border-border px-4 text-sm font-bold text-ink transition hover:border-secondary/40 sm:order-2">
+          <button type="button" onClick={() => choose("essential")} className="h-10 rounded-lg border border-border px-4 text-sm font-semibold text-ink transition hover:border-secondary/40 sm:order-2">
             {t("essentialOnly")}
           </button>
-          <button type="button" onClick={() => choose("rejected")} className="h-11 rounded-full px-4 text-sm font-bold text-ink underline-offset-4 transition hover:underline sm:order-1">
+          <button type="button" onClick={() => choose("rejected")} className="h-10 rounded-lg px-4 text-sm font-semibold text-ink underline-offset-4 transition hover:underline sm:order-1">
             {t("rejectAll")}
           </button>
         </div>

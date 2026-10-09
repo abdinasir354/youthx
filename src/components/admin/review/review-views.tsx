@@ -72,7 +72,7 @@ export async function ReviewList({ kind, searchParams, intro }: { kind: ReviewKi
       </form>
 
       {rows.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-border bg-white px-6 py-14 text-center text-sm text-muted-foreground">
+        <div className="rounded-lg border border-dashed border-border bg-white px-6 py-10 text-center text-sm text-muted-foreground">
           {q || status ? "No applications match." : "No applications yet. They'll appear here as soon as someone applies."}
         </div>
       ) : (
