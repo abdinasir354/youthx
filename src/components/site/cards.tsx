@@ -170,7 +170,7 @@ export function StoryCard({ story }: { story: Story }) {
   return (
     <article className={cn(card, "p-8")}>
       <Quote className="size-9 text-primary" aria-hidden />
-      <blockquote className="mt-5 line-clamp-6 text-pretty text-lg leading-relaxed text-ink/85">“{story.quote || story.introduction}”</blockquote>
+      <blockquote className="mt-5 line-clamp-6 text-pretty text-lg leading-relaxed text-ink/85">“{(story.quote || story.introduction || "").trim().replace(/^[“"'‘]+|[”"'’]+$/g, "").trim()}”</blockquote>
       <div className="mt-auto flex items-center gap-4 border-t border-border pt-6">
         <span className="relative flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-secondary text-lg font-bold text-primary">
           {story.profile_image_url ? (

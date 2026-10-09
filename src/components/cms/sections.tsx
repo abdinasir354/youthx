@@ -1,13 +1,14 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import { ChevronDown, Sparkles } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Quote, Sparkles } from "lucide-react";
 import { getEvents, getFaqs, getPartnerLogos, getProgramCategories, getProjects, getPrograms, getResources, getStories, getUpcomingEvents, pickItems } from "@/lib/data/cms";
 import { getImpactStats, getOpenOpportunities } from "@/lib/data/public";
 import { markdownToSafeHtml } from "@/lib/markdown";
 import { cn } from "@/lib/utils";
-import type { CmsSection } from "@/types/cms";
+import type { CmsSection, Story } from "@/types/cms";
 import { OpportunityCard } from "@/components/opportunities/opportunity-card";
 import { ArrowLink, Container, Eyebrow, RichText, SectionHeading, SmartLink, pill } from "@/components/site/basics";
+import { Link } from "@/i18n/navigation";
 import { EventCard, ProgramCard, ProjectCard, ResourceCard, StoryCard } from "@/components/site/cards";
 import { FloatingShapes, PhotoPlaceholder } from "@/components/site/shapes";
 import { CmsIcon } from "./icon";
@@ -121,10 +122,12 @@ async function Section({ section, tone, first }: { section: CmsSection; tone: "s
     case "cards":
       return <Cards data={d} wrap={wrap} headingId={headingId} />;
 
+    case "story_grid":
+      return <StorySpotlight data={d} wrap={wrap} headingId={headingId} />;
+
     case "program_grid":
     case "opportunity_grid":
     case "event_grid":
-    case "story_grid":
     case "project_grid":
     case "resource_grid":
       return <Grid section={section} wrap={wrap} headingId={headingId} />;
@@ -792,6 +795,83 @@ async function Grid({ section, wrap, headingId }: { section: CmsSection; wrap: (
         </div>
       )}
     </>,
+  );
+}
+
+/** Quote text without any quote marks the editor already typed (we add our own). */
+const bareQuote = (q: string) => q.trim().replace(/^[“"'‘]+|[”"'’]+$/g, "").trim();
+
+const initials = (name: string) => name.split(" ").map((p) => p[0]).slice(0, 2).join("");
+
+/**
+ * Stories: heading on the left, the lead story as a large dark "spotlight" card on the right,
+ * any further stories as compact rows underneath.
+ */
+async function StorySpotlight({ data: d, wrap, headingId }: { data: CmsSection["data"]; wrap: (c: React.ReactNode, o?: { narrow?: boolean; shapes?: "a" | "b" | "c" }) => React.ReactNode; headingId: string }) {
+  const [stories, t] = await Promise.all([getStories(), getTranslations("site")]);
+  const items = pickItems(stories, d.mode, d.ids, d.limit) as Story[];
+  if (!items.length && d.hide_when_empty) return null;
+  const cta = link(d.cta);
+  const [lead, ...more] = items;
+
+  return wrap(
+    <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div>
+        {str(d.eyebrow) && <Eyebrow>{str(d.eyebrow)}</Eyebrow>}
+        {str(d.heading) && <h2 id={headingId} className="heading mt-2 text-balance text-3xl text-ink sm:text-4xl lg:text-5xl">{str(d.heading)}</h2>}
+        {str(d.intro) && <p className="mt-4 max-w-md text-pretty text-lg leading-relaxed text-muted-foreground">{str(d.intro)}</p>}
+        <span aria-hidden className="mt-8 block h-1.5 w-20 rounded-full bg-primary" />
+        {cta && items.length > 0 && <ArrowLink href={cta.href} className="mt-8">{cta.label}</ArrowLink>}
+      </div>
+
+      <div>
+        {lead ? (
+          <>
+            <article className="relative overflow-hidden rounded-[2rem] bg-ink p-8 text-white shadow-[0_40px_80px_-40px_rgba(18,53,46,0.6)] sm:p-10">
+              <span aria-hidden className="absolute -right-16 -top-16 size-56 rounded-full bg-primary/15 blur-2xl" />
+              <span aria-hidden className="absolute -bottom-10 right-10 size-28 rounded-full border-[10px] border-primary/20" />
+              <span className="relative flex size-12 items-center justify-center rounded-2xl bg-primary text-ink">
+                <Quote className="size-6" aria-hidden />
+              </span>
+              <blockquote className="heading relative mt-6 text-pretty text-2xl leading-snug sm:text-3xl">“{bareQuote(lead.quote || lead.introduction || lead.title)}”</blockquote>
+              <div className="relative mt-8 flex flex-wrap items-center gap-4 border-t border-white/10 pt-6">
+                <span className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white/10 text-lg font-bold text-primary ring-2 ring-primary">
+                  {lead.profile_image_url ? <Image src={lead.profile_image_url} alt="" fill sizes="64px" className="object-cover" /> : <span aria-hidden>{initials(lead.person_name)}</span>}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold">{lead.person_name}</p>
+                  <h3 className="mt-0.5 text-sm text-white/65">{lead.title}</h3>
+                </div>
+                <Link href={`/stories/${lead.slug}`} className={cn(pill.primary, "h-11 px-5 text-sm")}>
+                  {t("readStory")} <ArrowUpRight className="size-4" aria-hidden />
+                </Link>
+              </div>
+            </article>
+            {more.length > 0 && (
+              <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                {more.map((s) => (
+                  <li key={s.id}>
+                    <Link href={`/stories/${s.slug}`} className="group flex h-full gap-4 rounded-3xl border border-border bg-white p-5 transition hover:border-secondary/30 hover:shadow-lg">
+                      <span className="relative flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-secondary text-sm font-bold text-primary">
+                        {s.profile_image_url ? <Image src={s.profile_image_url} alt="" fill sizes="48px" className="object-cover" /> : <span aria-hidden>{initials(s.person_name)}</span>}
+                      </span>
+                      <span className="min-w-0">
+                        <span className="line-clamp-2 text-ink/85">“{bareQuote(s.quote || s.introduction || s.title)}”</span>
+                        <span className="mt-2 block text-sm font-bold text-ink group-hover:text-secondary">{s.person_name}</span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
+        ) : (
+          <div className="rounded-3xl border border-dashed border-border bg-white px-6 py-14 text-center">
+            <p className="text-lg text-muted-foreground">{str(d.empty_text) ?? t("nothingYet")}</p>
+          </div>
+        )}
+      </div>
+    </div>,
   );
 }
 

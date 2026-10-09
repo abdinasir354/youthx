@@ -282,11 +282,12 @@ $j$[
   {
     "type": "story_grid",
     "data": {
-      "eyebrow": "Stories of impact",
-      "heading": "Stories from our community.",
+      "eyebrow": "Our Story",
+      "heading": "Our Journey Since 2026",
       "mode": "featured",
       "limit": 3,
-      "hide_when_empty": true
+      "hide_when_empty": true,
+      "intro": "We are a new foundation with a bold vision. Here is how far we have come in our first months of operation."
     }
   },
   {
@@ -543,11 +544,12 @@ $j$[
     "type": "story_grid",
     "anchor": "stories",
     "data": {
-      "eyebrow": "Stories of impact",
-      "heading": "Stories from our community.",
+      "eyebrow": "Our Story",
+      "heading": "Our Journey Since 2026",
       "mode": "latest",
       "limit": 3,
-      "hide_when_empty": true
+      "hide_when_empty": true,
+      "intro": "We are a new foundation with a bold vision. Here is how far we have come in our first months of operation."
     }
   },
   {
