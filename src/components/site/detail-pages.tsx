@@ -252,23 +252,29 @@ export async function StoryDetail({ story }: { story: Story }) {
 
             {chapters.map((c, i) => {
               const n = i + 1 + (opening ? 1 : 0);
+              // Chapters face each other across the line: one on the left, the next on the right, staggered.
               const right = n % 2 === 0;
               return (
-                <li key={i} className="relative grid items-center gap-6 pb-14 pl-14 last:pb-0 lg:grid-cols-2 lg:gap-24 lg:pl-0">
-                  {node(n)}
-                  <div className={cn(right ? "lg:order-2" : "lg:order-1")}>
-                    <article className="relative overflow-hidden rounded-[1.75rem] border border-border bg-surface/60 p-6 sm:p-8">
-                      <span aria-hidden className="absolute inset-y-0 left-0 w-1.5 bg-primary" />
-                      <p className="text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">
-                        {t("chapter")} {pad(n)}
-                      </p>
-                      {c.title && <h2 className="heading mt-2 text-balance text-2xl text-ink sm:text-[1.75rem]">{c.title}</h2>}
-                      {c.markdown && <RichText markdown={c.markdown} className="mt-3 break-words" />}
-                    </article>
-                  </div>
-                  <div aria-hidden className={cn("hidden lg:block", right ? "lg:order-1 lg:text-right" : "lg:order-2")}>
-                    <span className="display text-[7rem] leading-none text-ink/[0.06] xl:text-[9rem]">{pad(n)}</span>
-                  </div>
+                <li key={i} className={cn("relative grid pb-10 pl-14 last:pb-0 lg:grid-cols-2 lg:gap-x-24 lg:pl-0", right && i > 0 && "lg:-mt-28")}>
+                  <span
+                    aria-hidden
+                    className="absolute left-5 top-6 z-10 flex size-10 -translate-x-1/2 items-center justify-center rounded-full bg-ink text-sm font-extrabold text-primary ring-8 ring-white lg:left-1/2 lg:size-12"
+                  >
+                    {pad(n)}
+                  </span>
+                  <article
+                    className={cn(
+                      "relative overflow-hidden rounded-[1.75rem] border border-border bg-surface/60 p-6 shadow-[0_24px_50px_-34px_rgba(18,53,46,0.35)] sm:p-8",
+                      right ? "lg:col-start-2" : "lg:col-start-1 lg:text-right",
+                    )}
+                  >
+                    <span aria-hidden className={cn("absolute inset-y-0 w-1.5 bg-primary", right ? "left-0" : "left-0 lg:left-auto lg:right-0")} />
+                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">
+                      {t("chapter")} {pad(n)}
+                    </p>
+                    {c.title && <h2 className="heading mt-2 text-balance text-2xl text-ink sm:text-[1.75rem]">{c.title}</h2>}
+                    {c.markdown && <RichText markdown={c.markdown} className="mt-3 break-words" />}
+                  </article>
                 </li>
               );
             })}
