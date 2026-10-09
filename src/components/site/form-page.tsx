@@ -53,13 +53,13 @@ export async function FormPage({ current, eyebrow, title, description, back, ste
               ))}
             </nav>
 
-            <p className="mt-10 text-[13px] font-bold uppercase tracking-[0.22em] text-primary">{eyebrow}</p>
+            <p className="mt-10 text-[0.8125rem] font-bold uppercase tracking-[0.22em] text-primary">{eyebrow}</p>
             <h1 className="display mt-4 text-balance text-4xl sm:text-5xl">{title}</h1>
             <p className="mt-5 text-pretty text-lg leading-relaxed text-white/75">{description}</p>
 
             <h2 className="mt-10 text-xs font-bold uppercase tracking-[0.2em] text-white/50">{stepsTitle}</h2>
             <ol className="relative mt-5 space-y-6">
-              <span aria-hidden className="absolute bottom-3 left-[15px] top-3 w-px bg-white/15" />
+              <span aria-hidden className="absolute bottom-3 left-[0.9375rem] top-3 w-px bg-white/15" />
               {steps.map((s, i) => (
                 <li key={i} className="relative flex gap-4">
                   <span className="relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-extrabold text-ink" aria-hidden>

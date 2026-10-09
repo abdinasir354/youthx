@@ -150,7 +150,7 @@ function Control({
       return (
         <div>
           <Input id={id} type="datetime-local" value={str} onChange={(e) => onChange(e.target.value)} className="max-w-64" {...aria} />
-          <p className="mt-1 text-[11px] text-muted-foreground">Somalia time (EAT)</p>
+          <p className="mt-1 text-[0.6875rem] text-muted-foreground">Somalia time (EAT)</p>
         </div>
       );
     case "select":

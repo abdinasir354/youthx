@@ -30,7 +30,7 @@ function Line<V extends FieldValues>({ form, name, label, optional, className, c
   const err = errorText((form.formState.errors[name] as { message?: string } | undefined)?.message);
   return (
     <div className={className}>
-      <label htmlFor={id} className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.2em] text-[#5f8500]">
+      <label htmlFor={id} className="mb-1.5 block text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-[#5f8500]">
         {label}
         {optional && <span className="ml-1.5 font-semibold normal-case tracking-normal text-muted-foreground">({optional})</span>}
       </label>

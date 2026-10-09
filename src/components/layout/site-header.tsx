@@ -19,7 +19,7 @@ export async function SiteHeader() {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:z-50 focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-secondary">
         {t("skipToContent")}
       </a>
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:grid lg:h-[72px] lg:grid-cols-[1fr_auto_1fr]">
+      <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:grid lg:h-[4.5rem] lg:grid-cols-[1fr_auto_1fr]">
         <div className="lg:justify-self-start">
           <Logo preload />
         </div>

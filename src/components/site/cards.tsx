@@ -54,13 +54,13 @@ export function ProgramCard({ program, index = 0 }: { program: Program; index?: 
           <Icon className="size-7" aria-hidden />
         </span>
       )}
-      {program.category && <p className={cn("text-[13px] font-bold uppercase tracking-[0.2em] text-[#5f8500]", !program.featured_image_url && "mt-8")}>{program.category.name}</p>}
+      {program.category && <p className={cn("text-[0.8125rem] font-bold uppercase tracking-[0.2em] text-[#5f8500]", !program.featured_image_url && "mt-8")}>{program.category.name}</p>}
       <h3 className="heading mt-2 text-[1.6rem] text-ink">
         <Link href={`/programs/${program.slug}`} className="after:absolute after:inset-0 focus-visible:outline-none">
           {program.title}
         </Link>
       </h3>
-      {program.short_description && <p className="mt-4 text-[17px] leading-relaxed text-muted-foreground">{program.short_description}</p>}
+      {program.short_description && <p className="mt-4 text-[1.0625rem] leading-relaxed text-muted-foreground">{program.short_description}</p>}
       <p className="mt-auto flex items-center gap-2 pt-7 text-base font-semibold text-ink">
         {t("learnMore")} <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
       </p>
@@ -86,13 +86,13 @@ export function EventCard({ event, past }: { event: CmsEvent; past?: boolean }) 
           <span className="mt-1 text-xs font-bold uppercase tracking-wider text-primary">{month}</span>
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-[13px] font-bold uppercase tracking-[0.18em] text-[#5f8500]">{t(`eventTypes.${event.event_type}`)}</p>
+          <p className="text-[0.8125rem] font-bold uppercase tracking-[0.18em] text-[#5f8500]">{t(`eventTypes.${event.event_type}`)}</p>
           <h3 className="heading mt-1.5 text-xl text-ink">
             <Link href={`/events/${event.slug}`} className="after:absolute after:inset-0 focus-visible:outline-none">
               {event.title}
             </Link>
           </h3>
-          <ul className="mt-3 space-y-1.5 text-[15px] text-muted-foreground">
+          <ul className="mt-3 space-y-1.5 text-[0.9375rem] text-muted-foreground">
             <li className="flex items-center gap-2">
               <CalendarDays className="size-4 shrink-0" aria-hidden />
               <time dateTime={event.starts_at}>{formatEventDate(event.starts_at, { weekday: "short", day: "numeric", month: "short", year: "numeric" })}</time>
@@ -128,7 +128,7 @@ export function ProjectCard({ project }: { project: Project }) {
         )}
       </div>
       <div className="flex flex-1 flex-col p-7">
-        <p className="text-[13px] font-bold uppercase tracking-[0.18em] text-[#5f8500]">{t(`projectStatus.${project.project_status}`)}</p>
+        <p className="text-[0.8125rem] font-bold uppercase tracking-[0.18em] text-[#5f8500]">{t(`projectStatus.${project.project_status}`)}</p>
         <h3 className="heading mt-2 text-xl text-ink">
           <Link href={`/projects/${project.slug}`} className="after:absolute after:inset-0 focus-visible:outline-none">
             {project.title}
@@ -136,7 +136,7 @@ export function ProjectCard({ project }: { project: Project }) {
         </h3>
         {project.summary && <p className="mt-3 line-clamp-3 text-base leading-relaxed text-muted-foreground">{project.summary}</p>}
         {project.location && (
-          <p className="mt-auto flex items-center gap-2 pt-5 text-[15px] text-muted-foreground">
+          <p className="mt-auto flex items-center gap-2 pt-5 text-[0.9375rem] text-muted-foreground">
             <MapPin className="size-4" aria-hidden /> {project.location}
           </p>
         )}
@@ -153,7 +153,7 @@ export function ResourceCard({ resource }: { resource: Resource }) {
       <span className="flex size-12 items-center justify-center rounded-2xl bg-[#d8efe9] text-secondary">
         <Icon className="size-5" aria-hidden />
       </span>
-      <p className="mt-6 text-[13px] font-bold uppercase tracking-[0.18em] text-[#5f8500]">{t(`resourceTypes.${resource.resource_type}`)}</p>
+      <p className="mt-6 text-[0.8125rem] font-bold uppercase tracking-[0.18em] text-[#5f8500]">{t(`resourceTypes.${resource.resource_type}`)}</p>
       <h3 className="heading mt-2 text-xl text-ink">
         <Link href={`/resources/${resource.slug}`} className="after:absolute after:inset-0 focus-visible:outline-none">
           {resource.title}

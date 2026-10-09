@@ -93,7 +93,7 @@ async function Preview({ params }: { params: Promise<{ kind: string; id: string 
 
   return (
     <>
-      <div role="status" className="sticky top-16 z-30 flex items-center justify-center gap-2 bg-warning px-4 py-2 text-sm font-semibold text-white lg:top-[72px]">
+      <div role="status" className="sticky top-16 z-30 flex items-center justify-center gap-2 bg-warning px-4 py-2 text-sm font-semibold text-white lg:top-[4.5rem]">
         <Eye className="size-4" aria-hidden /> Preview — {status === "published" ? "this is how the live page looks" : `this ${status} content is not public yet`}
       </div>
       {content}

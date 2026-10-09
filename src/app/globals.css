@@ -52,6 +52,11 @@
   --color-ink: var(--ink);
 }
 
+/* Whole site at 90% scale: every rem-based size (text, spacing, logo, page width) shrinks together. */
+html {
+  font-size: 90%;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

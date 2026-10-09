@@ -9,7 +9,7 @@ import { FloatingShapes } from "./shapes";
 export function RichText({ markdown, className }: { markdown: string | null | undefined; className?: string }) {
   const html = markdownToSafeHtml(markdown);
   if (!html) return null;
-  return <div className={cn("prose-cms text-[17px] leading-[1.75] text-foreground/85 sm:text-lg", className)} dangerouslySetInnerHTML={{ __html: html }} />;
+  return <div className={cn("prose-cms text-[1.0625rem] leading-[1.75] text-foreground/85 sm:text-lg", className)} dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
 export function Container({ children, className, narrow }: { children: ReactNode; className?: string; narrow?: boolean }) {
@@ -17,7 +17,7 @@ export function Container({ children, className, narrow }: { children: ReactNode
 }
 
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
-  return <p className={cn("text-[13px] font-bold uppercase tracking-[0.22em] text-[#5f8500]", className)}>{children}</p>;
+  return <p className={cn("text-[0.8125rem] font-bold uppercase tracking-[0.22em] text-[#5f8500]", className)}>{children}</p>;
 }
 
 /** Eyebrow + heading + intro, with an optional link aligned right on wide screens. */

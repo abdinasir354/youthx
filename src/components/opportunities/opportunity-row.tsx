@@ -29,7 +29,7 @@ export function OpportunityRow({ opp }: { opp: Opportunity }) {
             {opp.title}
           </Link>
         </h3>
-        <p className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[15px] text-muted-foreground">
+        <p className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.9375rem] text-muted-foreground">
           <span className="font-semibold text-ink/80">{org}</span>
           {where && (
             <span className="inline-flex items-center gap-1.5">

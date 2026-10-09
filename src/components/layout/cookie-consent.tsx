@@ -67,7 +67,7 @@ export function CookieConsent() {
           </span>
           <h2 id="cookie-title" className="text-lg font-bold text-ink">{t("title")}</h2>
         </div>
-        <p id="cookie-text" className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+        <p id="cookie-text" className="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">
           {t("text")}{" "}
           <Link href="/cookies" className="font-semibold text-ink underline underline-offset-2">
             {t("policyLink")}

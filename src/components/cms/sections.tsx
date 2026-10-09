@@ -268,7 +268,7 @@ function Hero({ data: d, id, first }: { data: Data; id?: string; first: boolean 
       <Container className="relative grid items-center gap-10 py-10 sm:py-12 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:py-14">
         <div>
           {str(d.eyebrow) && (
-            <p className="inline-flex items-center gap-2.5 rounded-full border border-primary/60 bg-primary-soft px-5 py-2.5 text-[13px] font-bold uppercase tracking-[0.2em] text-[#4d6b00]">
+            <p className="inline-flex items-center gap-2.5 rounded-full border border-primary/60 bg-primary-soft px-5 py-2.5 text-[0.8125rem] font-bold uppercase tracking-[0.2em] text-[#4d6b00]">
               <Sparkles className="size-4" aria-hidden /> {str(d.eyebrow)}
             </p>
           )}
@@ -319,7 +319,7 @@ function Hero({ data: d, id, first }: { data: Data; id?: string; first: boolean 
           {str(d.stat_value) && (
             <div className="float-a absolute -top-4 right-2 flex size-28 flex-col items-center justify-center rounded-full bg-primary text-center shadow-lg sm:-top-6 sm:right-4 sm:size-36">
               <span className="heading text-3xl text-ink sm:text-4xl">{str(d.stat_value)}</span>
-              {str(d.stat_label) && <span className="mt-0.5 max-w-[80%] text-[10px] font-bold uppercase leading-tight tracking-wider text-ink sm:text-xs">{str(d.stat_label)}</span>}
+              {str(d.stat_label) && <span className="mt-0.5 max-w-[80%] text-[0.625rem] font-bold uppercase leading-tight tracking-wider text-ink sm:text-xs">{str(d.stat_label)}</span>}
             </div>
           )}
           {str(d.card_text) && (
@@ -352,7 +352,7 @@ async function IndexHero({ data: d, id, first }: { data: Data; id?: string; firs
       <FloatingShapes variant="a" />
       <Container className="relative py-10 sm:py-12">
         <div className="max-w-3xl">
-          {str(d.eyebrow) && <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-primary">{str(d.eyebrow)}</p>}
+          {str(d.eyebrow) && <p className="text-[0.8125rem] font-bold uppercase tracking-[0.24em] text-primary">{str(d.eyebrow)}</p>}
           <Heading className="heading mt-5 text-balance text-5xl sm:text-6xl">
             {str(d.heading)}
             {str(d.heading_accent) && <span className="text-primary"> {str(d.heading_accent)}</span>}
@@ -405,7 +405,7 @@ function CenteredHero({ data: d, id, first }: { data: Data; id?: string; first: 
       <FloatingShapes variant="c" />
       <Container className="relative pb-8 pt-10 text-center sm:pt-14">
         {str(d.eyebrow) && (
-          <p className="inline-flex items-center gap-3 text-[13px] font-bold uppercase tracking-[0.28em] text-[#5f8500]">
+          <p className="inline-flex items-center gap-3 text-[0.8125rem] font-bold uppercase tracking-[0.28em] text-[#5f8500]">
             <span className="h-px w-10 bg-[#5f8500]/50" aria-hidden /> {str(d.eyebrow)} <span className="h-px w-10 bg-[#5f8500]/50" aria-hidden />
           </p>
         )}
@@ -555,7 +555,7 @@ function Cards({ data: d, wrap, headingId }: { data: Data; wrap: (c: React.React
                   )}
                   <h3 className="heading text-xl text-ink sm:text-2xl">{str(it.title)}</h3>
                 </div>
-                {str(it.body) && <p className="mt-5 text-pretty text-[17px] leading-relaxed text-muted-foreground">{str(it.body)}</p>}
+                {str(it.body) && <p className="mt-5 text-pretty text-[1.0625rem] leading-relaxed text-muted-foreground">{str(it.body)}</p>}
               </article>
             );
           })}
@@ -570,7 +570,7 @@ function Cards({ data: d, wrap, headingId }: { data: Data; wrap: (c: React.React
         <li className="relative overflow-hidden rounded-[2rem] bg-ink p-9 text-white sm:col-span-2 sm:p-11">
           <FloatingShapes variant="a" />
           <div className="relative">
-            {str(d.eyebrow) && <p className="text-[13px] font-bold uppercase tracking-[0.22em] text-primary">{str(d.eyebrow)}</p>}
+            {str(d.eyebrow) && <p className="text-[0.8125rem] font-bold uppercase tracking-[0.22em] text-primary">{str(d.eyebrow)}</p>}
             {str(d.heading) && <h2 id={headingId} className="heading mt-4 text-4xl sm:text-5xl">{str(d.heading)}</h2>}
             {str(d.intro) && <p className="mt-4 max-w-lg text-lg leading-relaxed text-white/75">{str(d.intro)}</p>}
           </div>
@@ -672,9 +672,9 @@ function Cards({ data: d, wrap, headingId }: { data: Data; wrap: (c: React.React
                   <CmsIcon name={str(item.icon)} className="size-6" />
                 </span>
               )}
-              {str(item.subtitle) && <p className="mt-6 text-[13px] font-bold uppercase tracking-[0.2em] text-[#5f8500]">{str(item.subtitle)}</p>}
+              {str(item.subtitle) && <p className="mt-6 text-[0.8125rem] font-bold uppercase tracking-[0.2em] text-[#5f8500]">{str(item.subtitle)}</p>}
               <h3 className={cn("heading text-2xl text-ink", str(item.subtitle) ? "mt-2" : str(item.icon) && "mt-6")}>{str(item.title)}</h3>
-              {str(item.body) && <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-[17px]">{str(item.body)}</p>}
+              {str(item.body) && <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-[1.0625rem]">{str(item.body)}</p>}
               {l && <ArrowLink href={l.href} className="mt-auto pt-6">{l.label}</ArrowLink>}
             </li>
           );

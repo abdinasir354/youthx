@@ -69,7 +69,7 @@ export default async function ContactPage() {
                 )}
 
                 <div className="relative">
-                  <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-primary">{t("contactEyebrow")}</p>
+                  <p className="text-[0.8125rem] font-bold uppercase tracking-[0.24em] text-primary">{t("contactEyebrow")}</p>
                   <h1 className="display mt-2 text-balance text-3xl sm:text-4xl">
                     {heading} {accent && <em className="font-extrabold not-italic text-primary">{accent}</em>}
                   </h1>
@@ -78,7 +78,7 @@ export default async function ContactPage() {
                       <a href={`mailto:${s.contact_email}`} className={`${glass} flex items-center gap-3 px-4 py-3 transition hover:bg-white/25`}>
                         <Mail className="size-5 shrink-0" aria-hidden />
                         <span className="min-w-0">
-                          <span className="block text-[11px] font-bold uppercase tracking-[0.18em] text-white/75">{t("emailUs")}</span>
+                          <span className="block text-[0.6875rem] font-bold uppercase tracking-[0.18em] text-white/75">{t("emailUs")}</span>
                           <span className="block truncate text-sm font-semibold">{s.contact_email}</span>
                         </span>
                       </a>
@@ -87,7 +87,7 @@ export default async function ContactPage() {
                       <a href={`tel:${s.contact_phone.replace(/\s/g, "")}`} className={`${glass} flex items-center gap-3 px-4 py-3 transition hover:bg-white/25`}>
                         <Phone className="size-5 shrink-0" aria-hidden />
                         <span className="min-w-0">
-                          <span className="block text-[11px] font-bold uppercase tracking-[0.18em] text-white/75">{t("callUs")}</span>
+                          <span className="block text-[0.6875rem] font-bold uppercase tracking-[0.18em] text-white/75">{t("callUs")}</span>
                           <span className="block truncate text-sm font-semibold">{s.contact_phone}</span>
                         </span>
                       </a>

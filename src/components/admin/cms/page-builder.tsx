@@ -306,7 +306,7 @@ function SectionCard({
         </span>
         <button type="button" onClick={onToggleOpen} aria-expanded={open} className="flex min-w-0 flex-1 items-center gap-2 rounded px-2 py-1 text-left hover:bg-muted">
           <span className="min-w-0 flex-1">
-            <span className="block text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+            <span className="block text-[0.6875rem] font-semibold uppercase tracking-wide text-muted-foreground">
               {index + 1}. {def.label}
               {!section.is_visible && " · hidden"}
               {dirty && " · unsaved"}
