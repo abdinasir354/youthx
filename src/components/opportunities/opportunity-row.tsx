@@ -8,7 +8,7 @@ import { Deadline } from "./deadline";
 export function OpportunityRow({ opp }: { opp: Opportunity }) {
   const t = useTranslations("types");
   const ts = useTranslations("site");
-  const org = opp.organization?.name ?? opp.organization_name ?? "YouthX Foundation";
+  const org = opp.organization?.name ?? opp.organization_name ?? "Youthup Foundation";
   const where = [opp.location, opp.region].filter(Boolean).join(", ");
   const internal = opp.apply_mode === "internal";
 

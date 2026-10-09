@@ -28,8 +28,8 @@
         "anchor": "about",
         "data": {
           "eyebrow": "About YouthX",
-          "heading": "Welcome to YouthX Foundation.",
-          "body": "At YouthX Foundation, we drive sustainable impact across Somalia by creating actionable pathways for the next generation to learn, grow, connect, and lead.\n\nWe work with high school students, university students, recent graduates, young professionals, young entrepreneurs, and youth seeking skills and opportunities.",
+          "heading": "Welcome to Youthup Foundation.",
+          "body": "At Youthup Foundation, we drive sustainable impact across Somalia by creating actionable pathways for the next generation to learn, grow, connect, and lead.\n\nWe work with high school students, university students, recent graduates, young professionals, young entrepreneurs, and youth seeking skills and opportunities.",
           "image_side": "left",
           "stat_value": "15–35",
           "stat_label": "The youth we serve",
@@ -237,7 +237,7 @@
     ]
   },
   "about": {
-    "title": "About YouthX Foundation",
+    "title": "About Youthup Foundation",
     "description": "Empowering Somali young people through education, skills development, mentorship, career development, entrepreneurship, leadership, and community engagement.",
     "sections": [
       {
@@ -247,7 +247,7 @@
           "eyebrow": "Who we are",
           "heading": "Investing in the young people",
           "heading_accent": "who will lead Somalia.",
-          "subheading": "YouthX Foundation is a youth-focused organization dedicated to empowering Somali young people through education, skills development, mentorship, career development, entrepreneurship, leadership, and community engagement.",
+          "subheading": "Youthup Foundation is a youth-focused organization dedicated to empowering Somali young people through education, skills development, mentorship, career development, entrepreneurship, leadership, and community engagement.",
           "primary_cta": {
             "label": "Our programs",
             "href": "/programs"
@@ -327,7 +327,7 @@
         "data": {
           "eyebrow": "Our story",
           "heading": "Our journey.",
-          "intro": "The milestones that shape YouthX Foundation.",
+          "intro": "The milestones that shape Youthup Foundation.",
           "style": "timeline",
           "items": []
         }
@@ -561,7 +561,7 @@
           "eyebrow": "Contact",
           "heading": "Let's shape the future",
           "heading_accent": "together.",
-          "image_alt": "YouthX Foundation"
+          "image_alt": "Youthup Foundation"
         }
       }
     ]
@@ -573,14 +573,14 @@
         "type": "rich_text",
         "data": {
           "width": "narrow",
-          "body": "> **Official details to be completed.** YouthX Foundation will add its registered legal name and official address here: **[to be added by an administrator]**. Last updated: October 2026.\n\n## 1. Who we are\n\nThis website is run by YouthX Foundation (\"YouthX\", \"we\", \"us\"), a youth-focused organization based in Mogadishu, Somalia. This policy explains what personal information we collect through this website, why we collect it, and how we protect it.\n\n## 2. Information we collect\n\nWe only collect information that you choose to send us:\n\n- **Contact messages** — your name, and optionally your email, phone number, subject, and message.\n- **Volunteer applications** — your name, email, phone, location, skills, interests, experience, availability, motivation, portfolio or LinkedIn link, and your CV if you upload one.\n- **Mentor applications** — your name, email, phone, professional field, organization, years of experience, skills, areas you can mentor in, availability, short bio, motivation, website or LinkedIn link, and your CV if you upload one.\n- **Partnership and sponsorship inquiries** — your organization's name, your name, email, phone, and message.\n- **Donation pledges** — the details you enter on the donation form, such as your name, contact details, amount, payment method, and reference. We do not collect or store card numbers.\n- **Newsletter sign-ups** — your email address and whether you are subscribed.\n\nWe do **not** offer visitor accounts. The only accounts on this website belong to authorized YouthX staff who manage its content.\n\n## 3. How we use your information\n\n- To read and reply to your messages.\n- To review volunteer and mentor applications and contact applicants.\n- To discuss partnerships, sponsorships, and donations.\n- To send the newsletter, only if you subscribed.\n- To keep the website secure and prevent spam and abuse.\n\nWe do not sell, rent, or trade your personal information, and we do not use it for advertising.\n\n## 4. Who can see your information\n\nOnly authorized YouthX staff can see the information you submit, and each staff role only sees what it needs (for example, applications are visible only to the staff who review them). CVs are stored privately and can only be opened by authorized staff through temporary, secure links.\n\nWe may share information if the law requires it, or with your permission (for example, introducing a mentor to a young person).\n\n## 5. Where and how your information is stored\n\nThe website and its database are hosted by trusted service providers (Supabase for the database and file storage). Information is sent over encrypted connections (HTTPS) and access is protected by role-based security rules.\n\n## 6. How long we keep it\n\nWe keep messages, applications, and inquiries only as long as needed to respond and to run our programs, after which they are archived or deleted. Newsletter subscribers can unsubscribe at any time using the link in every email.\n\n## 7. Your rights\n\nYou can ask us to:\n\n- tell you what information we hold about you,\n- correct information that is wrong,\n- delete your information,\n- stop sending you the newsletter.\n\nTo make a request, use our [contact page](/contact).\n\n## 8. Young people\n\nOur work focuses on young people aged 15–35. If you are under 18, please ask a parent or guardian before sending us personal information.\n\n## 9. Cookies\n\nWe only use cookies that are essential for the website to work and to remember your cookie choice. See our [Cookie Policy](/cookies) for details.\n\n## 10. Changes to this policy\n\nWe may update this policy from time to time. The latest version will always be published on this page.\n\n## 11. Contact\n\nIf you have questions about this policy or your information, please [contact us](/contact)."
+          "body": "> **Official details to be completed.** Youthup Foundation will add its registered legal name and official address here: **[to be added by an administrator]**. Last updated: October 2026.\n\n## 1. Who we are\n\nThis website is run by Youthup Foundation (\"YouthX\", \"we\", \"us\"), a youth-focused organization based in Mogadishu, Somalia. This policy explains what personal information we collect through this website, why we collect it, and how we protect it.\n\n## 2. Information we collect\n\nWe only collect information that you choose to send us:\n\n- **Contact messages** — your name, and optionally your email, phone number, subject, and message.\n- **Volunteer applications** — your name, email, phone, location, skills, interests, experience, availability, motivation, portfolio or LinkedIn link, and your CV if you upload one.\n- **Mentor applications** — your name, email, phone, professional field, organization, years of experience, skills, areas you can mentor in, availability, short bio, motivation, website or LinkedIn link, and your CV if you upload one.\n- **Partnership and sponsorship inquiries** — your organization's name, your name, email, phone, and message.\n- **Donation pledges** — the details you enter on the donation form, such as your name, contact details, amount, payment method, and reference. We do not collect or store card numbers.\n- **Newsletter sign-ups** — your email address and whether you are subscribed.\n\nWe do **not** offer visitor accounts. The only accounts on this website belong to authorized YouthX staff who manage its content.\n\n## 3. How we use your information\n\n- To read and reply to your messages.\n- To review volunteer and mentor applications and contact applicants.\n- To discuss partnerships, sponsorships, and donations.\n- To send the newsletter, only if you subscribed.\n- To keep the website secure and prevent spam and abuse.\n\nWe do not sell, rent, or trade your personal information, and we do not use it for advertising.\n\n## 4. Who can see your information\n\nOnly authorized YouthX staff can see the information you submit, and each staff role only sees what it needs (for example, applications are visible only to the staff who review them). CVs are stored privately and can only be opened by authorized staff through temporary, secure links.\n\nWe may share information if the law requires it, or with your permission (for example, introducing a mentor to a young person).\n\n## 5. Where and how your information is stored\n\nThe website and its database are hosted by trusted service providers (Supabase for the database and file storage). Information is sent over encrypted connections (HTTPS) and access is protected by role-based security rules.\n\n## 6. How long we keep it\n\nWe keep messages, applications, and inquiries only as long as needed to respond and to run our programs, after which they are archived or deleted. Newsletter subscribers can unsubscribe at any time using the link in every email.\n\n## 7. Your rights\n\nYou can ask us to:\n\n- tell you what information we hold about you,\n- correct information that is wrong,\n- delete your information,\n- stop sending you the newsletter.\n\nTo make a request, use our [contact page](/contact).\n\n## 8. Young people\n\nOur work focuses on young people aged 15–35. If you are under 18, please ask a parent or guardian before sending us personal information.\n\n## 9. Cookies\n\nWe only use cookies that are essential for the website to work and to remember your cookie choice. See our [Cookie Policy](/cookies) for details.\n\n## 10. Changes to this policy\n\nWe may update this policy from time to time. The latest version will always be published on this page.\n\n## 11. Contact\n\nIf you have questions about this policy or your information, please [contact us](/contact)."
         }
       }
     ]
   },
   "cookies": {
     "title": "Cookie Policy",
-    "description": "How YouthX Foundation uses cookies, and the choices you have.",
+    "description": "How Youthup Foundation uses cookies, and the choices you have.",
     "sections": [
       {
         "type": "rich_text",

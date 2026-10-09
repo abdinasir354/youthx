@@ -25,7 +25,7 @@ export default function AdminLoginPage() {
           </div>
           <AdminLoginForm />
         </div>
-        <p className="mt-6 text-center text-xs text-muted-foreground">Authorized YouthX Foundation staff only.</p>
+        <p className="mt-6 text-center text-xs text-muted-foreground">Authorized Youthup Foundation staff only.</p>
       </main>
     </div>
   );

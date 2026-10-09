@@ -4,7 +4,7 @@ import { ImageResponse } from "next/og";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "YouthX Foundation — Empowering Somali Youth. Building a Better Future.";
+export const alt = "Youthup Foundation — Empowering Somali Youth. Building a Better Future.";
 
 /** Default social-share image in brand colors (pages and settings can override it with their own image). */
 export default async function OpengraphImage() {
@@ -17,7 +17,7 @@ export default async function OpengraphImage() {
           {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse renders plain <img> */}
           <img src={src} width={118} height={72} alt="" />
           <div style={{ display: "flex", fontSize: 40, fontWeight: 800 }}>
-            <span style={{ color: "#b3e717" }}>YouthX</span>
+            <span style={{ color: "#b3e717" }}>Youthup</span>
             <span style={{ marginLeft: 12 }}>Foundation</span>
           </div>
         </div>

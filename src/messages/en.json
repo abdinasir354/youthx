@@ -1,6 +1,6 @@
 {
   "common": {
-    "siteName": "YouthX Foundation",
+    "siteName": "Youthup Foundation",
     "shortName": "YouthX",
     "tagline": "Empowering Somali Youth. Building a Better Future.",
     "loading": "Loading…",
@@ -665,7 +665,7 @@
     "blogTitle": "Stories, news & updates",
     "blogIntro": "News from our workshops, programs, and community — written by the YouthX team.",
     "noPostsTitle": "Our first articles are coming soon",
-    "noPostsText": "Follow along here for news and updates from YouthX Foundation.",
+    "noPostsText": "Follow along here for news and updates from Youthup Foundation.",
     "latestPost": "Latest",
     "readArticle": "Read article",
     "minRead": "{count} min read",

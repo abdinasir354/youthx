@@ -1,5 +1,5 @@
 -- ============================================================================
--- Initial CMS content for YouthX Foundation.
+-- Initial CMS content for Youthup Foundation.
 --
 -- REAL CONTENT ONLY: mission, vision, values, programs and audiences come from the
 -- foundation's brief. There are no invented people, events, statistics, partners,
@@ -87,7 +87,7 @@ end $$;
 
 -- HOME
 select pg_temp.add_page('home', 'Home', null,
-  'YouthX Foundation empowers Somali youth through education, skills, mentorship, career development, entrepreneurship, and community initiatives.',
+  'Youthup Foundation empowers Somali youth through education, skills, mentorship, career development, entrepreneurship, and community initiatives.',
 $j$[
   {
     "type": "hero",
@@ -115,8 +115,8 @@ $j$[
     "anchor": "about",
     "data": {
       "eyebrow": "About YouthX",
-      "heading": "Welcome to YouthX Foundation.",
-      "body": "At YouthX Foundation, we drive sustainable impact across Somalia by creating actionable pathways for the next generation to learn, grow, connect, and lead.\n\nWe work with high school students, university students, recent graduates, young professionals, young entrepreneurs, and youth seeking skills and opportunities.",
+      "heading": "Welcome to Youthup Foundation.",
+      "body": "At Youthup Foundation, we drive sustainable impact across Somalia by creating actionable pathways for the next generation to learn, grow, connect, and lead.\n\nWe work with high school students, university students, recent graduates, young professionals, young entrepreneurs, and youth seeking skills and opportunities.",
       "image_side": "left",
       "stat_value": "15–35",
       "stat_label": "The youth we serve",
@@ -324,7 +324,7 @@ $j$[
 ]$j$::jsonb);
 
 -- ABOUT
-select pg_temp.add_page('about', 'About YouthX Foundation', 'Empowering Somali young people through education, skills development, mentorship, career development, entrepreneurship, leadership, and community engagement.',
+select pg_temp.add_page('about', 'About Youthup Foundation', 'Empowering Somali young people through education, skills development, mentorship, career development, entrepreneurship, leadership, and community engagement.',
   'Who we are, our mission, vision, values, and the young people we serve.',
 $j$[
   {
@@ -334,7 +334,7 @@ $j$[
       "eyebrow": "Who we are",
       "heading": "Investing in the young people",
       "heading_accent": "who will lead Somalia.",
-      "subheading": "YouthX Foundation is a youth-focused organization dedicated to empowering Somali young people through education, skills development, mentorship, career development, entrepreneurship, leadership, and community engagement.",
+      "subheading": "Youthup Foundation is a youth-focused organization dedicated to empowering Somali young people through education, skills development, mentorship, career development, entrepreneurship, leadership, and community engagement.",
       "primary_cta": {
         "label": "Our programs",
         "href": "/programs"
@@ -414,7 +414,7 @@ $j$[
     "data": {
       "eyebrow": "Our story",
       "heading": "Our journey.",
-      "intro": "The milestones that shape YouthX Foundation.",
+      "intro": "The milestones that shape Youthup Foundation.",
       "style": "timeline",
       "items": []
     }
@@ -570,7 +570,7 @@ $j$[
 
 -- PROGRAMS / OPPORTUNITIES / EVENTS listing pages (the list itself is built in; sections below it are optional)
 select pg_temp.add_page('programs', 'Core programs & services.', 'Programs designed around the needs of Somali youth — from the classroom to a first job, a business, and leadership in the community.',
-  'Programs from YouthX Foundation for Somali youth.',
+  'Programs from Youthup Foundation for Somali youth.',
 $j$[
   {
     "type": "hero",
@@ -649,12 +649,12 @@ $j$[
 
 select pg_temp.add_page('events', 'Events',
   'Workshops, trainings, webinars, and gatherings for Somali youth.',
-  'Upcoming and past YouthX Foundation events.', '[]'::jsonb);
+  'Upcoming and past Youthup Foundation events.', '[]'::jsonb);
 
 -- GET INVOLVED
 select pg_temp.add_page('get-involved', 'Get Involved',
   'There are many ways to support Somali youth — give your time, share your experience, or partner with us.',
-  'Volunteer, become a mentor, partner with us, or support YouthX Foundation.',
+  'Volunteer, become a mentor, partner with us, or support Youthup Foundation.',
 $j$[
   {"type": "cards", "anchor": "ways", "data": {
     "columns": 3,
@@ -677,7 +677,7 @@ $j$[
 
 -- CONTACT (contact details come from Site Settings)
 select pg_temp.add_page('contact', 'Contact Us', 'Questions, partnership ideas, or media inquiries — we would like to hear from you.',
-  'Contact YouthX Foundation.',
+  'Contact Youthup Foundation.',
 $j$[
   {
     "type": "hero",
@@ -685,7 +685,7 @@ $j$[
       "eyebrow": "Contact",
       "heading": "Let's shape the future",
       "heading_accent": "together.",
-      "image_alt": "YouthX Foundation"
+      "image_alt": "Youthup Foundation"
     }
   }
 ]$j$::jsonb);
@@ -732,24 +732,24 @@ $j$[
 ]$j$::jsonb);
 
 -- LEGAL (placeholders where official information is not yet available)
-select pg_temp.add_page('privacy', 'Privacy Policy', null, 'How YouthX Foundation collects and uses personal information.',
+select pg_temp.add_page('privacy', 'Privacy Policy', null, 'How Youthup Foundation collects and uses personal information.',
 $j$[
   {
     "type": "rich_text",
     "data": {
       "width": "narrow",
-      "body": "> **Official details to be completed.** YouthX Foundation will add its registered legal name and official address here: **[to be added by an administrator]**. Last updated: October 2026.\n\n## 1. Who we are\n\nThis website is run by YouthX Foundation (\"YouthX\", \"we\", \"us\"), a youth-focused organization based in Mogadishu, Somalia. This policy explains what personal information we collect through this website, why we collect it, and how we protect it.\n\n## 2. Information we collect\n\nWe only collect information that you choose to send us:\n\n- **Contact messages** — your name, and optionally your email, phone number, subject, and message.\n- **Volunteer applications** — your name, email, phone, location, skills, interests, experience, availability, motivation, portfolio or LinkedIn link, and your CV if you upload one.\n- **Mentor applications** — your name, email, phone, professional field, organization, years of experience, skills, areas you can mentor in, availability, short bio, motivation, website or LinkedIn link, and your CV if you upload one.\n- **Partnership and sponsorship inquiries** — your organization's name, your name, email, phone, and message.\n- **Donation pledges** — the details you enter on the donation form, such as your name, contact details, amount, payment method, and reference. We do not collect or store card numbers.\n- **Newsletter sign-ups** — your email address and whether you are subscribed.\n\nWe do **not** offer visitor accounts. The only accounts on this website belong to authorized YouthX staff who manage its content.\n\n## 3. How we use your information\n\n- To read and reply to your messages.\n- To review volunteer and mentor applications and contact applicants.\n- To discuss partnerships, sponsorships, and donations.\n- To send the newsletter, only if you subscribed.\n- To keep the website secure and prevent spam and abuse.\n\nWe do not sell, rent, or trade your personal information, and we do not use it for advertising.\n\n## 4. Who can see your information\n\nOnly authorized YouthX staff can see the information you submit, and each staff role only sees what it needs (for example, applications are visible only to the staff who review them). CVs are stored privately and can only be opened by authorized staff through temporary, secure links.\n\nWe may share information if the law requires it, or with your permission (for example, introducing a mentor to a young person).\n\n## 5. Where and how your information is stored\n\nThe website and its database are hosted by trusted service providers (Supabase for the database and file storage). Information is sent over encrypted connections (HTTPS) and access is protected by role-based security rules.\n\n## 6. How long we keep it\n\nWe keep messages, applications, and inquiries only as long as needed to respond and to run our programs, after which they are archived or deleted. Newsletter subscribers can unsubscribe at any time using the link in every email.\n\n## 7. Your rights\n\nYou can ask us to:\n\n- tell you what information we hold about you,\n- correct information that is wrong,\n- delete your information,\n- stop sending you the newsletter.\n\nTo make a request, use our [contact page](/contact).\n\n## 8. Young people\n\nOur work focuses on young people aged 15–35. If you are under 18, please ask a parent or guardian before sending us personal information.\n\n## 9. Cookies\n\nWe only use cookies that are essential for the website to work and to remember your cookie choice. See our [Cookie Policy](/cookies) for details.\n\n## 10. Changes to this policy\n\nWe may update this policy from time to time. The latest version will always be published on this page.\n\n## 11. Contact\n\nIf you have questions about this policy or your information, please [contact us](/contact)."
+      "body": "> **Official details to be completed.** Youthup Foundation will add its registered legal name and official address here: **[to be added by an administrator]**. Last updated: October 2026.\n\n## 1. Who we are\n\nThis website is run by Youthup Foundation (\"YouthX\", \"we\", \"us\"), a youth-focused organization based in Mogadishu, Somalia. This policy explains what personal information we collect through this website, why we collect it, and how we protect it.\n\n## 2. Information we collect\n\nWe only collect information that you choose to send us:\n\n- **Contact messages** — your name, and optionally your email, phone number, subject, and message.\n- **Volunteer applications** — your name, email, phone, location, skills, interests, experience, availability, motivation, portfolio or LinkedIn link, and your CV if you upload one.\n- **Mentor applications** — your name, email, phone, professional field, organization, years of experience, skills, areas you can mentor in, availability, short bio, motivation, website or LinkedIn link, and your CV if you upload one.\n- **Partnership and sponsorship inquiries** — your organization's name, your name, email, phone, and message.\n- **Donation pledges** — the details you enter on the donation form, such as your name, contact details, amount, payment method, and reference. We do not collect or store card numbers.\n- **Newsletter sign-ups** — your email address and whether you are subscribed.\n\nWe do **not** offer visitor accounts. The only accounts on this website belong to authorized YouthX staff who manage its content.\n\n## 3. How we use your information\n\n- To read and reply to your messages.\n- To review volunteer and mentor applications and contact applicants.\n- To discuss partnerships, sponsorships, and donations.\n- To send the newsletter, only if you subscribed.\n- To keep the website secure and prevent spam and abuse.\n\nWe do not sell, rent, or trade your personal information, and we do not use it for advertising.\n\n## 4. Who can see your information\n\nOnly authorized YouthX staff can see the information you submit, and each staff role only sees what it needs (for example, applications are visible only to the staff who review them). CVs are stored privately and can only be opened by authorized staff through temporary, secure links.\n\nWe may share information if the law requires it, or with your permission (for example, introducing a mentor to a young person).\n\n## 5. Where and how your information is stored\n\nThe website and its database are hosted by trusted service providers (Supabase for the database and file storage). Information is sent over encrypted connections (HTTPS) and access is protected by role-based security rules.\n\n## 6. How long we keep it\n\nWe keep messages, applications, and inquiries only as long as needed to respond and to run our programs, after which they are archived or deleted. Newsletter subscribers can unsubscribe at any time using the link in every email.\n\n## 7. Your rights\n\nYou can ask us to:\n\n- tell you what information we hold about you,\n- correct information that is wrong,\n- delete your information,\n- stop sending you the newsletter.\n\nTo make a request, use our [contact page](/contact).\n\n## 8. Young people\n\nOur work focuses on young people aged 15–35. If you are under 18, please ask a parent or guardian before sending us personal information.\n\n## 9. Cookies\n\nWe only use cookies that are essential for the website to work and to remember your cookie choice. See our [Cookie Policy](/cookies) for details.\n\n## 10. Changes to this policy\n\nWe may update this policy from time to time. The latest version will always be published on this page.\n\n## 11. Contact\n\nIf you have questions about this policy or your information, please [contact us](/contact)."
     }
   }
 ]$j$::jsonb);
 
-select pg_temp.add_page('terms', 'Terms of Service', null, 'Terms for using the YouthX Foundation website.',
+select pg_temp.add_page('terms', 'Terms of Service', null, 'Terms for using the Youthup Foundation website.',
 $j$[
-  {"type": "rich_text", "data": {"width": "narrow", "body": "> **Draft.** These terms will be finalized by YouthX Foundation. Official organization details: **[to be added by an administrator]**.\n\n## Using this website\n\nBy using this website you agree to use it lawfully and respectfully. Do not submit false information, impersonate others, or attempt to access accounts or data that are not yours.\n\n## Accounts\n\nYou are responsible for keeping your password safe and for activity on your account.\n\n## Applications\n\nSubmitting an application does not guarantee acceptance. Opportunities listed from other organizations are managed by those organizations; please read their terms before applying.\n\n## Content\n\nContent on this website is provided for information. We may update or remove content at any time.\n\n## Changes\n\nWe may update these terms. The latest version will always be published on this page."}}
+  {"type": "rich_text", "data": {"width": "narrow", "body": "> **Draft.** These terms will be finalized by Youthup Foundation. Official organization details: **[to be added by an administrator]**.\n\n## Using this website\n\nBy using this website you agree to use it lawfully and respectfully. Do not submit false information, impersonate others, or attempt to access accounts or data that are not yours.\n\n## Accounts\n\nYou are responsible for keeping your password safe and for activity on your account.\n\n## Applications\n\nSubmitting an application does not guarantee acceptance. Opportunities listed from other organizations are managed by those organizations; please read their terms before applying.\n\n## Content\n\nContent on this website is provided for information. We may update or remove content at any time.\n\n## Changes\n\nWe may update these terms. The latest version will always be published on this page."}}
 ]$j$::jsonb);
 
 -- COOKIE POLICY + GALLERY (sections filled from supabase/content/pages.json)
-select pg_temp.add_page('cookies', 'Cookie Policy', 'How YouthX Foundation uses cookies, and the choices you have.', 'How YouthX Foundation uses cookies.',
+select pg_temp.add_page('cookies', 'Cookie Policy', 'How Youthup Foundation uses cookies, and the choices you have.', 'How Youthup Foundation uses cookies.',
 $j$[
   {
     "type": "rich_text",
@@ -760,7 +760,7 @@ $j$[
   }
 ]$j$::jsonb);
 
-select pg_temp.add_page('gallery', 'Gallery', 'Moments from our workshops, trainings, and community activities.', 'Photos from YouthX Foundation programs and events.',
+select pg_temp.add_page('gallery', 'Gallery', 'Moments from our workshops, trainings, and community activities.', 'Photos from Youthup Foundation programs and events.',
 $j$[
   {
     "type": "gallery",

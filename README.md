@@ -1,8 +1,8 @@
-# YouthX Foundation
+# Youthup Foundation
 
 *Empowering Somali Youth. Building a Better Future.*
 
-Website, CMS and youth platform for YouthX Foundation: programs, opportunities, events, mentorship, projects, resources, stories, volunteer and mentor applications. Everything on the public site is managed from the admin CMS.
+Website, CMS and youth platform for Youthup Foundation: programs, opportunities, events, mentorship, projects, resources, stories, volunteer and mentor applications. Everything on the public site is managed from the admin CMS.
 
 **Core rule:** every opportunity with limited seats reserves **75% of seats for women and 25% for men**. The database enforces this through `accept_application()`. The UI only displays seat counts.
 

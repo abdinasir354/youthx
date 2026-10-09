@@ -60,8 +60,8 @@ async function merge(row, patch) {
   const about = list.find((s) => s.type === "image_text" && s.anchor === "about");
   if (about)
     await merge(about, {
-      heading: "Welcome to YouthX Foundation.",
-      body: "At YouthX Foundation, we drive sustainable impact across Somalia by creating actionable pathways for the next generation to learn, grow, connect, and lead.\n\nWe work with high school students, university students, recent graduates, young professionals, young entrepreneurs, and youth seeking skills and opportunities.",
+      heading: "Welcome to Youthup Foundation.",
+      body: "At Youthup Foundation, we drive sustainable impact across Somalia by creating actionable pathways for the next generation to learn, grow, connect, and lead.\n\nWe work with high school students, university students, recent graduates, young professionals, young entrepreneurs, and youth seeking skills and opportunities.",
     });
   const offer = list.find((s) => s.type === "cards" && !s.anchor);
   if (offer) await merge(offer, { eyebrow: "What we offer", heading: "Practical pathways to learn, grow, connect, and lead.", items: OFFER });

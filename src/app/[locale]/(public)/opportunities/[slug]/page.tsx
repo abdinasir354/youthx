@@ -36,7 +36,7 @@ async function OpportunityDetail({ params }: { params: Promise<{ slug: string }>
   const opp = await getOpportunityBySlug(slug);
   if (!opp) notFound();
   const [t, tt, ts] = await Promise.all([getTranslations("opportunities"), getTranslations("types"), getTranslations("site")]);
-  const org = opp.organization?.name ?? opp.organization_name ?? "YouthX Foundation";
+  const org = opp.organization?.name ?? opp.organization_name ?? "Youthup Foundation";
   const where = [opp.location, opp.region].filter(Boolean).join(", ");
 
   const chips = [

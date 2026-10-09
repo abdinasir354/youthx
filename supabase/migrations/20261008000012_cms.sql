@@ -59,7 +59,7 @@ end $$;
 -- ---------- site settings (single row) ----------
 create table public.site_settings (
   id int primary key default 1 check (id = 1),
-  site_name text not null default 'YouthX Foundation',
+  site_name text not null default 'Youthup Foundation',
   tagline text,
   description text,
   contact_email text,
@@ -92,10 +92,10 @@ for each row execute function public.settings_guard();
 insert into public.site_settings (id, tagline, description, footer_text, seo_title, seo_description)
 values (1,
   'Empowering Somali Youth. Building a Better Future.',
-  'YouthX Foundation empowers Somali youth to learn, grow, connect, and lead through education, practical skills, mentorship, career development, entrepreneurship, and community initiatives.',
+  'Youthup Foundation empowers Somali youth to learn, grow, connect, and lead through education, practical skills, mentorship, career development, entrepreneurship, and community initiatives.',
   'Empowering Somali Youth. Building a Better Future.',
-  'YouthX Foundation — Empowering Somali Youth',
-  'YouthX Foundation empowers Somali youth through education, skills development, mentorship, career development, entrepreneurship, leadership, and community engagement.')
+  'Youthup Foundation — Empowering Somali Youth',
+  'Youthup Foundation empowers Somali youth through education, skills development, mentorship, career development, entrepreneurship, leadership, and community engagement.')
 on conflict (id) do nothing;
 
 alter table public.site_settings enable row level security;

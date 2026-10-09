@@ -1,5 +1,5 @@
 -- ============================================================================
--- YouthX Foundation — seed
+-- Youthup Foundation — seed
 --
 -- Intentionally empty. The real starting content (site settings, navigation, pages,
 -- the eight programs) lives in migrations/20261008000014_initial_content.sql so that

@@ -31,10 +31,10 @@ export type SiteSettings = {
 
 /** Used when the settings row can't be read (e.g. database not set up yet). Real values only. */
 export const DEFAULT_SETTINGS: SiteSettings = {
-  site_name: "YouthX Foundation",
+  site_name: "Youthup Foundation",
   tagline: "Empowering Somali Youth. Building a Better Future.",
   description:
-    "YouthX Foundation empowers Somali youth to learn, grow, connect, and lead through education, practical skills, mentorship, career development, entrepreneurship, and community initiatives.",
+    "Youthup Foundation empowers Somali youth to learn, grow, connect, and lead through education, practical skills, mentorship, career development, entrepreneurship, and community initiatives.",
   contact_email: null,
   contact_phone: null,
   address: null,
@@ -42,7 +42,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   header_cta_label: "Contact us",
   header_cta_href: "/contact",
   footer_text: "Empowering Somali Youth. Building a Better Future.",
-  seo_title: "YouthX Foundation — Empowering Somali Youth",
+  seo_title: "Youthup Foundation — Empowering Somali Youth",
   seo_description: null,
   og_image_url: null,
   newsletter_enabled: true,

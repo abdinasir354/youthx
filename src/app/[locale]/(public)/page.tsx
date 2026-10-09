@@ -3,7 +3,7 @@ import { Sections } from "@/components/cms/sections";
 import { cmsPageMetadata } from "@/components/site/cms-page";
 
 export async function generateMetadata() {
-  return cmsPageMetadata("home", "YouthX Foundation");
+  return cmsPageMetadata("home", "Youthup Foundation");
 }
 
 /** Home is built entirely from CMS sections (Admin → Pages → Home). */
