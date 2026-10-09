@@ -320,7 +320,8 @@
               "body": "Initiatives in their own communities."
             }
           ]
-        }
+        },
+        "is_visible": false
       },
       {
         "type": "cards",
@@ -378,7 +379,8 @@
               "icon": "users"
             }
           ]
-        }
+        },
+        "is_visible": false
       },
       {
         "type": "cards",
@@ -413,7 +415,8 @@
               "title": "Youth seeking skills and opportunities"
             }
           ]
-        }
+        },
+        "is_visible": false
       },
       {
         "type": "cards",
@@ -443,7 +446,8 @@
               "label": "Opportunities shared"
             }
           ]
-        }
+        },
+        "is_visible": false
       },
       {
         "type": "partner_logos",
@@ -479,7 +483,8 @@
             "label": "Become a partner",
             "href": "/get-involved/partner"
           }
-        }
+        },
+        "is_visible": false
       }
     ]
   },

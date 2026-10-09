@@ -407,7 +407,8 @@ $j$[
           "body": "Initiatives in their own communities."
         }
       ]
-    }
+    },
+    "is_visible": false
   },
   {
     "type": "cards",
@@ -465,7 +466,8 @@ $j$[
           "icon": "users"
         }
       ]
-    }
+    },
+    "is_visible": false
   },
   {
     "type": "cards",
@@ -500,7 +502,8 @@ $j$[
           "title": "Youth seeking skills and opportunities"
         }
       ]
-    }
+    },
+    "is_visible": false
   },
   {
     "type": "cards",
@@ -530,7 +533,8 @@ $j$[
           "label": "Opportunities shared"
         }
       ]
-    }
+    },
+    "is_visible": false
   },
   {
     "type": "partner_logos",
@@ -566,7 +570,8 @@ $j$[
         "label": "Become a partner",
         "href": "/get-involved/partner"
       }
-    }
+    },
+    "is_visible": false
   }
 ]$j$::jsonb);
 
