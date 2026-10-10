@@ -2,7 +2,9 @@ import "server-only";
 import type { Metadata } from "next";
 import { getSettings } from "@/lib/data/cms";
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+/** The public address. Set NEXT_PUBLIC_SITE_URL to override (e.g. a preview deployment). */
+export const PRODUCTION_URL = "https://www.youthupfoundation.org";
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || PRODUCTION_URL).replace(/\/$/, "");
 
 /**
  * Page metadata with canonical URL, Open Graph and Twitter/X cards. Falls back to the

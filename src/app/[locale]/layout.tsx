@@ -16,7 +16,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.youthupfoundation.org").replace(/\/$/, "");
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

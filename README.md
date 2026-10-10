@@ -25,7 +25,7 @@ Copy `.env.example` to `.env.local` and fill in the values from **Supabase → P
 | `NEXT_PUBLIC_SUPABASE_URL` | Project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Publishable (anon) key |
 | `SUPABASE_SERVICE_ROLE_KEY` | Secret (service_role) key. Server only, never commit it. |
-| `NEXT_PUBLIC_SITE_URL` | `http://localhost:3000` locally, your domain in production |
+| `NEXT_PUBLIC_SITE_URL` | Public address, `https://www.youthupfoundation.org` (the default if unset) |
 | `CRON_SECRET` | Any long random string. Vercel sends it to the daily job that closes expired opportunities. |
 
 The newer Supabase names `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` and `SUPABASE_SECRET_KEY` are accepted too.
