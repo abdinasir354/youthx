@@ -1,5 +1,6 @@
 import "server-only";
 import { cacheLife, cacheTag } from "next/cache";
+import { isAdminGuidance } from "@/lib/cms/admin-text";
 import { DEFAULT_SETTINGS, type SiteSettings } from "@/lib/cms/settings";
 import { createPublicClient } from "@/lib/supabase/public";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
@@ -168,6 +169,9 @@ export async function getResource(slug: string): Promise<Resource | null> {
   return (data as Resource) ?? null;
 }
 
+/** Entries whose title or quote is only admin guidance text (pasted by mistake) are never shown. */
+const isPublicStory = (s: Story) => !isAdminGuidance(s.title) && !isAdminGuidance(s.quote);
+
 export async function getStories(): Promise<Story[]> {
   "use cache";
   cacheLife("hours");
@@ -176,7 +180,7 @@ export async function getStories(): Promise<Story[]> {
   // RLS also requires consent_status = 'granted'.
   const { data, error } = await createPublicClient().from("stories").select("*").eq("status", "published").order("published_at", { ascending: false });
   logReadError("stories", error);
-  return (data as Story[]) ?? [];
+  return ((data as Story[]) ?? []).filter(isPublicStory);
 }
 
 export async function getStory(slug: string): Promise<Story | null> {
@@ -185,7 +189,7 @@ export async function getStory(slug: string): Promise<Story | null> {
   cacheTag("stories");
   if (!isSupabaseConfigured) return null;
   const { data } = await createPublicClient().from("stories").select("*").eq("slug", slug).eq("status", "published").maybeSingle();
-  return (data as Story) ?? null;
+  return data && isPublicStory(data as Story) ? (data as Story) : null;
 }
 
 // ---------------- FAQs / partners ----------------

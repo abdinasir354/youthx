@@ -556,6 +556,7 @@ function Cards({ data: d, wrap, headingId }: { data: Data; wrap: (c: React.React
                     {str(it.quote) && <p className="text-base italic leading-relaxed text-foreground/80">“{str(it.quote)}”</p>}
                     <h3 className="heading mt-4 text-xl text-ink">{name}</h3>
                     {str(it.subtitle) && <p className="mt-1 text-sm font-semibold uppercase tracking-wider text-[#5f8500]">{str(it.subtitle)}</p>}
+                    {str(it.body) && <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">{str(it.body)}</p>}
                   </div>
                 </article>
               </li>
@@ -800,6 +801,43 @@ async function Grid({ section, wrap, headingId }: { section: CmsSection; wrap: (
   );
 }
 
+/**
+ * Stories as an alternating editorial list: photo left / text right, then text left / photo right…
+ * Side by side from tablet width up; stacked (photo first) on phones.
+ */
+function StoryRows({ stories, readLabel }: { stories: Story[]; readLabel: string }) {
+  return (
+    <ul className="space-y-12 sm:space-y-16">
+      {stories.map((s, i) => {
+        const flip = i % 2 === 1;
+        const quote = s.quote || s.introduction;
+        return (
+          <li key={s.id} className="grid items-center gap-6 md:grid-cols-2 md:gap-10 lg:gap-16">
+            <figure data-reveal="image" className={cn("group relative", flip && "md:order-2")}>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] bg-muted shadow-[0_30px_60px_-30px_rgba(18,53,46,0.45)]">
+                {s.profile_image_url ? (
+                  <Image src={s.profile_image_url} alt={s.person_name} fill sizes="(min-width: 768px) 45vw, 100vw" className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.04]" />
+                ) : (
+                  <PhotoPlaceholder className="absolute inset-0" />
+                )}
+              </div>
+            </figure>
+            <div data-reveal className={cn(flip && "md:order-1")}>
+              <p className="text-[0.8125rem] font-bold uppercase tracking-[0.2em] text-[#5f8500]">{s.person_name}</p>
+              <h3 className="heading mt-3 text-balance text-2xl text-ink sm:text-3xl">{s.title}</h3>
+              {quote && (
+                <blockquote className="mt-5 border-l-4 border-primary pl-5 text-pretty text-lg leading-relaxed text-ink/85">“{bareQuote(quote)}”</blockquote>
+              )}
+              {s.quote && s.introduction && <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">{s.introduction}</p>}
+              <ArrowLink href={`/stories/${s.slug}`} className="mt-6">{readLabel}</ArrowLink>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 /** Quote text without any quote marks the editor already typed (we add our own). */
 const bareQuote = (q: string) => q.trim().replace(/^[“"'‘]+|[”"'’]+$/g, "").trim();
 
@@ -816,6 +854,14 @@ async function StorySpotlight({ data: d, wrap, headingId }: { data: CmsSection["
   const cta = link(d.cta);
   const [lead, ...more] = items;
   if (lead && d.display === "full") return <StoryDetail story={lead} embedded />;
+  if (lead && d.display === "alternating") {
+    return wrap(
+      <>
+        <SectionHeading eyebrow={str(d.eyebrow)} heading={str(d.heading)} intro={str(d.intro)} id={headingId} />
+        <StoryRows stories={items} readLabel={t("readStory")} />
+      </>,
+    );
+  }
 
   return wrap(
     <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">

@@ -3,6 +3,7 @@
  * the public cache tags are all driven from these definitions.
  */
 import type { Perm } from "@/lib/permissions";
+import { ADMIN_GUIDANCE } from "./admin-text";
 import { OPPORTUNITY_TYPES, REGIONS } from "@/types/database.types";
 import { SEO_FIELDS, type FieldDef, type Option } from "./fields";
 
@@ -52,7 +53,7 @@ export function statusesFor(set: StatusSet): readonly string[] {
 }
 
 const title = (max = 160): FieldDef => ({ kind: "text", name: "title", label: "Title", required: true, max });
-const slug: FieldDef = { kind: "slug", name: "slug", label: "URL slug", from: "title", required: true, help: "Lowercase letters, numbers and dashes. Changing it changes the page address." };
+const slug: FieldDef = { kind: "slug", name: "slug", label: "URL slug", from: "title", required: true, help: ADMIN_GUIDANCE.slugHelp };
 
 export const COLLECTIONS: Record<CollectionKey, CollectionDef> = {
   programs: {

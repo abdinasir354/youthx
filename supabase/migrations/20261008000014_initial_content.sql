@@ -288,7 +288,8 @@ $j$[
       "limit": 3,
       "hide_when_empty": true,
       "intro": "We are a new foundation with a bold vision. Here is how far we have come in our first months of operation."
-    }
+    },
+    "is_visible": false
   },
   {
     "type": "cta",
@@ -506,17 +507,6 @@ $j$[
     "is_visible": false
   },
   {
-    "type": "cards",
-    "anchor": "team",
-    "data": {
-      "eyebrow": "The people behind Youthup",
-      "heading": "Meet our team.",
-      "intro": "The dedicated people working every day for Somali youth.",
-      "style": "team",
-      "items": []
-    }
-  },
-  {
     "type": "statistics",
     "anchor": "impact",
     "data": {
@@ -551,10 +541,21 @@ $j$[
       "eyebrow": "Our Story",
       "heading": "Our Journey Since 2026",
       "mode": "latest",
-      "limit": 3,
+      "limit": 12,
       "hide_when_empty": true,
       "intro": "We are a new foundation with a bold vision. Here is how far we have come in our first months of operation.",
-      "display": "full"
+      "display": "alternating"
+    }
+  },
+  {
+    "type": "cards",
+    "anchor": "team",
+    "data": {
+      "eyebrow": "The people behind Youthup",
+      "heading": "Meet our team.",
+      "intro": "The dedicated people working every day for Somali youth.",
+      "style": "team",
+      "items": []
     }
   },
   {
@@ -628,7 +629,8 @@ $j$[
       "mode": "latest",
       "limit": 3,
       "hide_when_empty": true
-    }
+    },
+    "is_visible": false
   },
   {
     "type": "cta",

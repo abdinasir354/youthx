@@ -58,6 +58,7 @@ function grid(type: SectionType, label: string, source: "programs" | "opportunit
       ...(source === "stories"
         ? [{ kind: "select", name: "display", label: "Display", options: [
             { value: "spotlight", label: "Spotlight card (quote + link to the story)" },
+            { value: "alternating", label: "Alternating (photo and text side by side, every story)" },
             { value: "full", label: "Full story (first story, told as chapters)" },
           ] } satisfies FieldDef]
         : []),
@@ -146,7 +147,7 @@ export const SECTIONS: Record<SectionType, SectionDef> = {
         { kind: "icon", name: "icon", label: "Icon (cards style)", half: true },
         { kind: "text", name: "subtitle", label: "Small label — timeline badge or team member's role", max: 60, half: true },
         { kind: "text", name: "date_label", label: "Date (timeline style, e.g. Jan 2026)", max: 30, half: true },
-        { kind: "textarea", name: "body", label: "Text", max: 800, rows: 3 },
+        { kind: "textarea", name: "body", label: "Text (for team members: short bio)", max: 800, rows: 3 },
         { kind: "textarea", name: "quote", label: "Quote (team style)", max: 300, rows: 2 },
         { kind: "image", name: "image_url", label: "Photo", folder: "images" },
         { kind: "text", name: "image_alt", label: "Photo description (alt text)", max: 200 },

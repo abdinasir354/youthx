@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState, useTransition } from "react";
+import { ADMIN_GUIDANCE } from "@/lib/cms/admin-text";
 import { ArrowLeft, Eye, EyeOff, Loader2, Save, Send, Star, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Link, useRouter } from "@/i18n/navigation";
@@ -221,7 +222,7 @@ export function EntryEditor({
             <section className="rounded-lg border border-border bg-white p-4">
               <h2 className="mb-3 text-sm font-bold text-secondary">Publishing</h2>
               {!id ? (
-                <p className="text-xs text-muted-foreground">New entries start as drafts. Nothing is public until you publish.</p>
+                <p className="text-xs text-muted-foreground">{ADMIN_GUIDANCE.draftNote}</p>
               ) : (
                 <>
                   <label htmlFor="entry-status" className="mb-1 block text-xs font-medium text-muted-foreground">Status</label>
