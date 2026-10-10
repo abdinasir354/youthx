@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
@@ -58,7 +59,11 @@ function ActiveNav({ render }: { render: (isActive: (href: string) => boolean) =
   return <>{render(isActive)}</>;
 }
 
-/** Mobile menu: a disclosure button + panel. Esc closes; focus returns to the button. */
+/**
+ * Mobile menu: a disclosure button + panel. Esc closes; focus returns to the button.
+ * The panel is portalled to <body>: the header's backdrop blur would otherwise make it
+ * size itself to the header instead of the screen.
+ */
 export function MobileMenu({ links, cta }: { links: NavLink[]; cta: { label: string; href: string } }) {
   const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
@@ -95,8 +100,8 @@ export function MobileMenu({ links, cta }: { links: NavLink[]; cta: { label: str
       >
         {open ? <X /> : <Menu />}
       </button>
-      {open && (
-        <div id="mobile-menu" ref={panel} className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto border-t border-border bg-white">
+      {open && createPortal(
+        <div id="mobile-menu" ref={panel} className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto border-t border-border bg-white lg:hidden">
           <nav aria-label="Mobile" className="mx-auto flex max-w-7xl flex-col px-4 py-4 sm:px-6">
             <Suspense fallback={null}>
               <MobileLinks links={links} onNavigate={() => setOpen(false)} />
@@ -108,7 +113,8 @@ export function MobileMenu({ links, cta }: { links: NavLink[]; cta: { label: str
             </div>
             <LanguageSwitcher className="mt-4 self-start" />
           </nav>
-        </div>
+        </div>,
+        document.body,
       )}
     </div>
   );
