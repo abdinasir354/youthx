@@ -98,41 +98,18 @@ body {
   from { opacity: 0; transform: translate3d(0, 28px, 0); }
   to { opacity: 1; transform: none; }
 }
-/* Image frames rise in while the photo inside settles from a slight zoom. */
-@keyframes reveal-frame {
-  from { opacity: 0; transform: translate3d(0, 32px, 0) scale(0.98); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes image-settle {
-  from { transform: scale(1.1); }
-  to { transform: none; }
-}
-
 /* Entrance for the first section of a page (plays once on load; CSS only). */
 .enter-up { animation: reveal-up 0.85s var(--ease-soft) backwards; }
 .enter-up-1 { animation-delay: 0.1s; }
 .enter-up-2 { animation-delay: 0.2s; }
 .enter-up-3 { animation-delay: 0.3s; }
 .enter-up-4 { animation-delay: 0.4s; }
-.enter-up img { animation: image-settle 1.4s var(--ease-soft) backwards; animation-delay: inherit; }
+.enter-up img { animation: image-settle 1.4s var(--ease-soft) backwards; }
+@keyframes image-settle { from { transform: scale(1.1); } to { transform: none; } }
 
-/* Scroll reveals (driven by <RevealObserver/>). Only elements it has marked "hidden" (below the
-   fold, after hydration) are hidden, so content is never lost if JS doesn't run. Each plays once.
-   Animations use `transform` with `backwards` fill, while hover effects use the separate
-   `translate`/`scale` properties, so the two never fight. */
-[data-reveal][data-reveal-state="hidden"],
-[data-reveal-stagger][data-reveal-state="hidden"] > * { opacity: 0; }
-[data-reveal][data-reveal-state="in"] { animation: reveal-up 0.8s var(--ease-soft) backwards; }
-[data-reveal="image"][data-reveal-state="in"] { animation: reveal-frame 0.85s var(--ease-soft) backwards; }
-[data-reveal="image"][data-reveal-state="in"] img { animation: image-settle 1.3s var(--ease-soft) backwards; }
-[data-reveal-stagger][data-reveal-state="in"] > * { animation: reveal-up 0.75s var(--ease-soft) var(--reveal-delay, 0s) backwards; }
-[data-reveal-stagger][data-reveal-state="in"] > * img { animation: image-settle 1.2s var(--ease-soft) var(--reveal-delay, 0s) backwards; }
-[data-reveal-stagger] > :nth-child(2) { --reveal-delay: 0.12s; }
-[data-reveal-stagger] > :nth-child(3) { --reveal-delay: 0.24s; }
-[data-reveal-stagger] > :nth-child(4) { --reveal-delay: 0.36s; }
-[data-reveal-stagger] > :nth-child(5) { --reveal-delay: 0.48s; }
-[data-reveal-stagger] > :nth-child(6) { --reveal-delay: 0.6s; }
-[data-reveal-stagger] > :nth-child(n + 7) { --reveal-delay: 0.72s; }
+/* Scroll reveals ([data-reveal], [data-reveal="image"], [data-reveal-stagger] children) are run by
+   the inline script in components/layout/reveal-script.ts with Web Animations, not CSS, so nothing
+   is ever hidden if that script doesn't run. */
 
 /* Text links: underline that draws in from the left. */
 @utility link-underline {

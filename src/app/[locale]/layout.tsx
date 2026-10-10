@@ -6,7 +6,7 @@ import { getSettings } from "@/lib/data/cms";
 import { jsonLd } from "@/lib/seo";
 import { Toaster } from "sonner";
 import { routing } from "@/i18n/routing";
-import { RevealObserver } from "@/components/layout/reveal-observer";
+import { REVEAL_SCRIPT } from "@/components/layout/reveal-script";
 import "../globals.css";
 
 // Inter: very legible at small sizes, and bold/tight enough for big headlines.
@@ -71,12 +71,15 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 
   return (
     <html lang={locale} className={`${inter.variable} h-full antialiased`}>
+      <head>
+        {/* Scroll reveals: must run while the page parses (see reveal-script.ts). */}
+        <script dangerouslySetInnerHTML={{ __html: REVEAL_SCRIPT }} />
+      </head>
       <body className="flex min-h-full flex-col font-sans">
         <OrganizationJsonLd />
         <NextIntlClientProvider>
           {children}
           <Toaster position="top-center" richColors closeButton />
-          <RevealObserver />
         </NextIntlClientProvider>
       </body>
     </html>
