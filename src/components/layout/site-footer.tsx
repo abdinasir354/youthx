@@ -24,7 +24,7 @@ export async function SiteFooter() {
             <ul className="flex flex-wrap gap-2" aria-label={t("social")}>
               {socials.map((n) => (
                 <li key={n}>
-                  <a href={settings.social[n]} target="_blank" rel="noopener noreferrer me" className="inline-flex rounded-md border border-white/20 px-2.5 py-1 text-xs font-medium text-white/85 hover:border-primary hover:text-primary">
+                  <a href={settings.social[n]} target="_blank" rel="noopener noreferrer me" className="inline-flex rounded-md border border-white/20 px-2.5 py-1 text-xs font-medium text-white/85 transition duration-300 ease-soft hover:-translate-y-0.5 hover:border-primary hover:text-primary">
                     {SOCIAL_LABELS[n]}
                   </a>
                 </li>
@@ -39,7 +39,7 @@ export async function SiteFooter() {
             <ul className="space-y-2.5 text-sm text-white/80">
               {links.map((l) => (
                 <li key={l.id}>
-                  <SmartLink href={l.href} newTab={l.open_in_new_tab} className="hover:text-primary">
+                  <SmartLink href={l.href} newTab={l.open_in_new_tab} className="link-underline hover:text-primary">
                     {l.label}
                   </SmartLink>
                 </li>
@@ -55,13 +55,13 @@ export async function SiteFooter() {
               {settings.contact_email && (
                 <li className="flex gap-2">
                   <Mail className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
-                  <a href={`mailto:${settings.contact_email}`} className="break-all hover:text-primary">{settings.contact_email}</a>
+                  <a href={`mailto:${settings.contact_email}`} className="link-underline break-all hover:text-primary">{settings.contact_email}</a>
                 </li>
               )}
               {settings.contact_phone && (
                 <li className="flex gap-2">
                   <Phone className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
-                  <a href={`tel:${settings.contact_phone.replace(/\s/g, "")}`} className="hover:text-primary">{settings.contact_phone}</a>
+                  <a href={`tel:${settings.contact_phone.replace(/\s/g, "")}`} className="link-underline hover:text-primary">{settings.contact_phone}</a>
                 </li>
               )}
               {settings.address && (
@@ -80,11 +80,11 @@ export async function SiteFooter() {
             <ul className="space-y-2.5 text-sm text-white/80">
               {legal.map((l) => (
                 <li key={l.id}>
-                  <SmartLink href={l.href} className="hover:text-primary">{l.label}</SmartLink>
+                  <SmartLink href={l.href} className="link-underline hover:text-primary">{l.label}</SmartLink>
                 </li>
               ))}
               <li>
-                <CookieSettingsButton className="text-left hover:text-primary">{t("cookieSettings")}</CookieSettingsButton>
+                <CookieSettingsButton className="link-underline text-left hover:text-primary">{t("cookieSettings")}</CookieSettingsButton>
               </li>
             </ul>
           </nav>

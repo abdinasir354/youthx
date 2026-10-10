@@ -209,7 +209,7 @@ export async function StoryDetail({ story, embedded = false }: { story: Story; e
       <section className="relative overflow-hidden bg-surface">
         <span aria-hidden className="absolute -left-24 top-10 size-72 rounded-full bg-primary/10 blur-3xl" />
         <span aria-hidden className="absolute -right-20 bottom-0 size-64 rounded-full bg-secondary/10 blur-3xl" />
-        <Container narrow className="relative py-12 text-center sm:py-16">
+        <Container narrow className="enter-up relative py-12 text-center sm:py-16">
           <p className="flex items-center justify-center gap-4 text-xs font-bold uppercase tracking-[0.24em] text-[#4d6b00]">
             <span aria-hidden className="h-px w-12 bg-[#4d6b00]/40" />
             {t("storiesEyebrow")}
@@ -227,7 +227,7 @@ export async function StoryDetail({ story, embedded = false }: { story: Story; e
             <span aria-hidden className="absolute bottom-6 left-5 top-6 w-px bg-gradient-to-b from-primary via-secondary/30 to-primary lg:left-1/2" />
 
             {opening && (
-              <li className="relative grid items-center gap-6 pb-14 pl-14 last:pb-0 lg:grid-cols-2 lg:gap-24 lg:pl-0">
+              <li data-reveal className="relative grid items-center gap-6 pb-14 pl-14 last:pb-0 lg:grid-cols-2 lg:gap-24 lg:pl-0">
                 {node(1)}
                 <div className="lg:text-right">
                   {story.quote ? (
@@ -241,9 +241,9 @@ export async function StoryDetail({ story, embedded = false }: { story: Story; e
                   )}
                 </div>
                 {story.profile_image_url && (
-                  <figure className="relative">
+                  <figure className="group relative">
                     <div className="relative aspect-[16/11] overflow-hidden rounded-[1.75rem] bg-muted shadow-[0_30px_60px_-30px_rgba(18,53,46,0.5)]">
-                      <Image src={story.profile_image_url} alt={story.person_name} fill preload={!embedded} sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
+                      <Image src={story.profile_image_url} alt={story.person_name} fill preload={!embedded} sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.04]" />
                     </div>
                     <figcaption className="absolute -bottom-4 left-6 rounded-2xl bg-primary px-5 py-2.5 text-sm font-extrabold text-ink shadow-lg">{story.person_name}</figcaption>
                   </figure>
@@ -259,7 +259,7 @@ export async function StoryDetail({ story, embedded = false }: { story: Story; e
               // Chapters without a photo are staggered so the two sides interlock.
               const stagger = !c.image && i > 0 && prev && !prev.image;
               return (
-                <li key={i} className={cn("relative grid items-center gap-6 pb-12 pl-14 last:pb-0 lg:grid-cols-2 lg:gap-x-24 lg:pl-0", stagger && "lg:-mt-28")}>
+                <li key={i} data-reveal className={cn("relative grid items-center gap-6 pb-12 pl-14 last:pb-0 lg:grid-cols-2 lg:gap-x-24 lg:pl-0", stagger && "lg:-mt-28")}>
                   <span
                     aria-hidden
                     className={cn(
@@ -271,7 +271,7 @@ export async function StoryDetail({ story, embedded = false }: { story: Story; e
                   </span>
                   <article
                     className={cn(
-                      "relative overflow-hidden rounded-[1.75rem] border border-border bg-surface/60 p-6 shadow-[0_24px_50px_-34px_rgba(18,53,46,0.35)] sm:p-8",
+                      "relative overflow-hidden rounded-[1.75rem] border border-border bg-surface/60 p-6 shadow-[0_24px_50px_-34px_rgba(18,53,46,0.35)] transition duration-[350ms] ease-soft hover:-translate-y-1 hover:border-primary/50 hover:bg-white sm:p-8",
                       right ? "lg:col-start-2 lg:row-start-1" : "lg:col-start-1 lg:row-start-1 lg:text-right",
                     )}
                   >
@@ -283,9 +283,9 @@ export async function StoryDetail({ story, embedded = false }: { story: Story; e
                     {c.markdown && <RichText markdown={c.markdown} className="mt-3 break-words" />}
                   </article>
                   {c.image && (
-                    <figure className={cn("relative", right ? "lg:col-start-1 lg:row-start-1" : "lg:col-start-2 lg:row-start-1")}>
+                    <figure className={cn("group relative", right ? "lg:col-start-1 lg:row-start-1" : "lg:col-start-2 lg:row-start-1")}>
                       <div className="relative aspect-[16/11] overflow-hidden rounded-[1.75rem] bg-muted shadow-[0_30px_60px_-30px_rgba(18,53,46,0.5)]">
-                        <Image src={c.image.src} alt={c.image.alt} fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" loading="lazy" />
+                        <Image src={c.image.src} alt={c.image.alt} fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.04]" loading="lazy" />
                       </div>
                     </figure>
                   )}

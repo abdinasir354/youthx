@@ -33,7 +33,7 @@ export async function FormPage({ current, eyebrow, title, description, back, ste
         <aside className="relative h-fit overflow-hidden rounded-[2.5rem] bg-ink p-8 text-white sm:p-11 lg:sticky lg:top-24">
           <FloatingShapes variant="a" />
           <div className="relative">
-            <Link href={back.href} className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-primary">
+            <Link href={back.href} className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition-colors duration-300 hover:text-primary [&>svg]:transition-transform [&>svg]:duration-300 hover:[&>svg]:-translate-x-1">
               <ArrowLeft className="size-4" aria-hidden /> {back.label}
             </Link>
 
@@ -76,14 +76,14 @@ export async function FormPage({ current, eyebrow, title, description, back, ste
                 <ul className="mt-3 space-y-2 text-sm text-white/75">
                   {settings.contact_email && (
                     <li>
-                      <a href={`mailto:${settings.contact_email}`} className="inline-flex items-center gap-2 hover:text-primary">
+                      <a href={`mailto:${settings.contact_email}`} className="link-underline inline-flex items-center gap-2 hover:text-primary">
                         <Mail className="size-4 text-primary" aria-hidden /> {settings.contact_email}
                       </a>
                     </li>
                   )}
                   {settings.contact_phone && (
                     <li>
-                      <a href={`tel:${settings.contact_phone.replace(/\s/g, "")}`} className="inline-flex items-center gap-2 hover:text-primary">
+                      <a href={`tel:${settings.contact_phone.replace(/\s/g, "")}`} className="link-underline inline-flex items-center gap-2 hover:text-primary">
                         <Phone className="size-4 text-primary" aria-hidden /> {settings.contact_phone}
                       </a>
                     </li>

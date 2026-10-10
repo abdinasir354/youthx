@@ -16,10 +16,10 @@ function readingTime(text: string | null) {
 export function FeaturedPost({ post }: { post: Post }) {
   const t = useTranslations("site");
   return (
-    <article className="group relative grid overflow-hidden rounded-[2rem] border border-border bg-white transition hover:shadow-[0_24px_50px_-28px_rgba(18,53,46,0.4)] lg:grid-cols-[1.15fr_1fr]">
-      <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[22rem]">
+    <article className="group relative grid overflow-hidden rounded-[2rem] border border-border bg-white transition duration-[400ms] ease-soft hover:-translate-y-1 hover:shadow-[0_24px_50px_-28px_rgba(18,53,46,0.4)] lg:grid-cols-[1.15fr_1fr]">
+      <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[22rem]">
         {post.cover_url ? (
-          <Image src={post.cover_url} alt="" fill preload sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+          <Image src={post.cover_url} alt="" fill preload sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.04]" />
         ) : (
           <PhotoPlaceholder className="absolute inset-0" />
         )}
@@ -35,7 +35,7 @@ export function FeaturedPost({ post }: { post: Post }) {
         </h2>
         {post.excerpt && <p className="mt-4 line-clamp-4 text-lg leading-relaxed text-muted-foreground">{post.excerpt}</p>}
         <p className="mt-6 flex items-center gap-2 font-semibold text-ink">
-          {t("readArticle")} <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
+          {t("readArticle")} <ArrowRight className="size-4 transition-transform duration-300 ease-soft group-hover:translate-x-1" aria-hidden />
         </p>
       </div>
     </article>
@@ -45,10 +45,10 @@ export function FeaturedPost({ post }: { post: Post }) {
 export function PostCard({ post, className }: { post: Post; className?: string }) {
   const t = useTranslations("site");
   return (
-    <article className={cn("group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border bg-white transition hover:-translate-y-1 hover:shadow-[0_24px_50px_-28px_rgba(18,53,46,0.4)]", className)}>
+    <article className={cn("group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border bg-white transition duration-[350ms] ease-soft hover:-translate-y-1.5 hover:shadow-[0_24px_50px_-28px_rgba(18,53,46,0.4)]", className)}>
       <div className="relative aspect-[16/10] overflow-hidden">
         {post.cover_url ? (
-          <Image src={post.cover_url} alt="" fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+          <Image src={post.cover_url} alt="" fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.05]" />
         ) : (
           <PhotoPlaceholder className="absolute inset-0" />
         )}

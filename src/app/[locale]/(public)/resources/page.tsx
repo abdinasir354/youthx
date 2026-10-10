@@ -24,7 +24,7 @@ export default async function ResourcesPage() {
         {[...groups.entries()].map(([name, items]) => (
           <section key={name} aria-label={name}>
             {groups.size > 1 && <h2 className="mb-6 text-2xl font-bold text-secondary">{name}</h2>}
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{items.map((r) => <ResourceCard key={r.id} resource={r} />)}</div>
+            <div data-reveal-stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{items.map((r) => <ResourceCard key={r.id} resource={r} />)}</div>
           </section>
         ))}
       </Container>

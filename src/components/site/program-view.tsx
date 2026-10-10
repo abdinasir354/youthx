@@ -54,7 +54,7 @@ export async function ProgramView({ program }: { program: Program }) {
       <section className="relative overflow-hidden bg-surface">
         <FloatingShapes variant="c" />
         <Container narrow className="relative pb-8 pt-8 sm:pb-10 sm:pt-10">
-          <Link href="/programs" className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-ink">
+          <Link href="/programs" className="group inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors duration-300 hover:text-ink [&>svg]:transition-transform [&>svg]:duration-300 hover:[&>svg]:-translate-x-1">
             <ArrowLeft className="size-4" aria-hidden /> {t("allPrograms")}
           </Link>
           {program.category && (
@@ -116,8 +116,8 @@ export async function ProgramView({ program }: { program: Program }) {
           {program.gallery.length > 0 && (
             <ul className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3" aria-label={t("gallery")}>
               {program.gallery.map((src, i) => (
-                <li key={src} className="relative aspect-square overflow-hidden rounded-2xl bg-muted">
-                  <Image src={src} alt={`${program.title} — ${i + 1}`} fill sizes="(min-width: 768px) 250px, 50vw" className="object-cover" loading="lazy" />
+                <li key={src} className="group relative aspect-square overflow-hidden rounded-2xl bg-muted">
+                  <Image src={src} alt={`${program.title} — ${i + 1}`} fill sizes="(min-width: 768px) 250px, 50vw" className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.05]" loading="lazy" />
                 </li>
               ))}
             </ul>
@@ -165,7 +165,7 @@ function RelatedBlock({ heading, children }: { heading: string; children: React.
     <section className="bg-surface py-10 sm:py-12">
       <Container>
         <SectionHeading heading={heading} />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{children}</div>
+        <div data-reveal-stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{children}</div>
       </Container>
     </section>
   );

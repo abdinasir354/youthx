@@ -54,12 +54,12 @@ export default async function GalleryPage() {
                       {a.intro && <p className="mt-2 max-w-2xl text-muted-foreground">{a.intro}</p>}
                     </div>
                   )}
-                  <ul className="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>li]:mb-4">
+                  <ul data-reveal-stagger className="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>li]:mb-4">
                     {a.photos.map((p, i) => (
                       <li key={`${p.url}-${i}`} className="break-inside-avoid">
-                        <figure className="group overflow-hidden rounded-[1.5rem] bg-muted">
+                        <figure className="group overflow-hidden rounded-[1.5rem] bg-muted transition duration-[400ms] ease-soft hover:-translate-y-1 hover:shadow-[0_24px_50px_-30px_rgba(18,53,46,0.4)]">
                           <a href={p.url} target="_blank" rel="noopener" className="block overflow-hidden" aria-label={p.alt || p.caption || t("openPhoto")}>
-                            <Image src={p.url} alt={p.alt} width={800} height={600} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]" loading={i < 3 ? "eager" : "lazy"} />
+                            <Image src={p.url} alt={p.alt} width={800} height={600} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="h-auto w-full transition-transform duration-700 ease-soft group-hover:scale-[1.04]" loading={i < 3 ? "eager" : "lazy"} />
                           </a>
                           {p.caption && <figcaption className="px-4 py-3 text-sm text-muted-foreground">{p.caption}</figcaption>}
                         </figure>

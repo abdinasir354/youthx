@@ -29,7 +29,7 @@ export default async function BlogPage() {
             <>
               <FeaturedPost post={first} />
               {rest.length > 0 && (
-                <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                <div data-reveal-stagger className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                   {rest.map((p) => (
                     <PostCard key={p.id} post={p} />
                   ))}

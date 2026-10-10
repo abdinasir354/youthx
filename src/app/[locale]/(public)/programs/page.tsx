@@ -32,7 +32,7 @@ export default async function ProgramsPage() {
           {used.length > 1 && (
             <nav aria-label={t("categories")} className="-mt-3 mb-7 flex flex-wrap gap-2">
               {used.map((c) => (
-                <a key={c.id} href={`#cat-${c.slug}`} className="rounded-full border border-border bg-surface px-4 py-2 text-sm font-semibold text-ink transition hover:border-secondary/40 hover:bg-white">
+                <a key={c.id} href={`#cat-${c.slug}`} className="rounded-full border border-border bg-surface px-4 py-2 text-sm font-semibold text-ink transition duration-300 ease-soft hover:-translate-y-0.5 hover:border-secondary/40 hover:bg-white">
                   {c.name}
                 </a>
               ))}
@@ -41,7 +41,7 @@ export default async function ProgramsPage() {
           {programs.length === 0 ? (
             <p className="rounded-3xl border border-dashed border-border px-6 py-14 text-center text-lg text-muted-foreground">{t("noPrograms")}</p>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div data-reveal-stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {programs.map((p, i) => {
                 const firstOfCategory = programs.findIndex((x) => x.category_id === p.category_id) === i;
                 const cat = categories.find((c) => c.id === p.category_id);

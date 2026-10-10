@@ -9,7 +9,7 @@ export function OpportunityCard({ opp }: { opp: Opportunity }) {
   const t = useTranslations("types");
   const common = useTranslations("common");
   return (
-    <article className="group relative flex h-full flex-col rounded-lg border border-border bg-white p-5 transition-shadow hover:shadow-lg focus-within:ring-2 focus-within:ring-primary">
+    <article className="group relative flex h-full flex-col rounded-lg border border-border bg-white p-5 transition-[translate,box-shadow] duration-[350ms] ease-soft hover:-translate-y-1 hover:shadow-lg focus-within:ring-2 focus-within:ring-primary">
       <div className="flex items-start justify-between gap-2">
         <Badge>{t(opp.type)}</Badge>
         {opp.is_remote && (

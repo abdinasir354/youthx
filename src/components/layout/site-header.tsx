@@ -26,7 +26,7 @@ export async function SiteHeader() {
         <HeaderNav links={links} className="hidden lg:flex" />
         <div className="ml-auto flex items-center gap-2 lg:ml-0 lg:justify-self-end">
           <LanguageSwitcher className="hidden sm:flex" />
-          <Link href={cta.href} className={cn(buttonVariants({ size: "sm" }), "hidden h-10 rounded-full px-5 sm:inline-flex")}>
+          <Link href={cta.href} className={cn(buttonVariants({ size: "sm" }), "hidden h-10 rounded-full px-5 transition duration-300 ease-soft hover:-translate-y-0.5 hover:shadow-md sm:inline-flex")}>
             {cta.label}
           </Link>
           <MobileMenu links={links} cta={cta} />

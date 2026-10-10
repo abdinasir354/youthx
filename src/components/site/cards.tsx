@@ -10,7 +10,7 @@ import type { CmsEvent, Program, Project, Resource, Story } from "@/types/cms";
 import { formatEventDate } from "./basics";
 
 const card =
-  "group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_-24px_rgba(18,53,46,0.35)] focus-within:ring-2 focus-within:ring-primary";
+  "group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border bg-white transition-[translate,box-shadow,border-color] duration-[350ms] ease-soft hover:-translate-y-1.5 hover:border-secondary/15 hover:shadow-[0_24px_50px_-24px_rgba(18,53,46,0.35)] focus-within:ring-2 focus-within:ring-primary";
 
 const TONES = [
   "bg-[#ecf7c6] text-[#4d6b00]",
@@ -47,7 +47,7 @@ export function ProgramCard({ program, index = 0 }: { program: Program; index?: 
     <article className={cn(card, "p-8")}>
       {program.featured_image_url ? (
         <div className="relative -mx-8 -mt-8 mb-7 aspect-[16/10] overflow-hidden">
-          <Image src={program.featured_image_url} alt="" fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+          <Image src={program.featured_image_url} alt="" fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.05]" />
         </div>
       ) : (
         <span className={cn("flex size-16 items-center justify-center rounded-2xl", TONES[index % TONES.length])}>
@@ -61,8 +61,8 @@ export function ProgramCard({ program, index = 0 }: { program: Program; index?: 
         </Link>
       </h3>
       {program.short_description && <p className="mt-4 text-[1.0625rem] leading-relaxed text-muted-foreground">{program.short_description}</p>}
-      <p className="mt-auto flex items-center gap-2 pt-7 text-base font-semibold text-ink">
-        {t("learnMore")} <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
+      <p className="mt-auto flex items-center gap-2 pt-7 text-base font-semibold text-ink transition-colors duration-300 group-hover:text-secondary">
+        {t("learnMore")} <ArrowRight className="size-4 transition-transform duration-300 ease-soft group-hover:translate-x-1" aria-hidden />
       </p>
     </article>
   );
@@ -77,7 +77,7 @@ export function EventCard({ event, past }: { event: CmsEvent; past?: boolean }) 
     <article className={cn(card, past && "opacity-90")}>
       {event.featured_image_url && (
         <div className="relative aspect-[16/9] overflow-hidden">
-          <Image src={event.featured_image_url} alt="" fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+          <Image src={event.featured_image_url} alt="" fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.05]" />
         </div>
       )}
       <div className="flex gap-5 p-7">
@@ -122,7 +122,7 @@ export function ProjectCard({ project }: { project: Project }) {
     <article className={card}>
       <div className="relative aspect-[16/10] overflow-hidden bg-secondary">
         {project.featured_image_url ? (
-          <Image src={project.featured_image_url} alt="" fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+          <Image src={project.featured_image_url} alt="" fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.05]" />
         ) : (
           <div className="bg-lattice absolute inset-0" aria-hidden />
         )}

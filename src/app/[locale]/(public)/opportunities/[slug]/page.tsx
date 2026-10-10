@@ -59,7 +59,7 @@ async function OpportunityDetail({ params }: { params: Promise<{ slug: string }>
       <section className="relative overflow-hidden bg-surface">
         <FloatingShapes variant="a" />
         <Container className="relative py-10 sm:py-14">
-          <Link href="/opportunities" className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-ink">
+          <Link href="/opportunities" className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors duration-300 hover:text-ink [&>svg]:transition-transform [&>svg]:duration-300 hover:[&>svg]:-translate-x-1">
             <ArrowLeft className="size-4" aria-hidden /> {ts("allOpportunities")}
           </Link>
 

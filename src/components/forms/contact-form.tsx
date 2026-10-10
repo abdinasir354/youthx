@@ -14,7 +14,7 @@ import { useActionForm, useErrorText } from "./use-action-form";
 type Values = { inquiry_type: string; name: string; email: string; phone: string; subject: string; message: string; website: string };
 
 const line =
-  "w-full border-0 border-b-2 border-border bg-transparent px-0 pb-2 pt-0.5 text-base text-ink placeholder:text-muted-foreground/50 focus:border-ink focus:outline-none focus:ring-0 aria-[invalid=true]:border-danger";
+  "w-full border-0 border-b-2 border-border bg-transparent px-0 pb-2 pt-0.5 text-base text-ink transition-colors duration-300 ease-soft placeholder:text-muted-foreground/50 hover:border-ink/40 focus:border-ink focus:outline-none focus:ring-0 aria-[invalid=true]:border-danger";
 
 /** Minimal field: small uppercase label, underlined input, inline error. */
 function Line<V extends FieldValues>({ form, name, label, optional, className, children }: {

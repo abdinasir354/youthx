@@ -18,7 +18,7 @@ export default async function EventsPage() {
         <section aria-labelledby="upcoming">
           <h2 id="upcoming" className="mb-6 text-2xl font-bold text-secondary">{t("upcomingEvents")}</h2>
           {upcoming.length ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div data-reveal-stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {upcoming.map((e) => <EventCard key={e.id} event={e} />)}
             </div>
           ) : (
@@ -28,7 +28,7 @@ export default async function EventsPage() {
         {past.length > 0 && (
           <section aria-labelledby="past" className="mt-16">
             <h2 id="past" className="mb-6 text-2xl font-bold text-secondary">{t("pastEvents")}</h2>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div data-reveal-stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {past.slice(0, 12).map((e) => <EventCard key={e.id} event={e} past />)}
             </div>
           </section>

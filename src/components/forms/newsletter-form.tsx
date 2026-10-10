@@ -38,7 +38,7 @@ export function NewsletterForm() {
           placeholder={t("newsletterEmail")}
           aria-invalid={!!err}
           aria-describedby={err ? "newsletter-err" : undefined}
-          className="h-11 min-w-0 flex-1 rounded-md border border-white/20 bg-white/10 px-3 text-sm text-white placeholder:text-white/50 focus:border-primary focus:outline-none"
+          className="h-11 min-w-0 flex-1 rounded-md border border-white/20 bg-white/10 px-3 text-sm text-white transition-colors duration-300 ease-soft placeholder:text-white/50 hover:border-white/40 focus:border-primary focus:outline-none"
           {...form.register("email")}
         />
         <SubmitButton pending={pending} className="h-11 rounded-md px-4">

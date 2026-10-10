@@ -6,6 +6,7 @@ import { getSettings } from "@/lib/data/cms";
 import { jsonLd } from "@/lib/seo";
 import { Toaster } from "sonner";
 import { routing } from "@/i18n/routing";
+import { RevealObserver } from "@/components/layout/reveal-observer";
 import "../globals.css";
 
 // Inter: very legible at small sizes, and bold/tight enough for big headlines.
@@ -75,6 +76,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         <NextIntlClientProvider>
           {children}
           <Toaster position="top-center" richColors closeButton />
+          <RevealObserver />
         </NextIntlClientProvider>
       </body>
     </html>

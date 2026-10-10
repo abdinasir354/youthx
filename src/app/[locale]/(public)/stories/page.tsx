@@ -17,7 +17,7 @@ export default async function StoriesPage() {
       <PageIntro eyebrow={t("storiesEyebrow")} title={t("storiesTitle")} description={t("storiesIntro")} />
       <Container className="py-10 sm:py-12">
         {stories.length ? (
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{stories.map((s) => <StoryCard key={s.id} story={s} />)}</div>
+          <div data-reveal-stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{stories.map((s) => <StoryCard key={s.id} story={s} />)}</div>
         ) : (
           <p className="rounded-lg border border-dashed border-border px-6 py-14 text-center text-muted-foreground">{t("noStories")}</p>
         )}

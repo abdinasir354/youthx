@@ -41,8 +41,10 @@ export function HeaderNav({ links, className }: { links: NavLink[]; className?: 
           link={l}
           active={isActive(l.href)}
           className={cn(
-            "relative rounded-md px-4 py-2 text-[1.0625rem] font-semibold tracking-[-0.01em] antialiased transition-colors",
-            isActive(l.href) ? "text-secondary after:absolute after:inset-x-4 after:-bottom-[0.8125rem] after:h-[3px] after:rounded-full after:bg-primary lg:after:-bottom-[0.875rem]" : "text-ink/85 hover:text-secondary",
+            "relative rounded-md px-4 py-2 text-[1.0625rem] font-semibold tracking-[-0.01em] antialiased transition-colors duration-300",
+            // Underline: always shown for the current page; draws in from the left on hover for the others.
+            "after:absolute after:inset-x-4 after:-bottom-[0.8125rem] after:h-[3px] after:origin-left after:rounded-full after:bg-primary after:transition-transform after:duration-300 after:ease-soft lg:after:-bottom-[0.875rem]",
+            isActive(l.href) ? "text-secondary after:scale-x-100" : "text-ink/85 after:scale-x-0 hover:text-secondary hover:after:scale-x-100 focus-visible:after:scale-x-100",
           )}
         />
       ))}
@@ -122,7 +124,7 @@ function MobileLinks({ links, onNavigate }: { links: NavLink[]; onNavigate: () =
           link={l}
           active={isActive(l.href)}
           onClick={onNavigate}
-          className={cn("border-b border-border py-3.5 text-lg font-semibold", isActive(l.href) ? "text-secondary" : "text-secondary/80")}
+          className={cn("border-b border-border py-3.5 text-lg font-semibold transition duration-300 ease-soft hover:translate-x-1 hover:text-secondary", isActive(l.href) ? "text-secondary" : "text-secondary/80")}
         />
       ))}
     </>

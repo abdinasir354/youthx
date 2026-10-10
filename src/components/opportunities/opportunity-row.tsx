@@ -13,7 +13,7 @@ export function OpportunityRow({ opp }: { opp: Opportunity }) {
   const internal = opp.apply_mode === "internal";
 
   return (
-    <article className="group relative flex flex-col gap-5 rounded-3xl border border-border bg-white p-6 transition-all hover:border-secondary/30 hover:shadow-[0_20px_40px_-24px_rgba(18,53,46,0.35)] focus-within:ring-2 focus-within:ring-primary sm:flex-row sm:items-center sm:gap-6 sm:p-7">
+    <article className="group relative flex flex-col gap-5 rounded-3xl border border-border bg-white p-6 transition-[translate,box-shadow,border-color] duration-[350ms] ease-soft hover:-translate-y-1 hover:border-secondary/30 hover:shadow-[0_20px_40px_-24px_rgba(18,53,46,0.35)] focus-within:ring-2 focus-within:ring-primary sm:flex-row sm:items-center sm:gap-6 sm:p-7">
       <span aria-hidden className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-ink text-xl font-extrabold text-primary">
         {org.trim()[0]?.toUpperCase()}
       </span>
@@ -48,7 +48,7 @@ export function OpportunityRow({ opp }: { opp: Opportunity }) {
       <div className="flex shrink-0 flex-row items-center justify-between gap-4 border-t border-border pt-4 sm:w-52 sm:flex-col sm:items-end sm:border-0 sm:pt-0">
         <Deadline value={opp.apply_deadline} className="text-sm" />
         <span className="inline-flex items-center gap-1.5 text-sm font-bold text-ink">
-          {ts("view")} <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
+          {ts("view")} <ArrowRight className="size-4 transition-transform duration-300 ease-soft group-hover:translate-x-1" aria-hidden />
         </span>
       </div>
     </article>
