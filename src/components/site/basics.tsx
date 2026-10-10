@@ -3,13 +3,12 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { markdownToSafeHtml } from "@/lib/markdown";
 import { cn } from "@/lib/utils";
-import { FloatingShapes } from "./shapes";
 
 /** CMS Markdown → sanitized HTML. */
 export function RichText({ markdown, className }: { markdown: string | null | undefined; className?: string }) {
   const html = markdownToSafeHtml(markdown);
   if (!html) return null;
-  return <div data-reveal className={cn("prose-cms text-[1.0625rem] leading-[1.75] text-foreground/85 sm:text-lg", className)} dangerouslySetInnerHTML={{ __html: html }} />;
+  return <div data-reveal className={cn("prose-cms text-base leading-[1.7] text-foreground/85 sm:text-[1.0625rem]", className)} dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
 export function Container({ children, className, narrow }: { children: ReactNode; className?: string; narrow?: boolean }) {
@@ -17,7 +16,7 @@ export function Container({ children, className, narrow }: { children: ReactNode
 }
 
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
-  return <p className={cn("text-[0.8125rem] font-bold uppercase tracking-[0.22em] text-[#5f8500]", className)}>{children}</p>;
+  return <p className={cn("text-xs font-semibold uppercase tracking-wider text-[#5f8500]", className)}>{children}</p>;
 }
 
 /** Eyebrow + heading + intro, with an optional link aligned right on wide screens. */
@@ -40,15 +39,15 @@ export function SectionHeading({
 }) {
   if (!eyebrow && !heading && !intro && !link) return null;
   return (
-    <div data-reveal className={cn("mb-7 flex flex-col gap-4 sm:mb-9", center ? "items-center text-center" : "md:flex-row md:items-end md:justify-between")}>
+    <div data-reveal className={cn("mb-6 flex flex-col gap-3 sm:mb-8", center ? "items-center text-center" : "md:flex-row md:items-end md:justify-between")}>
       <div className={cn("max-w-3xl", center && "mx-auto")}>
         {eyebrow && <Eyebrow className={invert ? "text-primary" : undefined}>{eyebrow}</Eyebrow>}
         {heading && (
-          <h2 id={id} className={cn("heading mt-2 text-balance text-3xl sm:text-4xl lg:text-5xl", invert ? "text-white" : "text-ink")}>
+          <h2 id={id} className={cn("heading mt-2 text-balance text-2xl sm:text-3xl lg:text-[2.125rem]", invert ? "text-white" : "text-ink")}>
             {heading}
           </h2>
         )}
-        {intro && <p className={cn("mt-3 text-pretty text-lg leading-relaxed", invert ? "text-white/80" : "text-muted-foreground")}>{intro}</p>}
+        {intro && <p className={cn("mt-2.5 text-pretty text-base leading-relaxed sm:text-lg", invert ? "text-white/80" : "text-muted-foreground")}>{intro}</p>}
       </div>
       {link && <ArrowLink href={link.href} invert={invert} className="shrink-0">{link.label}</ArrowLink>}
     </div>
@@ -87,21 +86,20 @@ export function ArrowLink({ href, children, invert, className }: { href: string;
 
 /** Rounded "pill" buttons used across the public site. */
 export const pill = {
-  primary: "inline-flex h-14 items-center justify-center gap-2 rounded-full bg-primary px-7 text-base font-bold text-secondary shadow-sm transition hover:bg-primary-hover hover:shadow-md duration-300 ease-soft hover:-translate-y-0.5 active:translate-y-0 [&>span[aria-hidden]]:transition-transform [&>span[aria-hidden]]:duration-300 hover:[&>span[aria-hidden]]:translate-x-1",
-  dark: "inline-flex h-14 items-center justify-center gap-2 rounded-full bg-secondary px-7 text-base font-bold text-white transition hover:bg-secondary-hover duration-300 ease-soft hover:-translate-y-0.5 active:translate-y-0 [&>span[aria-hidden]]:transition-transform [&>span[aria-hidden]]:duration-300 hover:[&>span[aria-hidden]]:translate-x-1",
-  outline: "inline-flex h-14 items-center justify-center gap-2 rounded-full border border-border bg-white px-7 text-base font-semibold text-secondary transition hover:border-secondary/40 hover:shadow-sm duration-300 ease-soft hover:-translate-y-0.5 active:translate-y-0 [&>span[aria-hidden]]:transition-transform [&>span[aria-hidden]]:duration-300 hover:[&>span[aria-hidden]]:translate-x-1",
-  ghostLight: "inline-flex h-14 items-center justify-center gap-2 rounded-full border border-white/30 px-7 text-base font-semibold text-white transition hover:bg-white/10 duration-300 ease-soft hover:-translate-y-0.5 active:translate-y-0 [&>span[aria-hidden]]:transition-transform [&>span[aria-hidden]]:duration-300 hover:[&>span[aria-hidden]]:translate-x-1",
+  primary: "inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-[0.9375rem] font-semibold text-secondary transition hover:bg-primary-hover duration-300 ease-soft hover:-translate-y-0.5 active:translate-y-0 [&>span[aria-hidden]]:transition-transform [&>span[aria-hidden]]:duration-300 hover:[&>span[aria-hidden]]:translate-x-1",
+  dark: "inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-secondary px-5 text-[0.9375rem] font-semibold text-white transition hover:bg-secondary-hover duration-300 ease-soft hover:-translate-y-0.5 active:translate-y-0 [&>span[aria-hidden]]:transition-transform [&>span[aria-hidden]]:duration-300 hover:[&>span[aria-hidden]]:translate-x-1",
+  outline: "inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-border bg-white px-5 text-[0.9375rem] font-semibold text-secondary transition hover:border-secondary/40 hover:bg-muted duration-300 ease-soft hover:-translate-y-0.5 active:translate-y-0 [&>span[aria-hidden]]:transition-transform [&>span[aria-hidden]]:duration-300 hover:[&>span[aria-hidden]]:translate-x-1",
+  ghostLight: "inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-white/30 px-5 text-[0.9375rem] font-semibold text-white transition hover:bg-white/10 duration-300 ease-soft hover:-translate-y-0.5 active:translate-y-0 [&>span[aria-hidden]]:transition-transform [&>span[aria-hidden]]:duration-300 hover:[&>span[aria-hidden]]:translate-x-1",
 };
 
 /** Inner-page header: big headline on the warm off-white background, with soft moving shapes. */
 export function PageIntro({ eyebrow, title, description, children }: { eyebrow?: string; title: string; description?: string | null; children?: ReactNode }) {
   return (
     <section className="relative overflow-hidden bg-surface">
-      <FloatingShapes variant="c" />
-      <Container className="enter-up relative py-10 sm:py-14">
+      <Container className="enter-up relative py-8 sm:py-10">
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-        <h1 className="display mt-3 max-w-4xl text-balance text-4xl text-ink sm:text-5xl lg:text-6xl">{title}</h1>
-        {description && <p className="mt-4 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">{description}</p>}
+        <h1 className="display mt-2.5 max-w-4xl text-balance text-3xl text-ink sm:text-4xl lg:text-[2.75rem]">{title}</h1>
+        {description && <p className="mt-3 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">{description}</p>}
         {children}
       </Container>
     </section>

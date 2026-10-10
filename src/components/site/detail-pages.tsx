@@ -10,14 +10,14 @@ import { Container, Eyebrow, RichText, formatLongDate } from "./basics";
 function Header({ eyebrow, title, intro, image }: { eyebrow: string; title: string; intro?: string | null; image?: string | null }) {
   return (
     <section className="relative overflow-hidden bg-surface">
-      <Container className={image ? "grid items-center gap-10 py-10 sm:py-12 lg:grid-cols-[1.1fr_1fr]" : "py-10 sm:py-12"}>
+      <Container className={image ? "grid items-center gap-8 py-8 sm:py-10 lg:grid-cols-[1.1fr_1fr]" : "py-8 sm:py-10"}>
         <div>
           <Eyebrow>{eyebrow}</Eyebrow>
-          <h1 className="mt-2 display text-balance text-5xl text-ink sm:text-6xl">{title}</h1>
+          <h1 className="mt-2 display text-balance text-3xl text-ink sm:text-4xl lg:text-[2.75rem]">{title}</h1>
           {intro && <p className="mt-4 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground sm:text-xl">{intro}</p>}
         </div>
         {image && (
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] shadow-[0_30px_60px_-25px_rgba(18,53,46,0.4)]">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
             <Image src={image} alt="" fill preload sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
           </div>
         )}
@@ -29,8 +29,8 @@ function Header({ eyebrow, title, intro, image }: { eyebrow: string; title: stri
 function Block({ title, markdown, id }: { title: string; markdown: string | null; id: string }) {
   if (!markdown) return null;
   return (
-    <section aria-labelledby={id} className="mt-12 first:mt-0">
-      <h2 id={id} className="mb-4 text-2xl font-bold text-secondary">{title}</h2>
+    <section aria-labelledby={id} className="mt-8 first:mt-0">
+      <h2 id={id} className="mb-4 text-2xl font-semibold text-secondary">{title}</h2>
       <RichText markdown={markdown} />
     </section>
   );
@@ -39,8 +39,8 @@ function Block({ title, markdown, id }: { title: string; markdown: string | null
 function Checklist({ title, items, id }: { title: string; items: string[]; id: string }) {
   if (!items.length) return null;
   return (
-    <section aria-labelledby={id} className="mt-12">
-      <h2 id={id} className="mb-4 text-2xl font-bold text-secondary">{title}</h2>
+    <section aria-labelledby={id} className="mt-8">
+      <h2 id={id} className="mb-4 text-2xl font-semibold text-secondary">{title}</h2>
       <ul className="space-y-3">
         {items.map((o) => (
           <li key={o} className="flex gap-3">
@@ -59,16 +59,16 @@ export async function ProjectDetail({ project, program }: { project: Project; pr
   return (
     <>
       <Header eyebrow={t(`projectStatus.${project.project_status}`)} title={project.title} intro={project.summary} image={project.featured_image_url} />
-      <Container className="grid gap-12 py-10 sm:py-12 lg:grid-cols-[minmax(0,1fr)_20rem]">
+      <Container className="grid gap-8 py-8 sm:py-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div>
-          <RichText markdown={project.description} className="mb-12" />
+          <RichText markdown={project.description} className="mb-8" />
           <Block id="problem" title={t("theProblem")} markdown={project.problem} />
           <Block id="solution" title={t("ourSolution")} markdown={project.solution} />
           <Checklist id="objectives" title={t("objectives")} items={project.objectives} />
           <Checklist id="activities" title={t("activities")} items={project.activities} />
           <Block id="impact" title={t("impact")} markdown={project.impact} />
           {project.gallery.length > 0 && (
-            <ul className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-3" aria-label={t("gallery")}>
+            <ul className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3" aria-label={t("gallery")}>
               {project.gallery.map((src, i) => (
                 <li key={src} className="relative aspect-[4/3] overflow-hidden rounded-md bg-muted">
                   <Image src={src} alt={`${project.title} — ${i + 1}`} fill sizes="(min-width: 768px) 25vw, 50vw" className="object-cover" loading="lazy" />
@@ -99,7 +99,7 @@ export async function ProjectDetail({ project, program }: { project: Project; pr
           )}
           {project.documents.length > 0 && (
             <div>
-              <h2 className="mb-2 text-sm font-bold text-secondary">{t("documents")}</h2>
+              <h2 className="mb-2 text-sm font-semibold text-secondary">{t("documents")}</h2>
               <ul className="space-y-1.5">
                 {project.documents.map((d) => (
                   <li key={d.url}>
@@ -113,7 +113,7 @@ export async function ProjectDetail({ project, program }: { project: Project; pr
           )}
           {project.partners && project.partners.length > 0 && (
             <div>
-              <h2 className="mb-2 text-sm font-bold text-secondary">{t("partners")}</h2>
+              <h2 className="mb-2 text-sm font-semibold text-secondary">{t("partners")}</h2>
               <ul className="space-y-1 text-sm text-secondary">
                 {project.partners.map((p) => (
                   <li key={p.id}>{p.website ? <a href={p.website} target="_blank" rel="noopener noreferrer" className="underline">{p.name}</a> : p.name}</li>
@@ -132,7 +132,7 @@ export async function ResourceDetail({ resource }: { resource: Resource }) {
   return (
     <>
       <Header eyebrow={t(`resourceTypes.${resource.resource_type}`)} title={resource.title} intro={resource.description} image={resource.cover_image_url} />
-      <Container className="grid gap-12 py-10 sm:py-12 lg:grid-cols-[minmax(0,1fr)_20rem]">
+      <Container className="grid gap-8 py-8 sm:py-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div>
           {resource.body ? <RichText markdown={resource.body} /> : !resource.file_url && !resource.external_url && <p className="text-muted-foreground">{resource.description}</p>}
         </div>
@@ -207,8 +207,6 @@ export async function StoryDetail({ story, embedded = false }: { story: Story; e
     <>
       {/* Header */}
       <section className="relative overflow-hidden bg-surface">
-        <span aria-hidden className="absolute -left-24 top-10 size-72 rounded-full bg-primary/10 blur-3xl" />
-        <span aria-hidden className="absolute -right-20 bottom-0 size-64 rounded-full bg-secondary/10 blur-3xl" />
         <Container narrow className="enter-up relative py-12 text-center sm:py-16">
           <p className="flex items-center justify-center gap-4 text-xs font-bold uppercase tracking-[0.24em] text-[#4d6b00]">
             <span aria-hidden className="h-px w-12 bg-[#4d6b00]/40" />

@@ -166,7 +166,7 @@ export function MediaLibrary({
       <div className={cn("grid gap-4", active && mode === "manage" ? "lg:grid-cols-[1fr_20rem]" : "")}>
         <div>
           {items.length === 0 && !loading ? (
-            <div className="rounded-lg border border-dashed border-border bg-white px-6 py-12 text-center text-sm text-muted-foreground">
+            <div className="rounded-lg border border-dashed border-border bg-white px-6 py-10 text-center text-sm text-muted-foreground">
               {q || folder ? "No files match your search." : "No files yet — drag some in above."}
             </div>
           ) : (

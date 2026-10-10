@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/resource
 
 export default function ResourcePage({ params }: PageProps<"/[locale]/resources/[slug]">) {
   return (
-    <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-16"><PageSkeleton /></div>}>
+    <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-12"><PageSkeleton /></div>}>
       <ResourceLoader params={params} />
     </Suspense>
   );

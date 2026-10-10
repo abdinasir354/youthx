@@ -16,7 +16,7 @@ export async function SiteFooter() {
 
   return (
     <footer className="mt-auto bg-secondary text-white">
-      <div data-reveal-stagger className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 lg:gap-8">
+      <div data-reveal-stagger className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 lg:gap-6">
         <div className="space-y-4 sm:col-span-2 lg:col-span-1">
           <Logo inverted />
           {settings.footer_text && <p className="max-w-xs text-sm leading-relaxed text-white/75">{settings.footer_text}</p>}
@@ -35,7 +35,7 @@ export async function SiteFooter() {
 
         {links.length > 0 && (
           <nav aria-labelledby="footer-links">
-            <h2 id="footer-links" className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-primary">{t("explore")}</h2>
+            <h2 id="footer-links" className="mb-4 text-xs font-semibold uppercase tracking-wider text-primary">{t("explore")}</h2>
             <ul className="space-y-2.5 text-sm text-white/80">
               {links.map((l) => (
                 <li key={l.id}>
@@ -50,7 +50,7 @@ export async function SiteFooter() {
 
         {hasContact && (
           <div>
-            <h2 className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-primary">{t("connect")}</h2>
+            <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-primary">{t("connect")}</h2>
             <ul className="space-y-3 text-sm text-white/80">
               {settings.contact_email && (
                 <li className="flex gap-2">
@@ -76,7 +76,7 @@ export async function SiteFooter() {
 
         {legal.length > 0 && (
           <nav aria-labelledby="footer-legal">
-            <h2 id="footer-legal" className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-primary">{t("legal")}</h2>
+            <h2 id="footer-legal" className="mb-4 text-xs font-semibold uppercase tracking-wider text-primary">{t("legal")}</h2>
             <ul className="space-y-2.5 text-sm text-white/80">
               {legal.map((l) => (
                 <li key={l.id}>
@@ -92,7 +92,7 @@ export async function SiteFooter() {
 
         {settings.newsletter_enabled && (
           <div>
-            <h2 className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-primary">{t("newsletterTitle")}</h2>
+            <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-primary">{t("newsletterTitle")}</h2>
             <p className="mb-4 text-sm leading-relaxed text-white/75">{t("newsletterText")}</p>
             <NewsletterForm />
           </div>

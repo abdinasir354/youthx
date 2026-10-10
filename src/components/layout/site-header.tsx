@@ -15,7 +15,7 @@ export async function SiteHeader() {
   const [links, settings, t] = await Promise.all([getNavigation("header"), getSettings(), getTranslations("nav")]);
   const cta = { label: settings.header_cta_label, href: settings.header_cta_href };
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-surface/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-border bg-surface">
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:z-50 focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-secondary">
         {t("skipToContent")}
       </a>
@@ -26,7 +26,7 @@ export async function SiteHeader() {
         <HeaderNav links={links} className="hidden lg:flex" />
         <div className="ml-auto flex items-center gap-2 lg:ml-0 lg:justify-self-end">
           <LanguageSwitcher className="hidden sm:flex" />
-          <Link href={cta.href} className={cn(buttonVariants({ size: "sm" }), "hidden h-10 rounded-full px-5 transition duration-300 ease-soft hover:-translate-y-0.5 hover:shadow-md sm:inline-flex")}>
+          <Link href={cta.href} className={cn(buttonVariants({ size: "sm" }), "hidden h-10 rounded-lg px-4 transition duration-300 ease-soft hover:-translate-y-0.5 hover:shadow-md sm:inline-flex")}>
             {cta.label}
           </Link>
           <MobileMenu links={links} cta={cta} />

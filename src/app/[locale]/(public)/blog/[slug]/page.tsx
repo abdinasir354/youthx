@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/blog/[sl
 
 export default function BlogPostPage({ params }: PageProps<"/[locale]/blog/[slug]">) {
   return (
-    <Suspense fallback={<div className="mx-auto max-w-3xl px-4 py-12"><PageSkeleton /></div>}>
+    <Suspense fallback={<div className="mx-auto max-w-3xl px-4 py-10"><PageSkeleton /></div>}>
       <Article params={params} />
     </Suspense>
   );
@@ -42,23 +42,23 @@ async function Article({ params }: { params: Promise<{ slug: string }> }) {
           <p className="mt-6 text-sm font-semibold text-[#5f8500]">
             {formatLongDate(post.published_at ?? post.created_at)} · {t("minRead", { count: readingTime(post.body) })}
           </p>
-          <h1 className="display mt-3 text-balance text-4xl text-ink sm:text-5xl">{post.title}</h1>
+          <h1 className="display mt-3 text-balance text-3xl text-ink sm:text-4xl">{post.title}</h1>
           {post.excerpt && <p className="mt-4 text-pretty text-xl leading-relaxed text-muted-foreground">{post.excerpt}</p>}
         </Container>
         {post.cover_url && (
           <Container className="max-w-5xl">
-            <div className="enter-up enter-up-2 relative aspect-[16/9] overflow-hidden rounded-[2rem]">
+            <div className="enter-up enter-up-2 relative aspect-[16/9] overflow-hidden rounded-xl">
               <Image src={post.cover_url} alt="" fill preload sizes="(min-width: 1024px) 1024px, 100vw" className="object-cover" />
             </div>
           </Container>
         )}
-        <Container narrow className="py-8 sm:py-10">
+        <Container narrow className="py-8 sm:py-8">
           <RichText markdown={post.body} className="break-words" />
         </Container>
       </article>
       {more.length > 0 && (
         <section className="bg-white">
-          <Container className="py-10 sm:py-12">
+          <Container className="py-8 sm:py-10">
             <h2 className="heading text-2xl text-ink sm:text-3xl">{t("morePosts")}</h2>
             <div data-reveal-stagger className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {more.map((p) => (

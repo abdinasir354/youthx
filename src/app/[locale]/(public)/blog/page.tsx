@@ -18,9 +18,9 @@ export default async function BlogPage() {
     <>
       <PageIntro eyebrow={t("blogEyebrow")} title={t("blogTitle")} description={t("blogIntro")} />
       <section className="bg-white">
-        <Container className="py-10 sm:py-14">
+        <Container className="py-8 sm:py-10">
           {!first ? (
-            <div className="rounded-[2rem] border border-dashed border-border bg-surface px-6 py-14 text-center">
+            <div className="rounded-xl border border-dashed border-border bg-surface px-6 py-10 text-center">
               <Newspaper className="mx-auto size-10 text-secondary/40" aria-hidden />
               <p className="heading mt-4 text-2xl text-ink">{t("noPostsTitle")}</p>
               <p className="mx-auto mt-2 max-w-md text-muted-foreground">{t("noPostsText")}</p>

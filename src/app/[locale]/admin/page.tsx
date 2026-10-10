@@ -50,7 +50,7 @@ export default async function AdminDashboard() {
   ].filter(Boolean) as { label: string; href: string; icon: LucideIcon }[];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <h1 className="text-2xl font-bold text-secondary">Welcome{me.profile.full_name ? `, ${me.profile.full_name.split(" ")[0]}` : ""}</h1>
         <div className="flex flex-wrap gap-2">

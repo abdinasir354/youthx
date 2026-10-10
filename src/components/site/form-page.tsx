@@ -5,7 +5,6 @@ import { Link } from "@/i18n/navigation";
 import { getSettings } from "@/lib/data/cms";
 import { cn } from "@/lib/utils";
 import { Container } from "./basics";
-import { FloatingShapes } from "./shapes";
 
 export type InvolveKind = "volunteer" | "mentor" | "partner" | "sponsor";
 const KINDS: InvolveKind[] = ["volunteer", "mentor", "partner", "sponsor"];
@@ -27,11 +26,9 @@ export async function FormPage({ current, eyebrow, title, description, back, ste
   const [t, settings] = await Promise.all([getTranslations("involve"), getSettings()]);
   return (
     <section className="relative overflow-hidden bg-surface">
-      <FloatingShapes variant="c" />
-      <Container className="enter-up relative grid gap-8 py-10 sm:py-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
+      <Container className="enter-up relative grid gap-6 py-8 sm:py-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-8">
         {/* Story panel */}
-        <aside className="relative h-fit overflow-hidden rounded-[2.5rem] bg-ink p-8 text-white sm:p-11 lg:sticky lg:top-24">
-          <FloatingShapes variant="a" />
+        <aside className="relative h-fit overflow-hidden rounded-2xl bg-ink p-6 text-white sm:p-8 lg:sticky lg:top-24">
           <div className="relative">
             <Link href={back.href} className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition-colors duration-300 hover:text-primary [&>svg]:transition-transform [&>svg]:duration-300 hover:[&>svg]:-translate-x-1">
               <ArrowLeft className="size-4" aria-hidden /> {back.label}
@@ -44,8 +41,8 @@ export async function FormPage({ current, eyebrow, title, description, back, ste
                   href={`/get-involved/${k}`}
                   aria-current={k === current ? "page" : undefined}
                   className={cn(
-                    "rounded-xl px-3 py-2.5 text-center text-sm font-bold transition",
-                    k === current ? "bg-primary text-ink shadow-sm" : "text-white/70 hover:bg-white/[0.08] hover:text-white",
+                    "rounded-xl px-3 py-2.5 text-center text-sm font-semibold transition",
+                    k === current ? "bg-primary text-ink" : "text-white/70 hover:bg-white/[0.08] hover:text-white",
                   )}
                 >
                   {t(`tab.${k}`)}
@@ -53,16 +50,16 @@ export async function FormPage({ current, eyebrow, title, description, back, ste
               ))}
             </nav>
 
-            <p className="mt-10 text-[0.8125rem] font-bold uppercase tracking-[0.22em] text-primary">{eyebrow}</p>
-            <h1 className="display mt-4 text-balance text-4xl sm:text-5xl">{title}</h1>
+            <p className="mt-8 text-xs font-semibold uppercase tracking-wider text-primary">{eyebrow}</p>
+            <h1 className="display mt-4 text-balance text-3xl sm:text-4xl">{title}</h1>
             <p className="mt-5 text-pretty text-lg leading-relaxed text-white/75">{description}</p>
 
-            <h2 className="mt-10 text-xs font-bold uppercase tracking-[0.2em] text-white/50">{stepsTitle}</h2>
+            <h2 className="mt-8 text-xs font-semibold uppercase tracking-wider text-white/50">{stepsTitle}</h2>
             <ol className="relative mt-5 space-y-6">
               <span aria-hidden className="absolute bottom-3 left-[0.9375rem] top-3 w-px bg-white/15" />
               {steps.map((s, i) => (
                 <li key={i} className="relative flex gap-4">
-                  <span className="relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-extrabold text-ink" aria-hidden>
+                  <span className="relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-ink" aria-hidden>
                     {i + 1}
                   </span>
                   <span className="pt-1 text-base leading-relaxed text-white/85">{s}</span>
@@ -71,7 +68,7 @@ export async function FormPage({ current, eyebrow, title, description, back, ste
             </ol>
 
             {(settings.contact_email || settings.contact_phone) && (
-              <div className="mt-10 rounded-2xl bg-white/[0.06] p-5 ring-1 ring-white/10">
+              <div className="mt-8 rounded-2xl bg-white/[0.06] p-5 ring-1 ring-white/10">
                 <p className="text-sm font-semibold text-white">{t("preferTalk")}</p>
                 <ul className="mt-3 space-y-2 text-sm text-white/75">
                   {settings.contact_email && (
@@ -95,7 +92,7 @@ export async function FormPage({ current, eyebrow, title, description, back, ste
         </aside>
 
         {/* Form card */}
-        <div className="rounded-[2.5rem] border border-border bg-white p-7 shadow-[0_30px_60px_-40px_rgba(18,53,46,0.35)] sm:p-12">
+        <div className="rounded-2xl border border-border bg-white p-7 sm:p-8">
           <h2 className="heading text-3xl text-ink">{t(`formTitle.${current}`)}</h2>
           <p className="mt-2 text-base text-muted-foreground">{t("formIntro")}</p>
           <div className="mt-8">{children}</div>

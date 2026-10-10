@@ -11,7 +11,6 @@ import { REGIONS } from "@/types/database.types";
 import { Sections } from "@/components/cms/sections";
 import { Container, Eyebrow } from "@/components/site/basics";
 import { cmsPageMetadata } from "@/components/site/cms-page";
-import { FloatingShapes } from "@/components/site/shapes";
 import { OpportunityRow } from "@/components/opportunities/opportunity-row";
 import { Skeleton } from "@/components/ui/misc";
 
@@ -26,19 +25,18 @@ export default async function OpportunitiesPage({ searchParams }: PageProps<"/[l
   return (
     <>
       <section className="relative overflow-hidden bg-surface">
-        <FloatingShapes variant="c" />
-        <Container className="enter-up relative pb-10 pt-16 sm:pb-14 sm:pt-20">
+        <Container className="enter-up relative pb-10 pt-12 sm:pb-10 sm:pt-14">
           <Eyebrow>{ts("opportunitiesEyebrow")}</Eyebrow>
-          <h1 className="display mt-4 max-w-3xl text-balance text-5xl text-ink sm:text-6xl">{ts("findNext")}</h1>
+          <h1 className="display mt-3 max-w-3xl text-balance text-3xl text-ink sm:text-4xl lg:text-[2.75rem]">{ts("findNext")}</h1>
           <p className="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground sm:text-xl">{page?.page.description ?? t("subtitle")}</p>
           {/* Search + filters read the URL (request data) → stream in behind Suspense */}
-          <Suspense fallback={<Skeleton className="mt-10 h-16 max-w-3xl rounded-full" />}>
+          <Suspense fallback={<Skeleton className="mt-8 h-16 max-w-3xl rounded-full" />}>
             <SearchBox searchParams={searchParams as Promise<Filters>} />
           </Suspense>
         </Container>
       </section>
       <section className="bg-white">
-        <Container className="py-10 sm:py-14">
+        <Container className="py-8 sm:py-10">
           <Suspense fallback={<ResultsSkeleton />}>
             <Results searchParams={searchParams as Promise<Filters>} />
           </Suspense>
@@ -62,8 +60,8 @@ async function SearchBox({ searchParams }: { searchParams: Promise<Filters> }) {
   const [t, tt, ts] = await Promise.all([getTranslations("opportunities"), getTranslations("types"), getTranslations("site")]);
   const quick = ["scholarship", "internship", "fellowship", "training", "job", "competition", "volunteering", "conference"] as const;
   return (
-    <div className="mt-10">
-      <form role="search" className="flex max-w-3xl items-center gap-2 rounded-full border border-border bg-white p-2 shadow-[0_20px_40px_-24px_rgba(18,53,46,0.35)] focus-within:ring-2 focus-within:ring-primary">
+    <div className="mt-8">
+      <form role="search" className="flex max-w-3xl items-center gap-2 rounded-xl border border-border bg-white p-1.5 focus-within:ring-2 focus-within:ring-primary">
         {params.type && <input type="hidden" name="type" value={params.type} />}
         {params.region && <input type="hidden" name="region" value={params.region} />}
         {params.remote && <input type="hidden" name="remote" value={params.remote} />}
@@ -77,7 +75,7 @@ async function SearchBox({ searchParams }: { searchParams: Promise<Filters> }) {
           placeholder={ts("searchOpportunities")}
           className="h-12 min-w-0 flex-1 bg-transparent text-base text-ink placeholder:text-muted-foreground focus:outline-none sm:text-lg"
         />
-        <button type="submit" className="h-12 shrink-0 rounded-full bg-ink px-6 text-base font-bold text-white transition hover:bg-secondary-hover">
+        <button type="submit" className="h-11 shrink-0 rounded-lg bg-ink px-5 text-[0.9375rem] font-semibold text-white transition hover:bg-secondary-hover">
           {ts("search")}
         </button>
       </form>
@@ -128,7 +126,7 @@ async function Results({ searchParams }: { searchParams: Promise<Filters> }) {
         {params.q && <input type="hidden" name="q" value={params.q} />}
         {params.type && <input type="hidden" name="type" value={params.type} />}
         <p className="text-lg text-ink" aria-live="polite">
-          <span className="font-extrabold">{opps.length}</span> {ts("opportunitiesFound", { count: opps.length })}
+          <span className="font-semibold">{opps.length}</span> {ts("opportunitiesFound", { count: opps.length })}
         </p>
         <div className="flex flex-wrap items-center gap-3">
           <label className="sr-only" htmlFor="opp-region">{t("filterRegion")}</label>
@@ -144,7 +142,7 @@ async function Results({ searchParams }: { searchParams: Promise<Filters> }) {
           <label className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full border border-border bg-white px-4 text-sm font-medium text-ink">
             <input type="checkbox" name="closed" value="1" defaultChecked={params.closed === "1"} className="size-4 accent-secondary" /> {ts("includeClosed")}
           </label>
-          <button type="submit" className="h-11 rounded-full bg-primary px-5 text-sm font-bold text-ink transition hover:bg-primary-hover">
+          <button type="submit" className="h-11 rounded-lg bg-primary px-5 text-sm font-semibold text-ink transition hover:bg-primary-hover">
             {common("filter")}
           </button>
           {filtered && (
@@ -156,7 +154,7 @@ async function Results({ searchParams }: { searchParams: Promise<Filters> }) {
       </form>
 
       {opps.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-border bg-surface px-6 py-16 text-center">
+        <div className="rounded-xl border border-dashed border-border bg-surface px-6 py-12 text-center">
           <SearchX className="mx-auto size-10 text-secondary/40" aria-hidden />
           <p className="heading mt-4 text-2xl text-ink">{all.length === 0 ? t("noneTitle") : ts("noMatches")}</p>
           <p className="mx-auto mt-2 max-w-md text-muted-foreground">{all.length === 0 ? t("noneText") : ts("noMatchesHint")}</p>
@@ -177,7 +175,7 @@ function ResultsSkeleton() {
     <div className="space-y-4" aria-busy="true">
       <Skeleton className="h-10 w-64" />
       {Array.from({ length: 3 }).map((_, i) => (
-        <Skeleton key={i} className="h-36 rounded-3xl" />
+        <Skeleton key={i} className="h-36 rounded-xl" />
       ))}
     </div>
   );

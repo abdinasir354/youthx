@@ -19,11 +19,11 @@ export default async function ResourcesPage() {
   return (
     <>
       <PageIntro eyebrow={t("resourcesEyebrow")} title={t("resourcesTitle")} description={t("resourcesIntro")} />
-      <Container className="space-y-14 py-10 sm:py-12">
-        {resources.length === 0 && <p className="rounded-lg border border-dashed border-border px-6 py-14 text-center text-muted-foreground">{t("noResources")}</p>}
+      <Container className="space-y-10 py-8 sm:py-10">
+        {resources.length === 0 && <p className="rounded-lg border border-dashed border-border px-6 py-10 text-center text-muted-foreground">{t("noResources")}</p>}
         {[...groups.entries()].map(([name, items]) => (
           <section key={name} aria-label={name}>
-            {groups.size > 1 && <h2 className="mb-6 text-2xl font-bold text-secondary">{name}</h2>}
+            {groups.size > 1 && <h2 className="mb-6 text-2xl font-semibold text-secondary">{name}</h2>}
             <div data-reveal-stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{items.map((r) => <ResourceCard key={r.id} resource={r} />)}</div>
           </section>
         ))}

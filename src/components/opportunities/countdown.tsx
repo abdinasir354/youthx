@@ -19,9 +19,9 @@ export function Countdown({ deadline }: { deadline: string | null }) {
     return () => clearInterval(id);
   }, [deadline]);
 
-  if (!deadline) return <p className="heading text-4xl text-primary">{t("rolling")}</p>;
-  if (ms == null) return <p className="heading text-5xl text-white/30" aria-hidden>—</p>;
-  if (ms <= 0) return <p className="heading text-5xl text-white/50">{t("closedShort")}</p>;
+  if (!deadline) return <p className="heading text-3xl text-primary">{t("rolling")}</p>;
+  if (ms == null) return <p className="heading text-4xl text-white/30" aria-hidden>—</p>;
+  if (ms <= 0) return <p className="heading text-4xl text-white/50">{t("closedShort")}</p>;
 
   const days = Math.floor(ms / 86_400_000);
   const hours = Math.floor((ms % 86_400_000) / 3_600_000);
@@ -29,12 +29,12 @@ export function Countdown({ deadline }: { deadline: string | null }) {
     <p className="flex items-baseline gap-2" role="timer" aria-live="off">
       {days > 0 ? (
         <>
-          <span className="display text-6xl tabular-nums text-primary">{days}</span>
+          <span className="display text-5xl tabular-nums text-primary">{days}</span>
           <span className="text-lg font-semibold text-white/80">{t("daysLeft", { count: days })}</span>
         </>
       ) : (
         <>
-          <span className="display text-6xl tabular-nums text-primary">{Math.max(1, hours)}</span>
+          <span className="display text-5xl tabular-nums text-primary">{Math.max(1, hours)}</span>
           <span className="text-lg font-semibold text-white/80">{t("hoursLeft", { count: Math.max(1, hours) })}</span>
         </>
       )}

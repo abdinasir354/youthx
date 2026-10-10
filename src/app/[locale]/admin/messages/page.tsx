@@ -53,7 +53,7 @@ export default async function AdminMessagesPage({ searchParams }: PageProps<"/[l
         ))}
       </div>
       {messages.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-border bg-white px-6 py-14 text-center text-sm text-muted-foreground">{archived ? "No archived messages." : "Inbox zero — no messages."}</div>
+        <div className="rounded-lg border border-dashed border-border bg-white px-6 py-10 text-center text-sm text-muted-foreground">{archived ? "No archived messages." : "Inbox zero — no messages."}</div>
       ) : (
         <ul className="space-y-3">
           {messages.map((m) => (

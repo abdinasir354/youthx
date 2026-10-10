@@ -70,7 +70,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   if (!hasLocale(routing.locales, locale)) notFound();
 
   return (
-    <html lang={locale} className={`${inter.variable} h-full antialiased`}>
+    <html lang={locale} className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         {/* Scroll reveals: must run while the page parses (see reveal-script.ts). */}
         <script dangerouslySetInnerHTML={{ __html: REVEAL_SCRIPT }} />

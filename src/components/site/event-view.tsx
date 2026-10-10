@@ -48,9 +48,9 @@ export async function EventView({ event }: { event: CmsEvent }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(ld)} />
       <section className="relative overflow-hidden bg-surface">
-        <Container className="enter-up py-10 sm:py-12">
+        <Container className="enter-up py-8 sm:py-10">
           <Eyebrow>{t(`eventTypes.${event.event_type}`)}</Eyebrow>
-          <h1 className="mt-2 max-w-4xl display text-balance text-5xl text-ink sm:text-6xl">{event.title}</h1>
+          <h1 className="mt-2 max-w-4xl display text-balance text-3xl text-ink sm:text-4xl lg:text-[2.75rem]">{event.title}</h1>
           {event.summary && <p className="mt-5 max-w-2xl text-lg text-muted-foreground sm:text-xl">{event.summary}</p>}
           <p className={cn("mt-6 inline-flex rounded px-3 py-1 text-sm font-semibold", event.event_status === "cancelled" ? "bg-danger text-white" : "bg-primary text-secondary")}>
             {t(`eventStatus.${event.event_status}`)}
@@ -58,17 +58,17 @@ export async function EventView({ event }: { event: CmsEvent }) {
         </Container>
       </section>
 
-      <Container className="grid gap-12 py-10 sm:py-12 lg:grid-cols-[minmax(0,1fr)_22rem]">
+      <Container className="grid gap-8 py-8 sm:py-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <div>
           {event.featured_image_url && (
-            <div className="relative mb-10 aspect-video overflow-hidden rounded-lg bg-muted">
+            <div className="relative mb-8 aspect-video overflow-hidden rounded-lg bg-muted">
               <Image src={event.featured_image_url} alt="" fill preload sizes="(min-width: 1024px) 60vw, 100vw" className="object-cover" />
             </div>
           )}
           <RichText markdown={event.description} />
           {event.speakers && event.speakers.length > 0 && (
-            <section className="mt-12" aria-labelledby="speakers">
-              <h2 id="speakers" className="text-2xl font-bold text-secondary">{t("speakers")}</h2>
+            <section className="mt-8" aria-labelledby="speakers">
+              <h2 id="speakers" className="text-2xl font-semibold text-secondary">{t("speakers")}</h2>
               <ul data-reveal-stagger className="mt-6 grid gap-5 sm:grid-cols-2">
                 {event.speakers.map((s) => (
                   <li key={s.name} className="flex gap-4 rounded-lg border border-border p-5">
@@ -78,7 +78,7 @@ export async function EventView({ event }: { event: CmsEvent }) {
                       </span>
                     )}
                     <div>
-                      <p className="font-bold text-secondary">{s.name}</p>
+                      <p className="font-semibold text-secondary">{s.name}</p>
                       {s.role_title && <p className="text-sm text-muted-foreground">{s.role_title}</p>}
                       {s.bio && <p className="mt-2 text-sm leading-relaxed text-foreground/85">{s.bio}</p>}
                     </div>

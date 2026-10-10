@@ -274,7 +274,7 @@ export function EntryEditor({
       </div>
 
       {/* Sticky save bar */}
-      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-white/95 backdrop-blur lg:left-64">
+      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-white lg:left-64">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <p className="hidden text-xs text-muted-foreground sm:block">{dirty ? "You have unsaved changes · Ctrl+S to save" : "All changes saved"}</p>
           <div className="ml-auto flex gap-2">

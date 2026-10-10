@@ -37,15 +37,15 @@ export default async function GalleryPage() {
     <>
       <PageIntro eyebrow={t("galleryEyebrow")} title={page?.page.title ?? t("galleryTitle")} description={page?.page.description ?? t("galleryIntro")} />
       <section className="bg-white">
-        <Container className="py-10 sm:py-14">
+        <Container className="py-8 sm:py-10">
           {albums.length === 0 ? (
-            <div className="rounded-[2rem] border border-dashed border-border bg-surface px-6 py-14 text-center">
+            <div className="rounded-xl border border-dashed border-border bg-surface px-6 py-10 text-center">
               <Images className="mx-auto size-10 text-secondary/40" aria-hidden />
               <p className="heading mt-4 text-2xl text-ink">{t("galleryEmptyTitle")}</p>
               <p className="mx-auto mt-2 max-w-md text-muted-foreground">{t("galleryEmptyText")}</p>
             </div>
           ) : (
-            <div className="space-y-12">
+            <div className="space-y-8">
               {albums.map((a) => (
                 <section key={a.id} aria-label={a.heading ?? t("galleryTitle")}>
                   {(a.heading || a.intro) && (
@@ -57,7 +57,7 @@ export default async function GalleryPage() {
                   <ul data-reveal-stagger className="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>li]:mb-4">
                     {a.photos.map((p, i) => (
                       <li key={`${p.url}-${i}`} className="break-inside-avoid">
-                        <figure className="group overflow-hidden rounded-[1.5rem] bg-muted transition duration-[400ms] ease-soft hover:-translate-y-1 hover:shadow-[0_24px_50px_-30px_rgba(18,53,46,0.4)]">
+                        <figure className="group overflow-hidden rounded-xl bg-muted transition duration-[400ms] ease-soft hover:-translate-y-1 hover:shadow-md">
                           <a href={p.url} target="_blank" rel="noopener" className="block overflow-hidden" aria-label={p.alt || p.caption || t("openPhoto")}>
                             <Image src={p.url} alt={p.alt} width={800} height={600} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="h-auto w-full transition-transform duration-700 ease-soft group-hover:scale-[1.04]" loading={i < 3 ? "eager" : "lazy"} />
                           </a>

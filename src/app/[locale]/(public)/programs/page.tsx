@@ -4,7 +4,6 @@ import { Sections } from "@/components/cms/sections";
 import { Container, PageIntro, SectionHeading } from "@/components/site/basics";
 import { ProgramCard } from "@/components/site/cards";
 import { cmsPageMetadata } from "@/components/site/cms-page";
-import { FloatingShapes } from "@/components/site/shapes";
 
 export async function generateMetadata() {
   return cmsPageMetadata("programs", "Programs");
@@ -25,8 +24,7 @@ export default async function ProgramsPage() {
     <>
       {hero ? <Sections sections={[hero]} /> : <PageIntro eyebrow={t("programsEyebrow")} title={page?.page.title ?? t("programsTitle")} description={page?.page.description} />}
 
-      <section id="programs" aria-labelledby="programs-heading" className="relative scroll-mt-24 overflow-hidden bg-white py-12 sm:py-16">
-        <FloatingShapes variant="c" />
+      <section id="programs" aria-labelledby="programs-heading" className="relative scroll-mt-24 overflow-hidden bg-white py-10 sm:py-12">
         <Container className="relative">
           <SectionHeading eyebrow={t("ourPillars")} heading={hero ? page?.page.title ?? t("programsTitle") : t("allPrograms")} intro={hero ? page?.page.description : null} id="programs-heading" />
           {used.length > 1 && (
@@ -39,7 +37,7 @@ export default async function ProgramsPage() {
             </nav>
           )}
           {programs.length === 0 ? (
-            <p className="rounded-3xl border border-dashed border-border px-6 py-14 text-center text-lg text-muted-foreground">{t("noPrograms")}</p>
+            <p className="rounded-xl border border-dashed border-border px-6 py-10 text-center text-lg text-muted-foreground">{t("noPrograms")}</p>
           ) : (
             <div data-reveal-stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {programs.map((p, i) => {

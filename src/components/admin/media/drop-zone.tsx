@@ -70,7 +70,7 @@ export function DropZone({
           type="button"
           disabled={disabled}
           onClick={() => input.current?.click()}
-          className={cn("flex w-full flex-col items-center justify-center gap-1.5 text-center", compact ? "px-4 py-5" : "px-6 py-10")}
+          className={cn("flex w-full flex-col items-center justify-center gap-1.5 text-center", compact ? "px-4 py-5" : "px-6 py-8")}
         >
           <UploadCloud className={cn("text-secondary/60", compact ? "size-6" : "size-9")} aria-hidden />
           <span className="text-sm font-semibold text-secondary">

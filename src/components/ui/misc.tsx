@@ -39,7 +39,7 @@ export function Progress({ value, className, barClassName, label }: { value: num
 
 export function EmptyState({ title, description, icon: Icon = Inbox, children }: { title: string; description?: string; icon?: LucideIcon; children?: ReactNode }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-muted/50 px-6 py-12 text-center">
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-muted/50 px-6 py-10 text-center">
       <div className="mb-3 rounded-full bg-primary-soft p-3 text-secondary">
         <Icon className="size-6" />
       </div>
@@ -82,7 +82,7 @@ export function PageHeader({ title, description, children }: { title: string; de
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <h1 className="text-2xl font-extrabold text-secondary sm:text-3xl">{title}</h1>
+        <h1 className="text-xl font-bold text-secondary sm:text-2xl">{title}</h1>
         {description && <p className="mt-1 text-muted-foreground">{description}</p>}
       </div>
       {children && <div className="flex flex-wrap gap-2">{children}</div>}
@@ -101,7 +101,7 @@ export function StatCard({ label, value, hint, icon: Icon }: { label: string; va
           </span>
         )}
       </div>
-      <p className="mt-2 text-3xl font-extrabold text-secondary">{value}</p>
+      <p className="mt-1.5 text-2xl font-bold text-secondary">{value}</p>
       {hint && <p className="mt-1 text-xs text-muted-foreground">{hint}</p>}
     </div>
   );

@@ -61,30 +61,22 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-size: 1.0625rem; /* 17px: easier reading on phones */
-  line-height: 1.65;
+  font-size: 1rem;
+  line-height: 1.6;
   text-rendering: optimizeLegibility;
 }
 
-/* Big, tight display headlines (public site). */
+/* Display headlines (public site). */
 .display {
-  font-weight: 800;
-  letter-spacing: -0.045em;
-  line-height: 0.98;
-}
-.heading {
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.05;
 }
-
-/* Gentle floating shapes (decorative). Disabled by prefers-reduced-motion below. */
-@keyframes float-a { 0%,100% { transform: translate(0,0) rotate(0deg); } 50% { transform: translate(10px,-14px) rotate(6deg); } }
-@keyframes float-b { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-12px,10px) scale(1.06); } }
-@keyframes spin-slow { to { transform: rotate(360deg); } }
-.float-a { animation: float-a 9s ease-in-out infinite; }
-.float-b { animation: float-b 11s ease-in-out infinite; }
-.spin-slow { animation: spin-slow 40s linear infinite; }
+.heading {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
 
 :focus-visible {
   outline: 3px solid var(--primary);
@@ -122,33 +114,21 @@ body {
 }
 
 /* Sanitized rich text (CMS Markdown, posts, opportunity descriptions) */
-.prose-content, .prose-cms { line-height: 1.75; }
-.prose-content h2, .prose-cms h2 { font-size: 1.35rem; font-weight: 700; margin: 1.5rem 0 .5rem; color: var(--secondary); }
-.prose-content h3, .prose-cms h3 { font-size: 1.15rem; font-weight: 700; margin: 1.25rem 0 .5rem; color: var(--secondary); }
-.prose-content p, .prose-cms p { margin: .75rem 0; }
+.prose-content, .prose-cms { line-height: 1.7; }
+.prose-content h2, .prose-cms h2 { font-size: 1.25rem; font-weight: 600; margin: 1.25rem 0 .5rem; color: var(--secondary); }
+.prose-content h3, .prose-cms h3 { font-size: 1.1rem; font-weight: 600; margin: 1rem 0 .4rem; color: var(--secondary); }
+.prose-content p, .prose-cms p { margin: .6rem 0; }
 .prose-content ul, .prose-cms ul { list-style: disc; padding-left: 1.5rem; margin: .75rem 0; }
 .prose-content ol, .prose-cms ol { list-style: decimal; padding-left: 1.5rem; margin: .75rem 0; }
 .prose-content a, .prose-cms a { color: var(--secondary); text-decoration: underline; }
 .prose-content blockquote, .prose-cms blockquote { border-left: 4px solid var(--primary); padding-left: 1rem; color: var(--muted-foreground); }
 .prose-cms > :first-child { margin-top: 0; }
-.prose-cms h4 { font-weight: 700; margin: 1rem 0 .25rem; color: var(--secondary); }
-.prose-cms strong { color: var(--secondary); }
-.prose-cms hr { border-color: var(--border); margin: 1.5rem 0; }
+.prose-cms h4 { font-weight: 600; margin: 1rem 0 .25rem; color: var(--secondary); }
+.prose-cms strong { color: var(--secondary); font-weight: 600; }
+.prose-cms hr { border-color: var(--border); margin: 1.25rem 0; }
 .prose-cms table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .9em; }
 .prose-cms th, .prose-cms td { border: 1px solid var(--border); padding: .5rem .75rem; text-align: left; }
 .prose-cms blockquote { border-left: 4px solid var(--primary); padding-left: 1rem; color: var(--muted-foreground); }
-
-/* Subtle geometric lattice used behind hero sections — a quiet nod to traditional
-   Somali woven and carved patterns. Decorative only. */
-.bg-lattice {
-  background-image:
-    linear-gradient(135deg, rgb(255 255 255 / .045) 25%, transparent 25%),
-    linear-gradient(225deg, rgb(255 255 255 / .045) 25%, transparent 25%),
-    linear-gradient(315deg, rgb(255 255 255 / .045) 25%, transparent 25%),
-    linear-gradient(45deg, rgb(255 255 255 / .045) 25%, transparent 25%);
-  background-size: 36px 36px;
-  background-position: 18px 0, 18px 0, 0 0, 0 0;
-}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }

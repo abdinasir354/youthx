@@ -28,7 +28,7 @@ export default async function NewsletterPage() {
         <CsvButton action={exportSubscribersCsv} filename="youthup-subscribers.csv">Export CSV</CsvButton>
       </div>
       {rows.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-border bg-white px-6 py-14 text-center text-sm text-muted-foreground">No subscribers yet.</div>
+        <div className="rounded-lg border border-dashed border-border bg-white px-6 py-10 text-center text-sm text-muted-foreground">No subscribers yet.</div>
       ) : (
         <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-white">
           {rows.map((r) => (
