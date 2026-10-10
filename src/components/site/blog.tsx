@@ -16,7 +16,7 @@ function readingTime(text: string | null) {
 export function FeaturedPost({ post }: { post: Post }) {
   const t = useTranslations("site");
   return (
-    <article className="group relative grid overflow-hidden rounded-[2rem] border border-border bg-white transition duration-[400ms] ease-soft hover:-translate-y-1 hover:shadow-[0_24px_50px_-28px_rgba(18,53,46,0.4)] lg:grid-cols-[1.15fr_1fr]">
+    <article data-reveal="image" className="group relative grid overflow-hidden rounded-[2rem] border border-border bg-white transition duration-[400ms] ease-soft hover:-translate-y-1 hover:shadow-[0_24px_50px_-28px_rgba(18,53,46,0.4)] lg:grid-cols-[1.15fr_1fr]">
       <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[22rem]">
         {post.cover_url ? (
           <Image src={post.cover_url} alt="" fill preload sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.04]" />

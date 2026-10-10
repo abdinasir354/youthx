@@ -49,7 +49,7 @@ export default async function GalleryPage() {
               {albums.map((a) => (
                 <section key={a.id} aria-label={a.heading ?? t("galleryTitle")}>
                   {(a.heading || a.intro) && (
-                    <div className="mb-6">
+                    <div data-reveal className="mb-6">
                       {a.heading && <h2 className="heading text-2xl text-ink sm:text-3xl">{a.heading}</h2>}
                       {a.intro && <p className="mt-2 max-w-2xl text-muted-foreground">{a.intro}</p>}
                     </div>

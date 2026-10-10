@@ -63,7 +63,7 @@ async function OpportunityDetail({ params }: { params: Promise<{ slug: string }>
             <ArrowLeft className="size-4" aria-hidden /> {ts("allOpportunities")}
           </Link>
 
-          <article className="mt-8 flex flex-col overflow-hidden rounded-[2rem] shadow-[0_40px_80px_-40px_rgba(18,53,46,0.45)] lg:flex-row">
+          <article className="enter-up enter-up-1 mt-8 flex flex-col overflow-hidden rounded-[2rem] shadow-[0_40px_80px_-40px_rgba(18,53,46,0.45)] lg:flex-row">
             {/* Main part */}
             <div className="relative flex-1 bg-white p-8 sm:p-12">
               <div className="flex flex-wrap items-center gap-2">
@@ -122,20 +122,20 @@ async function OpportunityDetail({ params }: { params: Promise<{ slug: string }>
         <Container className="grid gap-10 py-10 sm:py-12 lg:grid-cols-[minmax(0,1fr)_22rem]">
           <div className="space-y-6">
             {opp.description && (
-              <section aria-labelledby="opp-about" className="rounded-[2rem] border border-border p-8 sm:p-10">
+              <section aria-labelledby="opp-about" data-reveal className="rounded-[2rem] border border-border p-8 sm:p-10">
                 <h2 id="opp-about" className="heading text-3xl text-ink">{t("about")}</h2>
                 <RichText markdown={opp.description} className="mt-5 break-words" />
               </section>
             )}
             {opp.requirements && (
-              <section aria-labelledby="opp-who" className="rounded-[2rem] bg-surface p-8 sm:p-10">
+              <section aria-labelledby="opp-who" data-reveal className="rounded-[2rem] bg-surface p-8 sm:p-10">
                 <h2 id="opp-who" className="heading text-3xl text-ink">{ts("whoCanApply")}</h2>
                 <RichText markdown={opp.requirements} className="mt-5 break-words" />
               </section>
             )}
           </div>
 
-          <aside className="h-fit space-y-4 lg:sticky lg:top-24">
+          <aside data-reveal className="h-fit space-y-4 lg:sticky lg:top-24">
             <div className="rounded-[2rem] border border-border p-7">
               <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">{ts("atAGlance")}</h2>
               <dl className="mt-5 space-y-4">

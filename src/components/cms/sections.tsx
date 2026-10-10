@@ -95,7 +95,7 @@ async function Section({ section, tone, first }: { section: CmsSection; tone: "s
         </div>
       );
       const media = (
-        <div data-reveal className="relative">
+        <div data-reveal="image" className="relative">
           <FloatingShapes variant="b" className="-inset-10 overflow-visible" />
           <div className="group relative aspect-[4/3] overflow-hidden rounded-[2rem] shadow-[0_30px_60px_-20px_rgba(18,53,46,0.35)]">
             {image ? (
@@ -485,7 +485,7 @@ function Cards({ data: d, wrap, headingId }: { data: Data; wrap: (c: React.React
             const date = str(it.date_label);
             const n = String(i + 1).padStart(2, "0");
             return (
-              <li key={i} data-reveal className="relative grid items-center gap-5 pb-12 pl-14 last:pb-0 lg:grid-cols-2 lg:gap-24 lg:pl-0">
+              <li key={i} className="relative grid items-center gap-5 pb-12 pl-14 last:pb-0 lg:grid-cols-2 lg:gap-24 lg:pl-0">
                 <span
                   aria-hidden
                   className="absolute left-5 top-0 flex size-10 -translate-x-1/2 items-center justify-center rounded-full bg-ink text-sm font-extrabold text-primary ring-8 ring-surface lg:left-1/2 lg:top-1/2 lg:size-12 lg:-translate-y-1/2"
@@ -493,7 +493,7 @@ function Cards({ data: d, wrap, headingId }: { data: Data; wrap: (c: React.React
                   {n}
                 </span>
 
-                <div className={cn("relative", right ? "lg:order-2" : "lg:order-1")}>
+                <div data-reveal className={cn("relative", right ? "lg:order-2" : "lg:order-1")}>
                   <div className="relative overflow-hidden rounded-[1.75rem] border border-border bg-white p-6 shadow-[0_24px_50px_-30px_rgba(18,53,46,0.35)] transition duration-[350ms] ease-soft hover:-translate-y-1 hover:border-primary/50 sm:p-8">
                     <span aria-hidden className={cn("absolute inset-y-0 w-1.5 bg-primary", right ? "left-0" : "left-0 lg:left-auto lg:right-0")} />
                     <p className="text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">
@@ -510,7 +510,7 @@ function Cards({ data: d, wrap, headingId }: { data: Data; wrap: (c: React.React
 
                 <div className={cn(right ? "lg:order-1" : "lg:order-2")}>
                   {img ? (
-                    <figure className="relative">
+                    <figure data-reveal="image" className="relative">
                       <div className="relative aspect-[16/10] overflow-hidden rounded-[1.75rem] shadow-[0_30px_60px_-30px_rgba(18,53,46,0.5)]">
                         <Image src={img} alt={str(it.image_alt) ?? ""} fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover transition-transform duration-700 ease-soft hover:scale-[1.04]" loading="lazy" />
                       </div>
@@ -830,7 +830,7 @@ async function StorySpotlight({ data: d, wrap, headingId }: { data: CmsSection["
       <div>
         {lead ? (
           <>
-            <article data-reveal className="relative overflow-hidden rounded-[2rem] bg-ink p-8 text-white shadow-[0_40px_80px_-40px_rgba(18,53,46,0.6)] transition duration-[400ms] ease-soft hover:-translate-y-1 hover:shadow-[0_50px_90px_-40px_rgba(18,53,46,0.7)] sm:p-10">
+            <article data-reveal="image" className="relative overflow-hidden rounded-[2rem] bg-ink p-8 text-white shadow-[0_40px_80px_-40px_rgba(18,53,46,0.6)] transition duration-[400ms] ease-soft hover:-translate-y-1 hover:shadow-[0_50px_90px_-40px_rgba(18,53,46,0.7)] sm:p-10">
               <span aria-hidden className="absolute -right-16 -top-16 size-56 rounded-full bg-primary/15 blur-2xl" />
               <span aria-hidden className="absolute -bottom-10 right-10 size-28 rounded-full border-[10px] border-primary/20" />
               <span className="relative flex size-12 items-center justify-center rounded-2xl bg-primary text-ink">

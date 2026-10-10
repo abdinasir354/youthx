@@ -28,7 +28,7 @@ export async function FormPage({ current, eyebrow, title, description, back, ste
   return (
     <section className="relative overflow-hidden bg-surface">
       <FloatingShapes variant="c" />
-      <Container className="relative grid gap-8 py-10 sm:py-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
+      <Container className="enter-up relative grid gap-8 py-10 sm:py-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
         {/* Story panel */}
         <aside className="relative h-fit overflow-hidden rounded-[2.5rem] bg-ink p-8 text-white sm:p-11 lg:sticky lg:top-24">
           <FloatingShapes variant="a" />

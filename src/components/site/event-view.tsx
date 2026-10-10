@@ -48,7 +48,7 @@ export async function EventView({ event }: { event: CmsEvent }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(ld)} />
       <section className="relative overflow-hidden bg-surface">
-        <Container className="py-10 sm:py-12">
+        <Container className="enter-up py-10 sm:py-12">
           <Eyebrow>{t(`eventTypes.${event.event_type}`)}</Eyebrow>
           <h1 className="mt-2 max-w-4xl display text-balance text-5xl text-ink sm:text-6xl">{event.title}</h1>
           {event.summary && <p className="mt-5 max-w-2xl text-lg text-muted-foreground sm:text-xl">{event.summary}</p>}
@@ -69,7 +69,7 @@ export async function EventView({ event }: { event: CmsEvent }) {
           {event.speakers && event.speakers.length > 0 && (
             <section className="mt-12" aria-labelledby="speakers">
               <h2 id="speakers" className="text-2xl font-bold text-secondary">{t("speakers")}</h2>
-              <ul className="mt-6 grid gap-5 sm:grid-cols-2">
+              <ul data-reveal-stagger className="mt-6 grid gap-5 sm:grid-cols-2">
                 {event.speakers.map((s) => (
                   <li key={s.name} className="flex gap-4 rounded-lg border border-border p-5">
                     {s.image_url && (

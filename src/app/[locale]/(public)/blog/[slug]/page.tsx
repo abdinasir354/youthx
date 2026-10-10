@@ -35,7 +35,7 @@ async function Article({ params }: { params: Promise<{ slug: string }> }) {
   return (
     <>
       <article className="bg-surface">
-        <Container narrow className="pb-8 pt-8 sm:pt-10">
+        <Container narrow className="enter-up pb-8 pt-8 sm:pt-10">
           <Link href="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-ink">
             <ArrowLeft className="size-4" aria-hidden /> {t("allPosts")}
           </Link>
@@ -47,7 +47,7 @@ async function Article({ params }: { params: Promise<{ slug: string }> }) {
         </Container>
         {post.cover_url && (
           <Container className="max-w-5xl">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-[2rem]">
+            <div className="enter-up enter-up-2 relative aspect-[16/9] overflow-hidden rounded-[2rem]">
               <Image src={post.cover_url} alt="" fill preload sizes="(min-width: 1024px) 1024px, 100vw" className="object-cover" />
             </div>
           </Container>
@@ -60,7 +60,7 @@ async function Article({ params }: { params: Promise<{ slug: string }> }) {
         <section className="bg-white">
           <Container className="py-10 sm:py-12">
             <h2 className="heading text-2xl text-ink sm:text-3xl">{t("morePosts")}</h2>
-            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div data-reveal-stagger className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {more.map((p) => (
                 <PostCard key={p.id} post={p} />
               ))}

@@ -39,7 +39,7 @@ export default async function ContactPage() {
     <>
       <section className="relative overflow-hidden bg-surface">
         <FloatingShapes variant="c" />
-        <Container className="relative py-8 sm:py-10">
+        <Container className="enter-up relative py-8 sm:py-10">
           <div className="grid overflow-hidden rounded-[2.75rem] bg-white shadow-[0_40px_90px_-50px_rgba(18,53,46,0.55)] lg:grid-cols-[1fr_1.1fr]">
             {/* Photo panel */}
             <div className="relative p-3">

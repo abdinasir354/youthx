@@ -9,7 +9,7 @@ import { FloatingShapes } from "./shapes";
 export function RichText({ markdown, className }: { markdown: string | null | undefined; className?: string }) {
   const html = markdownToSafeHtml(markdown);
   if (!html) return null;
-  return <div className={cn("prose-cms text-[1.0625rem] leading-[1.75] text-foreground/85 sm:text-lg", className)} dangerouslySetInnerHTML={{ __html: html }} />;
+  return <div data-reveal className={cn("prose-cms text-[1.0625rem] leading-[1.75] text-foreground/85 sm:text-lg", className)} dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
 export function Container({ children, className, narrow }: { children: ReactNode; className?: string; narrow?: boolean }) {

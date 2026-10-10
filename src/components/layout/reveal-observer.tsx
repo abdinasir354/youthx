@@ -31,37 +31,50 @@ export function RevealObserver() {
       { rootMargin: "0px 0px -8% 0px", threshold: 0 },
     );
 
-    let waiting = false;
+    // Elements that exist but aren't hydrated yet are re-checked until React reaches them.
+    let retry = 0;
+    let tries = 0;
+    const retryLater = () => {
+      if (retry) return;
+      retry = window.setInterval(() => {
+        if (scan() || ++tries > 80) {
+          window.clearInterval(retry);
+          retry = 0;
+          tries = 0;
+        }
+      }, 150);
+    };
+
+    /** Returns true when every target has been handled. */
     const scan = () => {
-      waiting = false;
+      let waiting = false;
       document.querySelectorAll<HTMLElement>(TARGETS).forEach((el) => {
         if (!isHydrated(el)) {
           waiting = true;
           return;
         }
         const r = el.getBoundingClientRect();
-        if (r.top < window.innerHeight && r.bottom > 0) {
+        // Inside something that already reveals (e.g. text in a timeline card): moves with its parent.
+        const nested = el.parentElement?.closest("[data-reveal], [data-reveal-stagger]");
+        if (nested || (r.top < window.innerHeight && r.bottom > 0)) {
           el.dataset.revealState = "shown"; // already on screen: leave as is
         } else {
           el.dataset.revealState = "hidden";
           io.observe(el);
         }
       });
+      if (waiting) retryLater();
+      return !waiting;
     };
 
     scan();
-    // Streamed sections hydrate a moment later; client navigation adds new ones.
+    // Streamed sections arrive (and hydrate) a moment later; client navigation adds new ones.
     let frame = 0;
     const mo = new MutationObserver(() => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(scan);
     });
     mo.observe(document.body, { childList: true, subtree: true });
-    let tries = 0;
-    const retry = window.setInterval(() => {
-      if (waiting) scan();
-      if (!waiting || ++tries > 40) window.clearInterval(retry);
-    }, 250);
 
     return () => {
       io.disconnect();

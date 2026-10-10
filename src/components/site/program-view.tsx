@@ -53,7 +53,7 @@ export async function ProgramView({ program }: { program: Program }) {
       {/* 1. Header */}
       <section className="relative overflow-hidden bg-surface">
         <FloatingShapes variant="c" />
-        <Container narrow className="relative pb-8 pt-8 sm:pb-10 sm:pt-10">
+        <Container narrow className="enter-up relative pb-8 pt-8 sm:pb-10 sm:pt-10">
           <Link href="/programs" className="group inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors duration-300 hover:text-ink [&>svg]:transition-transform [&>svg]:duration-300 hover:[&>svg]:-translate-x-1">
             <ArrowLeft className="size-4" aria-hidden /> {t("allPrograms")}
           </Link>
@@ -70,7 +70,7 @@ export async function ProgramView({ program }: { program: Program }) {
         <Container narrow className="py-10 sm:py-12">
           {/* 2. Key facts */}
           {facts.length > 0 && (
-            <dl className="grid gap-3 sm:grid-cols-3">
+            <dl data-reveal-stagger className="grid gap-3 sm:grid-cols-3">
               {facts.map((f) => (
                 <div key={f.label} className="rounded-2xl bg-surface p-5">
                   <dt className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-muted-foreground">
@@ -83,7 +83,7 @@ export async function ProgramView({ program }: { program: Program }) {
           )}
 
           {program.featured_image_url && (
-            <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-[2rem]">
+            <div data-reveal="image" className="relative mt-10 aspect-[16/9] overflow-hidden rounded-[2rem]">
               <Image src={program.featured_image_url} alt="" fill preload sizes="(min-width: 768px) 768px, 100vw" className="object-cover" />
             </div>
           )}
@@ -91,7 +91,7 @@ export async function ProgramView({ program }: { program: Program }) {
           {/* 3. About */}
           {program.description && (
             <section aria-labelledby="about-program" className="mt-14">
-              <h2 id="about-program" className="heading text-3xl text-ink">{t("aboutProgram")}</h2>
+              <h2 id="about-program" data-reveal className="heading text-3xl text-ink">{t("aboutProgram")}</h2>
               <RichText markdown={program.description} className="mt-5 break-words" />
             </section>
           )}
@@ -99,8 +99,8 @@ export async function ProgramView({ program }: { program: Program }) {
           {/* 4. Objectives */}
           {program.objectives.length > 0 && (
             <section aria-labelledby="objectives" className="mt-14">
-              <h2 id="objectives" className="heading text-3xl text-ink">{t("whatYouGain")}</h2>
-              <ul className="mt-6 space-y-3">
+              <h2 id="objectives" data-reveal className="heading text-3xl text-ink">{t("whatYouGain")}</h2>
+              <ul data-reveal-stagger className="mt-6 space-y-3">
                 {program.objectives.map((o) => (
                   <li key={o} className="flex gap-4 rounded-2xl border border-border p-4 text-lg">
                     <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary text-ink" aria-hidden>
@@ -114,7 +114,7 @@ export async function ProgramView({ program }: { program: Program }) {
           )}
 
           {program.gallery.length > 0 && (
-            <ul className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3" aria-label={t("gallery")}>
+            <ul data-reveal-stagger className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3" aria-label={t("gallery")}>
               {program.gallery.map((src, i) => (
                 <li key={src} className="group relative aspect-square overflow-hidden rounded-2xl bg-muted">
                   <Image src={src} alt={`${program.title} — ${i + 1}`} fill sizes="(min-width: 768px) 250px, 50vw" className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.05]" loading="lazy" />
@@ -136,7 +136,7 @@ export async function ProgramView({ program }: { program: Program }) {
       {/* 6. One clear call to action */}
       <section className="bg-surface py-8 sm:py-10">
         <Container>
-          <div className="rounded-[2.5rem] bg-ink px-8 py-12 text-center text-white sm:px-14 sm:py-16">
+          <div data-reveal className="rounded-[2.5rem] bg-ink px-8 py-12 text-center text-white sm:px-14 sm:py-16">
             <h2 className="heading text-balance text-3xl sm:text-4xl">{t("interested")}</h2>
             <p className="mx-auto mt-3 max-w-xl text-lg text-white/75">{t("interestedText")}</p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">

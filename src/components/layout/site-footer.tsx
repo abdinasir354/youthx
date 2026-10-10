@@ -16,7 +16,7 @@ export async function SiteFooter() {
 
   return (
     <footer className="mt-auto bg-secondary text-white">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 lg:gap-8">
+      <div data-reveal-stagger className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 lg:gap-8">
         <div className="space-y-4 sm:col-span-2 lg:col-span-1">
           <Logo inverted />
           {settings.footer_text && <p className="max-w-xs text-sm leading-relaxed text-white/75">{settings.footer_text}</p>}

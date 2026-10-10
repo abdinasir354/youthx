@@ -27,7 +27,7 @@ export default async function OpportunitiesPage({ searchParams }: PageProps<"/[l
     <>
       <section className="relative overflow-hidden bg-surface">
         <FloatingShapes variant="c" />
-        <Container className="relative pb-10 pt-16 sm:pb-14 sm:pt-20">
+        <Container className="enter-up relative pb-10 pt-16 sm:pb-14 sm:pt-20">
           <Eyebrow>{ts("opportunitiesEyebrow")}</Eyebrow>
           <h1 className="display mt-4 max-w-3xl text-balance text-5xl text-ink sm:text-6xl">{ts("findNext")}</h1>
           <p className="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground sm:text-xl">{page?.page.description ?? t("subtitle")}</p>
@@ -162,7 +162,7 @@ async function Results({ searchParams }: { searchParams: Promise<Filters> }) {
           <p className="mx-auto mt-2 max-w-md text-muted-foreground">{all.length === 0 ? t("noneText") : ts("noMatchesHint")}</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div data-reveal-stagger className="space-y-4">
           {opps.map((o) => (
             <OpportunityRow key={o.id} opp={o} />
           ))}
